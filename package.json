@@ -1,0 +1,30 @@
+{
+  "name": "wp-scratch-theme",
+  "version": "1.0.0",
+  "description": "Wordpress Theme Boilerplate",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anrw/wp-scratch-theme.git"
+  },
+  "keywords": [
+    "laravel-blade",
+    "wordpress",
+    "theme",
+    "boilerplate"
+  ],
+  "author": "Andrew Tolochka",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/anrw/wp-scratch-theme/issues"
+  },
+  "homepage": "https://github.com/anrw/wp-scratch-theme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-bump": "^2.1.0",
+    "gulp-shell": "^0.5.2"
+  }
+}
