@@ -11,14 +11,15 @@ The biggest problem with wordpress theme development is that you always need to 
 
 ### How it works?
 
-TemplateLoader repeats the wordpress template hierarchy and uses it separately for scopes and templates. This allows to use the same scope with different templates and different scopes with the same template.
+`TemplateLoader` repeats the wordpress template hierarchy and uses it separately for scopes and templates. This allows to use the same scope with different templates and different scopes with the same template.
 
 ## Instalation
 1. Navigate to your WordPress themes directory
 `$ cd ~/Sites/mysite/wp-content/themes`
 2. Clone repository `$ git clone git@github.com:anrw/wp-scratch-theme.git`
 3. Navigate `cd wp-scratch-theme`
-4. Run install `gulp install`
+4. Install gulp dependencies `npm install`
+5. Install theme `gulp install`
 
 
 # Requirements:
