@@ -4,4 +4,6 @@
  * Data that will be accesible in every view
  */
 
-$data = array();
+$data = array(
+	'foo' => 'bar'
+);

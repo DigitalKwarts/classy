@@ -45,6 +45,8 @@ class ThemeFramework {
 
 		$this->define_constants();
 
+		$this->includes();
+
 		$this->init_config();
 
 	}
@@ -85,13 +87,23 @@ class ThemeFramework {
 
 	}
 
+	public function includes() {
+
+		// Theme Config
+		require_once THEME_FRAMEWORK_PATH . 'core/theme-config.php';
+	
+		// Scope
+		require_once THEME_FRAMEWORK_PATH . 'core/scope.php';
+
+		// Template Loader
+		require_once THEME_FRAMEWORK_PATH . 'core/template-loader.php';
+
+	}
+
 	/**
 	 * Init Theme Configuration
 	 */
 	private function init_config() {
-
-		// Require Class
-		require_once THEME_FRAMEWORK_PATH . 'core/theme-config.php';
 
 		$this->config = ThemeConfig::init();
 
@@ -130,8 +142,6 @@ class ThemeFramework {
 	 * Main Template Render Function
 	 */
 	public static function render() {
-
-		require_once THEME_FRAMEWORK_PATH . 'core/template-loader.php';
 
 		TemplateLoader::render();
 
