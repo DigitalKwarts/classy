@@ -1,0 +1,14 @@
+{
+    "name": "anrw/wp-scratch-theme",
+    "description": "Wordpress Theme Boilerplate",
+    "license": "GNU GPL",
+    "authors": [
+        {
+            "name": "Andrew Tolochka",
+            "email": "atolochka@gmail.com"
+        }
+    ],
+    "require": {
+        "philo/laravel-blade": "^3.1"
+    }
+}
