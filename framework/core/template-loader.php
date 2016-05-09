@@ -1,5 +1,7 @@
 <?php 
 
+use Windwalker\Renderer\BladeRenderer;
+
 /**
  * Template Loader
  *
@@ -23,7 +25,7 @@ class TemplateLoader {
 	 */
 	public static function get_theme_template_path($template) {
 
-		return THEME_PATH . '/' . self::$theme_templates_folder . '/' . $template  . '/' . $template . '.blade.php';
+		return THEME_PATH . self::$theme_templates_folder . '/' . $template  . '/' . $template . '.blade.php';
 
 	}
 
@@ -327,6 +329,9 @@ class TemplateLoader {
 	 */
 	public static function render() {
 
+		$views = THEME_PATH . self::$theme_templates_folder;
+		$cache = WP_CONTENT_DIR . '/templatecache';
+
 		$current_page = self::get_current_page();
 
 		$template_name = self::get_current_template($current_page);
@@ -339,11 +344,10 @@ class TemplateLoader {
 
 			if ($template) {
 
-				var_dump($template_name);
+				$renderer = new BladeRenderer($views, array('cache_path' => $cache));
 
-				// Render
+				echo $renderer->render($template_name . '.' . $template_name, $scope);
 
-				var_dump($scope);
 			}
 			
 		} else {

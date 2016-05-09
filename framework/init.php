@@ -89,6 +89,8 @@ class ThemeFramework {
 
 	public function includes() {
 
+		require 'vendor/autoload.php';
+
 		// Theme Config
 		require_once THEME_FRAMEWORK_PATH . 'core/theme-config.php';
 	
