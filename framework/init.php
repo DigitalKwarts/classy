@@ -97,6 +97,12 @@ class ThemeFramework {
 
 	}
 
+	/**
+	 * Returns theme config variable
+	 * 
+	 * @param  string $name
+	 * @return any
+	 */
 	public static function get_config_var($name) {
 
 		$vars = ThemeConfig::get_vars();
@@ -107,11 +113,27 @@ class ThemeFramework {
 
 	}
 
+	/**
+	 * Returns theme textdomain
+	 * 
+	 * @return string
+	 */
 	public static function textdomain() {
 
 		$textdomain = ThemeFramework::get_config_var('textdomain');
 
 		return $textdomain ? $textdomain : THEME;
+
+	}
+
+	/**
+	 * Main Template Render Function
+	 */
+	public static function render() {
+
+		require_once THEME_FRAMEWORK_PATH . 'core/template-loader.php';
+
+		TemplateLoader::render();
 
 	}
 
