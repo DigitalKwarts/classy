@@ -100,6 +100,9 @@ class ThemeFramework {
 		// Template Loader
 		require_once THEME_FRAMEWORK_PATH . 'core/template-loader.php';
 
+		// Appearance
+		require_once THEME_PATH . 'custom/appearance.php';
+
 	}
 
 	/**

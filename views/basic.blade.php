@@ -7,7 +7,7 @@
         <title>{{ wp_title('|', true, 'right'); }}</title>
         {{ wp_head() }}
     </head>
-    <body class="@yield('body_class')">
+    <body {{ body_class() }}>
         <div class="container">
             @yield('content')
         </div>
