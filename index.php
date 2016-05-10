@@ -6,4 +6,4 @@
  * @package 	WordPress
  */
 
-ThemeFramework::render();
+Classy::render();
