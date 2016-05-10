@@ -20,7 +20,7 @@ TemplateLoader repeats the wordpress template hierarchy and uses it separately f
 ---
 
 ### Example of project structure
-![alt tag](http://i.imgur.com/WzpUdvt.png)
+![alt tag](http://i.imgur.com/7BUl5lR.png)
 
 ## Installation
 1. Navigate to your WordPress themes directory `$ cd ~/Sites/mysite/wp-content/themes`
