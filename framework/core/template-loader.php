@@ -209,7 +209,7 @@ class TemplateLoader {
 					$pagename = $post->post_name;
 			}
 
-			$template = get_option('theme-page-template', $id);
+			$template = get_post_meta('theme-page-template', $id);
 
 			if ( $template != 'index' )
 				$templates[] = $template;
@@ -225,7 +225,7 @@ class TemplateLoader {
 
 			$id = get_queried_object_id();
 			
-			$template = get_option('theme-page-template', $id);
+			$template = get_post_meta('theme-page-template', $id);
 
 			$pagename = get_query_var('pagename');
 
