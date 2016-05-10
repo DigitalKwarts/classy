@@ -1,5 +1,6 @@
-# Wordpress theme boilerplate
-Light, well-structured wordpress theme boileplate based on “Laravel Blade” template engine
+![alt tag](http://i.imgur.com/2TgPJNk.png)
+
+Light, well-structured wordpress theme framework based on “Laravel Blade” template engine and on conception to separate logic from view.
 
 ### Why Blade?
 
@@ -13,13 +14,17 @@ The biggest problem with wordpress theme development is that you always need to 
 
 `TemplateLoader` repeats the wordpress template hierarchy and uses it separately for scopes and templates. This allows to use the same scope with different templates and different scopes with the same template.
 
-## Instalation
+![alt tag](http://i.imgur.com/eKZsyF3.png)
+
+## Installation
 1. Navigate to your WordPress themes directory
 `$ cd ~/Sites/mysite/wp-content/themes`
 2. Clone repository `$ git clone git@github.com:anrw/wp-scratch-theme.git`
 3. Navigate `cd wp-scratch-theme`
 4. Install gulp dependencies `npm install`
 5. Install theme `gulp install`
+
+## Getting started
 
 
 # Requirements:
