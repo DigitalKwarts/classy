@@ -51,4 +51,5 @@ The biggest problem with wordpress theme development is that you always need to 
 
 ## Requirements:
 
+Wordpress: 4.5+
 PHP: 5.4+
