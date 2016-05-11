@@ -24,8 +24,7 @@ The biggest problem with wordpress theme development is that you always need to 
 1. Navigate to your WordPress themes directory `cd ~/Sites/mysite/wp-content/themes`
 2. Clone repository `git clone git@github.com:anrw/wp-scratch-theme.git`
 3. Navigate to it `cd wp-scratch-theme`
-4. Install gulp dependencies `npm install`
-5. Install composer dependencies `composer install`
+4. Install composer dependencies `composer install`
 
 ## Documentation
 1. [Custom post types](https://github.com/anrw/classy/wiki/Custom-post-types)
