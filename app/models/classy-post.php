@@ -100,7 +100,7 @@ class ClassyPost {
 	 * @return object
 	 */
 	
-	protected function get_object() {
+	public function get_object() {
 		$object = get_post($this->ID);
 
 		return $object;
@@ -136,14 +136,14 @@ class ClassyPost {
 	/**
 	 * Returns post thumbnail
 	 * 
-	 * @return object
+	 * @return ClassyImage
 	 */
 	public function get_thumbnail() {
 		if ( function_exists('get_post_thumbnail_id') ) {
-			$tid = get_post_thumbnail_id($this->ID);
+			$image_id = get_post_thumbnail_id($this->ID);
 			
-			if ( $tid ) {
-
+			if ( $image_id ) {
+				return new ClassyImage($image_id);
 			}
 		}
 	}
