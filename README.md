@@ -6,6 +6,21 @@ Classy is a framework for building wordpress themes, based on [Blade](https://la
 
 Blade is the simple, yet powerful templating engine provided with Laravel. Unlike other popular PHP templating engines, Blade does not restrict you from using plain PHP code in your views. All Blade views are compiled into plain PHP code and cached until they are modified, meaning Blade adds essentially zero overhead to your application.
 
+##### Code example:
+
+```blade
+@extends('basic')
+
+@section('content')
+	<h1 class="big-title">{{ $foo }}</h1>
+	<h2 class="post-title">{{ $post.title() }}</h2>
+	<img src="{{ $post.thumbnail('large') }}" />
+	<div class="body">
+		{{ post.content() }}
+	</div>
+@stop
+```
+
 ### What’s about structure?
 
 The biggest problem with wordpress theme development is that you always need to repeat same code.  New approach, that assumes that template data will be collected and prepared separately from actual render allows you to have the project structured more accurate.
