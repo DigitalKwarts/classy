@@ -45,7 +45,9 @@ class Classy {
 
 		$this->define_constants();
 
-		$this->includes();
+		$this->include_core_files();
+
+		$this->include_models();
 
 		$this->init_config();
 
@@ -87,21 +89,46 @@ class Classy {
 
 	}
 
-	public function includes() {
+	/**
+	 * Include core files that are responsible for theme render
+	 */
+	private function include_core_files() {
 
 		require_once THEME_PATH . 'vendor/autoload.php';
 
 		// Theme Config
-		require_once THEME_FRAMEWORK_PATH . 'classy/theme-config.php';
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
 	
 		// Scope
-		require_once THEME_FRAMEWORK_PATH . 'classy/scope.php';
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
 
 		// Template Loader
-		require_once THEME_FRAMEWORK_PATH . 'classy/template-loader.php';
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-template.php';
+
+		// Helper functions
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-helper.php';
 
 		// Appearance
 		require_once THEME_FRAMEWORK_PATH . 'appearance.php';
+
+	}
+
+	/**
+	 * Include theme Object-Orienter models
+	 */
+	private function include_models() {
+
+		$files = (array) glob( THEME_FRAMEWORK_PATH . '/models/*.php' );
+
+		foreach ( $files as $filename ) {
+
+			if ( !empty($filename) ) {
+
+				require_once $filename;
+
+			}
+
+		}
 
 	}
 

@@ -4,4 +4,4 @@
  * Init our Wordpress Theme
  */
 
-require_once 'app/classy/init.php';
+require_once 'app/classy/classy.php';
