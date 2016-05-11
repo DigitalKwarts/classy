@@ -1,6 +1,6 @@
 ![alt tag](http://i.imgur.com/2TgPJNk.png)
 
-Light, well-structured wordpress theme framework based on “Laravel Blade” template engine and on conception to separate template logic from view.
+Classy is a framework for building wordpress themes, based on [Blade](https://laravel.com/docs/5.1/blade) template engine. It's fast with beautiful architecture that allows you to write less code and focus more on project itself. It doesn't provide frontend boilerplate, since every project needs its own, instead it handles all architecture, providing an elegant way to separate logic from view.
 
 ### Why Blade?
 
@@ -20,10 +20,11 @@ The biggest problem with wordpress theme development is that you always need to 
 ## Example of project structure
 ![alt tag](http://i.imgur.com/7BUl5lR.png)
 
-## Installation
+
+## Getting started
 1. Navigate to your WordPress themes directory `cd ~/Sites/mysite/wp-content/themes`
-2. Clone repository `git clone git@github.com:anrw/wp-scratch-theme.git`
-3. Navigate to it `cd wp-scratch-theme`
+2. Clone repository `git clone git@github.com:anrw/classy.git`
+3. Navigate to it `cd classy`
 4. Install composer dependencies `composer install`
 
 ## Documentation
@@ -31,6 +32,7 @@ The biggest problem with wordpress theme development is that you always need to 
 2. [Taxonomies](https://github.com/anrw/classy/wiki/Taxonomies)
 3. [Post formats](https://github.com/anrw/classy/wiki/Post-formats)
 4. [Sidebars](https://github.com/anrw/classy/wiki/Sidebars)
+5. [Blade](https://laravel.com/docs/5.1/blade)
 
 ## Requirements:
 
