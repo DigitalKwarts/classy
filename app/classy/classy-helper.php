@@ -96,5 +96,209 @@ class ClassyHelper {
 		return $html;
 	}
 
+	/**
+	 * Displays variable if WP_DEBUG is up
+	 * 
+	 * @param  mixed $arg
+	 */
+	public static function error_log( $arg ) {
+		if ( !WP_DEBUG ) {
+			return;
+		}
+		if ( is_object( $arg ) || is_array( $arg ) ) {
+			$arg = print_r( $arg, true );
+		}
+		return error_log( $arg );
+	}
+
+	/**
+	 *
+	 *
+	 * @param string  $args
+	 * @return array
+	 */
+	public static function paginate_links( $args = '' ) {
+		$defaults = array(
+			'base' => '%_%', // http://example.com/all_posts.php%_% : %_% is replaced by format (below)
+			'format' => '?page=%#%', // ?page=%#% : %#% is replaced by the page number
+			'total' => 1,
+			'current' => 0,
+			'show_all' => false,
+			'prev_next' => true,
+			'prev_text' => __( '&laquo; Previous' ),
+			'next_text' => __( 'Next &raquo;' ),
+			'end_size' => 1,
+			'mid_size' => 2,
+			'type' => 'array',
+			'add_args' => false, // array of query args to add
+			'add_fragment' => ''
+		);
+		$args = wp_parse_args( $args, $defaults );
+		// Who knows what else people pass in $args
+		$args['total'] = intval( (int)$args['total'] );
+		if ( $args['total'] < 2 ) {
+			return array();
+		}
+		$args['current'] = (int)$args['current'];
+		$args['end_size'] = 0 < (int)$args['end_size'] ? (int)$args['end_size'] : 1; // Out of bounds?  Make it the default.
+		$args['mid_size'] = 0 <= (int)$args['mid_size'] ? (int)$args['mid_size'] : 2;
+		$args['add_args'] = is_array( $args['add_args'] ) ? $args['add_args'] : false;
+		$page_links = array();
+		$dots = false;
+		if ( $args['prev_next'] && $args['current'] && 1 < $args['current'] ) {
+			$link = str_replace( '%_%', 2 == $args['current'] ? '' : $args['format'], $args['base'] );
+			$link = str_replace( '%#%', $args['current'] - 1, $link );
+			if ( $args['add_args'] ) {
+				$link = add_query_arg( $args['add_args'], $link );
+			}
+			$link .= $args['add_fragment'];
+			$link = untrailingslashit( $link );
+			$page_links[] = array(
+				'class' => 'prev page-numbers',
+				'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
+				'title' => $args['prev_text']
+			);
+		}
+		for ( $n = 1; $n <= $args['total']; $n++ ) {
+			$n_display = number_format_i18n( $n );
+			if ( $n == $args['current'] ) {
+				$page_links[] = array(
+					'class' => 'page-number page-numbers current',
+					'title' => $n_display,
+					'text' => $n_display,
+					'name' => $n_display,
+					'current' => true
+				);
+				$dots = true;
+			} else {
+				if ( $args['show_all'] || ( $n <= $args['end_size'] || ( $args['current'] && $n >= $args['current'] - $args['mid_size'] && $n <= $args['current'] + $args['mid_size'] ) || $n > $args['total'] - $args['end_size'] ) ) {
+					$link = str_replace( '%_%', 1 == $n ? '' : $args['format'], $args['base'] );
+					$link = str_replace( '%#%', $n, $link );
+					$link = trailingslashit( $link ) . ltrim( $args['add_fragment'], '/' );
+					if ( $args['add_args'] ) {
+						$link = rtrim( add_query_arg( $args['add_args'], $link ), '/' );
+					}
+					$link = str_replace(' ', '+', $link);
+					$link = untrailingslashit( $link );
+					$page_links[] = array(
+						'class' => 'page-number page-numbers',
+						'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
+						'title' => $n_display,
+						'name' => $n_display,
+						'current' => $args['current'] == $n
+					);
+					$dots = true;
+				} elseif ( $dots && !$args['show_all'] ) {
+					$page_links[] = array(
+						'class' => 'dots',
+						'title' => __( '&hellip;' )
+					);
+					$dots = false;
+				}
+			}
+		}
+		if ( $args['prev_next'] && $args['current'] && ( $args['current'] < $args['total'] || -1 == $args['total'] ) ) {
+			$link = str_replace( '%_%', $args['format'], $args['base'] );
+			$link = str_replace( '%#%', $args['current'] + 1, $link );
+			if ( $args['add_args'] ) {
+				$link = add_query_arg( $args['add_args'], $link );
+			}
+			$link = untrailingslashit( trailingslashit( $link ) . $args['add_fragment'] );
+			$page_links[] = array(
+				'class' => 'next page-numbers',
+				'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
+				'title' => $args['next_text']
+			);
+		}
+		return $page_links;
+	}
+
+
+	/**
+	 * Converts array to object recursively
+	 * 
+	 * @param  array $array
+	 * @return object
+	 */
+	public static function array_to_object($array) {
+		$obj = new stdClass;
+
+		foreach ($array as $k => $v) {
+			if (strlen($k)) {
+				if (is_array($v)) {
+					$obj->{$k} = self::array_to_object($v); //RECURSION
+				} else {
+					$obj->{$k} = $v;
+				}
+			}
+		}
+
+		return $obj;
+
+	} 
+
+
+	/**
+	 * Returns Current Archives Page Title
+	 * 
+	 * @return string
+	 */
+	public static function get_archives_title() {
+
+	    $archives_title = '';
+
+	    if ( is_category() ) {
+
+	        $archives_title = single_cat_title( '', false );
+	    
+	    } else if ( is_tag() ) {
+
+	        $archives_title = 'Tag: ' . single_tag_title( '', false );
+	    
+	    } else if ( is_author() ) {
+
+	        if ( have_posts() ) {
+	        
+	            the_post();
+	            $archives_title = 'Author: ' . get_the_author();
+	        
+	        }
+	        
+	        rewind_posts();
+
+	    } else if ( is_search() ) {
+
+	        $archives_title = sprintf( __( 'Search Results for: %s', 'flotheme' ), '<span>' . get_search_query() . '</span>' );
+	    
+	    } else if ( is_archive() ) {
+	        
+	        if ( is_day() ) {
+	        
+	            $archives_title = get_the_date();
+	        
+	        } elseif ( is_month() ) {
+	        
+	            $archives_title = get_the_date( _x( 'F Y', 'monthly archives date format', 'flotheme'));
+	        
+	        } elseif ( is_year() ) {
+	        
+	            $archives_title = get_the_date( _x( 'Y', 'yearly archives date format', 'flotheme'));
+	        
+	        } else {
+	        
+	            $archives_title = 'Archives';
+	        
+	        }
+	    
+	    } else {
+	    
+	        $archives_title = 'Archives';
+	    
+	    }
+
+	    return $archives_title;
+
+	}
+
 
 }
