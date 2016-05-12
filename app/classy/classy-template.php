@@ -296,8 +296,6 @@ class ClassyTemplate {
 
 		elseif ( is_archive() && $template = self::get_query_template('archive') ) :
 
-		elseif ( is_comments_popup() && $template = self::get_query_template('comments-popup') ) :
-
 		elseif ( is_paged() && $template = self::get_query_template('paged') ) :
 
 		else :
