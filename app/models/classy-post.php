@@ -155,7 +155,16 @@ class ClassyPost {
 	 * @return string
 	 */
 	public function get_title() {
-		return apply_filters('the_title', $this->object->post_title, $this->ID);
+		return apply_filters('the_title', $this->post_title, $this->ID);
+	}
+
+	/**
+	 * Alias for get_title
+	 * 
+	 * @return string
+	 */
+	public function title() {
+		return $this->get_title();
 	}
 
 
@@ -187,6 +196,16 @@ class ClassyPost {
 		return $content;
 	}
 
+
+	/**
+	 * Alias for get_content
+	 * 
+	 * @return string
+	 */
+	public function content() {
+		return $this->get_content();
+	}
+
 	/**
 	 * Returns post type object for current post
 	 * 
@@ -198,6 +217,7 @@ class ClassyPost {
 
 	/**
 	 * Returns post permalink
+	 * 
 	 * @return string
 	 */
 	public function get_permalink() {
@@ -208,6 +228,16 @@ class ClassyPost {
 		$this->permalink = get_permalink($this->ID);
 
 		return $this->permalink;
+	}
+
+
+	/**
+	 * Alias for get_permalink
+	 * 
+	 * @return string
+	 */
+	public function permalink() {
+		return $this->get_permalink();
 	}
 
 	/**
