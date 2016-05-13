@@ -129,10 +129,6 @@ class ClassyMenuItem extends ClassyBasis {
 			$this->has_child = true;
 		}
 
-		if ( !isset( $this->children ) ) {
-			$this->children = array();
-		}
-
 		$this->children[] = $item;
 		$item->level = $this->level + 1;
 
