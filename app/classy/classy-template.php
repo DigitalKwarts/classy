@@ -20,20 +20,24 @@ class ClassyTemplate {
 	/**
 	 * Return theme template absolute path
 	 * 
-	 * @param  string $template
-	 * @return string
+	 * @param  string $template in blade path format, ex: base.header
+	 * @return string full path to template file
 	 */
 	public static function get_theme_template_path($template) {
 
-		return THEME_PATH . self::$theme_templates_folder . '/' . $template  . '/' . $template . '.blade.php';
+		$template = self::get_nested_blade_path($template);
+
+		$template = str_replace('.', '/', $template);
+
+		return THEME_PATH . self::$theme_templates_folder . '/' . $template . '.blade.php';			
 
 	}
 
 	/**
 	 * Checks if template exists
 	 * 
-	 * @param  string $template 
-	 * @return boolean           
+	 * @param  string $template in blade path format, ex: base.header
+	 * @return boolean true/false
 	 */
 	public static function template_exists($template) {
 
@@ -50,9 +54,9 @@ class ClassyTemplate {
 	 * @param  string $type 
 	 * @return array 
 	 */
-	public static function get_query_template($type) {
+	public static function get_available_template($type) {
 
-		$templates = self::get_query_templates_list($type);
+		$templates = self::get_request_templates_list($type);
 
 		foreach ($templates as $template) {
 
@@ -69,14 +73,13 @@ class ClassyTemplate {
 	}
 
 
-
 	/**
 	 * Returns list of templates to check, based on type of request
 	 * 
 	 * @param  string $type 
 	 * @return array
 	 */
-	private static function get_query_templates_list($type) {
+	private static function get_request_templates_list($type) {
 
 		$templates = array();
 
@@ -266,37 +269,37 @@ class ClassyTemplate {
 	 */
 	public static function get_current_page() {
 
-		if ( is_404() && $template = self::get_query_template('404') ) :
+		if ( is_404() && $template = self::get_available_template('404') ) :
 
-		elseif ( is_search() && $template = self::get_query_template('search') ) :
+		elseif ( is_search() && $template = self::get_available_template('search') ) :
 
-		elseif ( is_front_page() && $template = self::get_query_template('front-page') ) :
+		elseif ( is_front_page() && $template = self::get_available_template('front-page') ) :
 
-		elseif ( is_home() && $template = self::get_query_template('home') ) :
+		elseif ( is_home() && $template = self::get_available_template('home') ) :
 
-		elseif ( is_post_type_archive() && $template = self::get_query_template('post_type_archive') ) :
+		elseif ( is_post_type_archive() && $template = self::get_available_template('post_type_archive') ) :
 
-		elseif ( is_tax() && $template = self::get_query_template('taxonomy') ) :
+		elseif ( is_tax() && $template = self::get_available_template('taxonomy') ) :
 
-		elseif ( is_attachment() && $template = self::get_query_template('attachment') ) :
+		elseif ( is_attachment() && $template = self::get_available_template('attachment') ) :
 
-		elseif ( is_single() && $template = self::get_query_template('single') ) :
+		elseif ( is_single() && $template = self::get_available_template('single') ) :
 
-		elseif ( is_page() && $template = self::get_query_template('page') ) :
+		elseif ( is_page() && $template = self::get_available_template('page') ) :
 
-		elseif ( is_singular() && $template = self::get_query_template('singular') ) :
+		elseif ( is_singular() && $template = self::get_available_template('singular') ) :
 
-		elseif ( is_category() && $template = self::get_query_template('category') ) :
+		elseif ( is_category() && $template = self::get_available_template('category') ) :
 
-		elseif ( is_tag() && $template = self::get_query_template('tag') ) :
+		elseif ( is_tag() && $template = self::get_available_template('tag') ) :
 
-		elseif ( is_author() && $template = self::get_query_template('author') ) :
+		elseif ( is_author() && $template = self::get_available_template('author') ) :
 
-		elseif ( is_date() && $template = self::get_query_template('date') ) :
+		elseif ( is_date() && $template = self::get_available_template('date') ) :
 
-		elseif ( is_archive() && $template = self::get_query_template('archive') ) :
+		elseif ( is_archive() && $template = self::get_available_template('archive') ) :
 
-		elseif ( is_paged() && $template = self::get_query_template('paged') ) :
+		elseif ( is_paged() && $template = self::get_available_template('paged') ) :
 
 		else :
 		
@@ -309,51 +312,92 @@ class ClassyTemplate {
 
 	}
 
+	/**
+	 * Modifies template path to nested that we use for our template structuring
+	 * 
+	 * @param  string $template ex: single
+	 * @return string           single.single (it will look at "single" folder and will find "single.blade.php" template)
+	 */
+	public static function get_nested_blade_path($template) {
+
+		if (preg_match('/\./', $template)) {
+
+			return $template;	
+
+		} else {
+
+			return $template . '.' . $template;
+			
+		}
+
+	}
+
 
 	/**
-	 * Returns current template, that will be used for template page render
+	 * Returns available template, based on page argument
 	 * 
 	 * @return string
 	 */
-	public static function get_current_template($current_page = null) {
+	public static function get_blade_template($page = null) {
 
-		$current_page = $current_page ? $current_page : self::get_current_page();
+		if (!$page) {
+			$page = self::get_current_page();
+		}
 
-		return self::get_query_template($current_page);
+
+		$template = self::get_available_template($page);
+
+		if ($template) {
+
+			return self::get_nested_blade_path($template);
+			
+		}
+
+		return false;
 
 	}
 
-
 	/**
-	 * Main Function to perform page render
+	 * Performs template render. 
+	 * If there is $template attribute presented, it will render requested template. 
+	 * If it's not it will try to find necessary template based on $wp_query
+	 * 
+	 * @param  string|null $template template path in blade format, ex: single, base.default, single.partials.slider and etc
+	 * @param  array|null  $data     Additional params
+	 * @return void                
 	 */
-	public static function render() {
+	public static function render($template = null, $data = null) {
 
 		$views = THEME_PATH . self::$theme_templates_folder;
 		$cache = WP_CONTENT_DIR . '/templatecache';
+		$common_scope = ClassyScope::get_common_scope();
 
-		$current_page = self::get_current_page();
+		if ($template !== null && is_string($template)) {
 
-		$template_name = self::get_current_template($current_page);
+			if ($data && is_array($data)) {
 
-		if ($template_name) {
+				$scope = array_merge($common_scope, $data);
 
-			$template = self::get_theme_template_path($template_name);
+			} else {
 
-			$scope = ClassyScope::get_scope($template_name);
-
-			if ($template) {
-
-				$renderer = new BladeRenderer($views, array('cache_path' => $cache));
-
-				echo $renderer->render($template_name . '.' . $template_name, $scope);
+				$scope = $common_scope;
 
 			}
-			
+
 		} else {
 
-			die("Can't find template for " . $current_page . " page");
+			$current_page = self::get_current_page();
+
+			$template = self::get_blade_template($current_page);
+
+			$scope = ClassyScope::get_scope($current_page);
 
 		}
+
+		$renderer = new BladeRenderer($views, array('cache_path' => $cache));
+
+		echo $renderer->render($template, $scope);
+
 	}
+	
 }
