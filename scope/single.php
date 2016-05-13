@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Data that will be accesible on archive page (index)
+ * Data that will be accesible on single post
  */
 
 $data = array(

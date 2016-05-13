@@ -1,0 +1,1 @@
+<?php Classy::render('base.comments'); ?>

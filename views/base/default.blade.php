@@ -11,9 +11,14 @@
         {{ wp_head() }}
     </head>
     <body {{ body_class() }}>
+
+        {{ get_header() }}
+
         <div class="container">
             @yield('content')
         </div>
+
+        {{ get_footer() }}
 
         {{ wp_footer() }}
     </body>
