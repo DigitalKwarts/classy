@@ -21,6 +21,12 @@ class ClassyUser extends ClassyBasis {
 	public $user_login;
 
 	/**
+	 * User full name
+	 * @var string
+	 */
+	public $name;
+
+	/**
 	 * It's basically sanitized version of user login, used for permalinks
 	 * @var string
 	 */
@@ -72,6 +78,13 @@ class ClassyUser extends ClassyBasis {
 		$object = (array) $this->get_object();
 
 		$this->import($object);
+
+		if (isset($this->first_name) && isset($this->last_name)) {
+			$this->name = $this->first_name . ' ' . $this->last_name;
+		} else {
+			$this->name = 'Anonymous';
+		}
+
 	}
 
 	/**
@@ -110,9 +123,9 @@ class ClassyUser extends ClassyBasis {
 	 * 
 	 * @return string
 	 */
-	public function full_name() {
+	public function name() {
 
-		return $this->first_name . ' ' . $this->last_name;
+		return $this->name;
 
 	}
 	
