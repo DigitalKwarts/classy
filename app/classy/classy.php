@@ -107,7 +107,12 @@ class Classy {
 
 		// Menu
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-menu.php';
+
+		// Menu Item
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-menu-item.php';
+
+		// Comment
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-comment.php';
 
 		// Appearance
 		require_once THEME_FRAMEWORK_PATH . 'appearance.php';
