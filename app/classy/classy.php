@@ -87,6 +87,9 @@ class Classy {
 	private function include_core_files() {
 		require_once THEME_PATH . 'vendor/autoload.php';
 
+		// Basis Class
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-basis.php';
+
 		// Theme Config
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
 	
@@ -101,6 +104,10 @@ class Classy {
 
 		// Query Helper
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-query-helper.php';
+
+		// Menu
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-menu.php';
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-menu-item.php';
 
 		// Appearance
 		require_once THEME_FRAMEWORK_PATH . 'appearance.php';
@@ -156,10 +163,16 @@ class Classy {
 	}
 
 	/**
-	 * Main Template Render Function
+	 * Performs template render. 
+	 * If there is $template attribute presented, it will render requested template. 
+	 * If it's not it will try to find necessary template based on $wp_query
+	 * 
+	 * @param  string|null $template template path in blade format, ex: single, base.default, single.partials.slider and etc
+	 * @param  array|null  $data     Additional params
+	 * @return void                
 	 */
-	public static function render() {
-		ClassyTemplate::render();
+	public static function render($template = null, $data = null) {
+		ClassyTemplate::render($template, $data);
 	}
 
 	/**
@@ -281,7 +294,7 @@ class Classy {
 		}
 		
 		if ( $paged < 2 ) {
-			$data['prev'] = '';
+			$data['prev'] = null;
 		}
 		
 		return ClassyHelper::array_to_object($data);
@@ -298,9 +311,7 @@ class Classy {
  * @return Classy  Singleton instance of plugin class.
  */
 function get_theme_framework() {
-	
 	return Classy::get_instance();
-
 }
 
 /**
