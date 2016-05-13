@@ -331,4 +331,42 @@ class ClassyPost extends ClassyBasis {
 		return trim($text);
 	}
 
+	/**
+	 * Returns comments array
+	 * @return array 
+	 */
+	public function get_comments($status = 'approve', $order = 'DESC') {
+
+		$_return = array();
+
+		$args = array(
+			'post_id' => $this->ID, 
+			'status' => $status, 
+			'order' => $order
+		);
+
+		$comments = get_comments($args);
+
+		foreach ($comments as $comment) {
+			
+			$_return[$comment->comment_ID] = new ClassyComment($comment);
+
+		}
+
+		foreach ($_return as $key => $comment) {
+
+			if ($comment->has_parent()) {
+
+				$_return[$comment->comment_parent]->add_child($comment);
+
+				unset($_return[$key]);
+
+			}
+
+		}
+
+		return array_values($_return);
+
+	}
+
 }
