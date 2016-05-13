@@ -1,5 +1,9 @@
 ![alt tag](http://i.imgur.com/2TgPJNk.png)
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/anrw/classy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/anrw/classy/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/anrw/classy/badges/build.png?b=master)](https://scrutinizer-ci.com/g/anrw/classy/build-status/master)
+
+
 Classy is a framework for building wordpress themes, based on [Blade](https://laravel.com/docs/5.1/blade) template engine. It's fast with beautiful architecture that allows you to write less code and focus more on project itself. It doesn't provide frontend boilerplate, since every project needs its own, instead it handles all architecture, providing an elegant way to separate logic from view.
 
 ### Why Blade?
@@ -8,7 +12,7 @@ Blade is the simple, yet powerful templating engine provided with Laravel. Unlik
 
 ##### Code example:
 
-```blade
+```html
 @extends('basic')
 
 @section('content')
