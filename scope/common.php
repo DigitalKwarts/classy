@@ -5,5 +5,6 @@
  */
 
 $data = array(
+	'menu' => new ClassyMenu(),
 	'foo' => 'bar'
 );
