@@ -7,6 +7,8 @@
  */
 class ClassyScope {
 
+	protected static $common = null;
+
 	/**
 	 * Returns basic scope
 	 * 
@@ -50,8 +52,14 @@ class ClassyScope {
 	 * @return array
 	 */
 	public static function get_common_scope() {
+		
+		if ( null === self::$common ) {
 
-		return self::require_scope('common');
+			self::$common = self::require_scope('common');
+
+		}
+
+		return self::$common;
 
 	}
 
@@ -69,7 +77,7 @@ class ClassyScope {
 
 		if ( file_exists($file) ) {
 
-			require_once $file;
+			require $file;
 			
 		}
 
