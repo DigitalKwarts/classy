@@ -2,6 +2,12 @@
 
 class ClassyQueryHelper {
 
+	/**
+	 * Finds or creates new query based on provided params
+	 * 
+	 * @param  array/boolean $args
+	 * @return object        WP_Query
+	 */
 	public static function find_query($args = false) {
 
 		$default_args = array('fields' => 'ids');
@@ -23,6 +29,11 @@ class ClassyQueryHelper {
 		}
 	}
 
+	/**
+	 * Returns current WP_Query
+	 * 
+	 * @return object WP_Query
+	 */
 	public static function get_current_query() {
 
         global $wp_query;
@@ -35,6 +46,12 @@ class ClassyQueryHelper {
 
 	}
 
+	/**
+	 * Checks and returns WP_Query for home posts page
+	 * 
+	 * @param  object $query WP_Query
+	 * @return object        WP_Query
+	 */
     private static function handle_maybe_custom_posts_page( $query ) {
 
     	if ($custom_posts_page = get_option('page_for_posts')) {

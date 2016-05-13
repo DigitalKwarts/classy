@@ -6,6 +6,12 @@
 
 class ClassyBasis {
 
+    /**
+     * Imports data params into the class instance
+     * 
+     * @param  object/array $data
+     * @return void
+     */
 	protected function import($data) {
 
         if ( is_object( $data ) ) {

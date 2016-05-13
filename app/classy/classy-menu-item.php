@@ -6,64 +6,127 @@
 
 class ClassyMenuItem extends ClassyBasis {
 
-	public $children = array();
+	/**
+	 * Children
+	 * @var array
+	 */
+	protected $children = array();
 
-	public $classes = array();
+	/**
+	 * CSS Classes
+	 * @var array
+	 */
+	protected $classes = array();
 
-	public $has_child_class = false;
+	/**
+	 * If item has child
+	 * @var boolean
+	 */
+	protected $has_child = false;
 
+	/**
+	 * Nesting level
+	 * @var integer
+	 */
 	public $level = 0;
 	
+	/**
+	 * Item title
+	 * @var string
+	 */
 	public $title;
 
+	/**
+	 * Checks if provided arg is instance of WP_Post and inits it
+	 * 
+	 * @param WP_Post $item
+	 */
 	public function __construct($item) {
 
 		if (is_a($item, 'WP_Post')) {
 
 			$this->import($item);
-			$this->import_classes($item);
+			$this->filter_classes();
 			
 		}
 
 	}
 
+	/**
+	 * Returns item title
+	 * 
+	 * @return string
+	 */
 	public function get_title() {
 
 		return $this->title;
 
 	}
 
+	/**
+	 * Returns item slug
+	 * 
+	 * @return string
+	 */
 	public function get_slug() {
 
 		return $this->post_name;
 
 	}
 
+	/**
+	 * Returns item link (url)
+	 * 
+	 * @return string
+	 */
 	public function get_link() {
 
 		return $this->url;
 
 	}
 
+	/**
+	 * Retuns item children, if there are any
+	 * 
+	 * @return array
+	 */
 	public function get_children() {
 
 		return $this->children;
 
 	}
 
+	/**
+	 * Returns menu item classes
+	 * @return string
+	 */
+	public function get_classes() {
 
-	public function add_class($class_name) {
-		
-		$this->classes[] = $class_name;
-		$this->class .= ' ' . $class_name;
+		return implode(' ', $this->classes);
 
 	}
 
+	/**
+	 * Adds css class to classes array
+	 * 
+	 * @param string $class_name
+	 */
+	public function add_class($class_name) {
+		
+		$this->classes[] = $class_name;
+
+	}
+
+	/**
+	 * Adds child to current ClassyMenuItem
+	 * 
+	 * @param ClassyMenuItem $item 
+	 */
 	public function add_child($item) {
 
-		if ( !$this->has_child_class ) {
+		if ( !$this->has_child ) {
 			$this->add_class( 'menu-item-has-children' );
-			$this->has_child_class = true;
+			$this->has_child = true;
 		}
 
 		if ( !isset( $this->children ) ) {
@@ -79,19 +142,22 @@ class ClassyMenuItem extends ClassyBasis {
 
 	}
 
-	protected function import_classes( $data ) {
-	
-		if ( is_array($data) ) {
-			$data = (object) $data;
-		}
-	
-		$this->classes = array_merge( $this->classes, $data->classes );
-		$this->classes = array_unique( $this->classes );
+	/**
+	 * Applies filters for item classes
+	 * 
+	 * @return void
+	 */
+	protected function filter_classes() {
+
 		$this->classes = apply_filters( 'nav_menu_css_class', $this->classes, $this );
 	
 	}
 
-
+	/**
+	 * Updates children nesting level param
+	 * 
+	 * @return boolean
+	 */
 	protected function update_child_levels() {
 
 		if (is_array($this->children)) {
@@ -104,6 +170,8 @@ class ClassyMenuItem extends ClassyBasis {
 			return true;
 		
 		}
+
+		return false;
 
 	}
 

@@ -6,10 +6,23 @@
 
 class ClassyMenu {
 
+	/**
+	 * Menu ID
+	 * @var int
+	 */
 	public $ID;
 
-	public $items;
+	/**
+	 * Items
+	 * @var array
+	 */
+	protected $items;
 
+	/**
+	 * Main constructor. Tries to find menu id based on provided arg (or not) and inits menu
+	 * 
+	 * @param string $arg it can be menu id, slug or full name
+	 */
 	public function __construct($arg = null) {
 
 		if (is_numeric($arg) && $arg != 0) {
@@ -38,6 +51,11 @@ class ClassyMenu {
 
 	}
 
+	/**
+	 * Inits menu
+	 * 
+	 * @return void
+	 */
 	protected function init() {
 
 		$_return = array();
@@ -67,6 +85,11 @@ class ClassyMenu {
 
 	}
 
+	/**
+	 * Retuns first menu id or false if there are no menus
+	 * 
+	 * @return int
+	 */
 	protected function get_first_menu_id() {
 
 		$menus = get_terms('nav_menu', array('hide_empty' => true));
@@ -85,7 +108,12 @@ class ClassyMenu {
 
 	}
 
-
+	/**
+	 * Checks if the provided menu id exists
+	 * 
+	 * @param  int $menu_id 
+	 * @return int/boolean          
+	 */
 	protected function check_menu_id($menu_id) {
 
 		$menus = get_terms('nav_menu', array('hide_empty' => true));
@@ -108,9 +136,15 @@ class ClassyMenu {
 
 	}
 
-	protected function get_menu_id_by_name($slug = 0) {
+	/**
+	 * Returns menu id by menu name/slug
+	 * 
+	 * @param  string $slug 
+	 * @return int
+	 */
+	protected function get_menu_id_by_name($slug = null) {
 
-		if (is_string($slug) && !is_numeric($slug)) {
+		if ($slug && is_string($slug)) {
 			
 			$menu_id = get_term_by('slug', $slug, 'nav_menu');
 
@@ -126,6 +160,11 @@ class ClassyMenu {
 	
 	}
 
+	/**
+	 * Returns menu items
+	 * 
+	 * @return array
+	 */
 	public function get_items() {
 
 		return $this->items;
