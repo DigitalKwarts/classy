@@ -1,6 +1,6 @@
 <?php 
 
-class ClassyUser {
+class ClassyUser extends ClassyBasis {
 
 	/**
 	 * Current user id
@@ -71,9 +71,7 @@ class ClassyUser {
 	private function init() {
 		$object = (array) $this->get_object();
 
-		foreach ($object['data'] as $key => $value) {
-			$this->$key = $value;
-		}
+		$this->import($object);
 	}
 
 	/**

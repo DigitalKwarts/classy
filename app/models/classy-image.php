@@ -1,6 +1,6 @@
 <?php 
 
-class ClassyImage {
+class ClassyImage extends ClassyBasis {
 
 	/**
 	 * Current image id

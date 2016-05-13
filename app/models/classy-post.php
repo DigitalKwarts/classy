@@ -1,6 +1,6 @@
 <?php 
 
-class ClassyPost {
+class ClassyPost extends ClassyBasis {
 
 	/**
 	 * Current post id
@@ -89,9 +89,7 @@ class ClassyPost {
 	protected function init() {
 		$object = (array) $this->get_object();
 
-		foreach ($object as $key => $value) {
-			$this->$key = $value;
-		}
+		$this->import($object);
 	}
 
 	/**
