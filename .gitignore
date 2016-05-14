@@ -27,4 +27,4 @@ logs
 node_modules
 
 # Framework dependencies
-framework/vendor
+vendor
