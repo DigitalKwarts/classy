@@ -56,6 +56,16 @@ class ClassyTemplate {
 	 */
 	public static function get_available_template($type) {
 
+		// Classy template?
+
+		if ( $template = self::get_classy_template() ) {
+		
+			return $template;
+		
+		}
+
+		// Else try to find template based on request
+
 		$templates = self::get_request_templates_list($type);
 
 		foreach ($templates as $template) {
@@ -261,6 +271,33 @@ class ClassyTemplate {
 
 	}
 
+	/**
+	 * Checks if this is classy custom template
+	 * 
+	 * @return boolean
+	 */
+	public static function is_classy_template() {
+
+		return self::get_classy_template() ? true : false;
+	}
+
+	/**
+	 * Returns classy template name or boolean if this is not classy template
+	 * 
+	 * @return mixed
+	 */
+	public static function get_classy_template() {
+
+		$template_slug = get_page_template_slug();
+
+		preg_match('/classy\-(.*)/', $template_slug, $matches);
+
+		if ( $matches && isset($matches[1]) ) return $matches[1];
+
+		return false;
+
+	}
+
 
 	/**
 	 * Returns current page template slug
@@ -344,7 +381,6 @@ class ClassyTemplate {
 			$page = self::get_current_page();
 		}
 
-
 		$template = self::get_available_template($page);
 
 		if ($template) {
@@ -400,4 +436,37 @@ class ClassyTemplate {
 
 	}
 	
+	/**
+	 * Returns list of theme page templates
+	 * 
+	 * @return array
+	 */
+	public static function get_page_templates_list() {
+
+		$templates = array();
+		
+	    $files = (array) glob( THEME_PATH . '/' . self::$theme_templates_folder . '/*/*.blade.php' );
+
+		foreach ( $files as $filename ) {
+			
+			if ( !empty($filename) ) {
+
+				if ( ! preg_match( '/\{\{\-\-\s*Template Name:(.*)\s*\-\-\}\}/mi', file_get_contents( $filename ), $header ) ) continue;
+
+				$template_name = trim($header[1]);
+
+				preg_match('/\/([^\/]*)\.blade.php$/is', $filename, $filename_match);
+
+				$template_file = 'classy-' . $filename_match[1];
+
+				$templates[$template_file] = $template_name;
+				
+			}
+
+		}
+
+		return $templates;
+
+	}
+
 }

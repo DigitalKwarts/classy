@@ -47,6 +47,8 @@ class Classy {
 		$this->include_models();
 
 		$this->init_config();
+
+		add_filter('theme_page_templates', array($this, 'filter_templates'), 3);
 	}
 
 	/**
@@ -140,6 +142,20 @@ class Classy {
 	 */
 	private function init_config() {
 		$this->config = ClassyConfig::init();
+	}
+
+	/**
+	 * Filters registed templates and ads custom theme templates
+	 * 
+	 * @return array
+	 */
+	
+	public function filter_templates($page_templates = array(), $object = null, $post = null) {
+
+		$custom_templates = ClassyTemplate::get_page_templates_list(); 
+
+		return array_merge($page_templates, $custom_templates);
+
 	}
 
 	/**
