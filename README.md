@@ -13,15 +13,18 @@ Blade is the simple, yet powerful templating engine provided with Laravel. Unlik
 ##### Code example:
 
 ```html
-@extends('basic')
+@extends('layout.default')
 
 @section('content')
-	<h1 class="big-title">{{ $foo }}</h1>
-	<h2 class="post-title">{{ $post.title() }}</h2>
-	<img src="{{ $post.thumbnail('large') }}" />
-	<div class="body">
-		{{ post.content() }}
-	</div>
+	@if ($post)
+		<article>
+			<h1>{{ $post->title() }}</h1>
+			
+			<section class="body">
+				{{ $post->content() }}
+			</section>
+		</article>
+	@endif
 @stop
 ```
 
