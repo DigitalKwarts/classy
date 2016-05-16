@@ -1,1 +1,1 @@
-<?php Classy::render('base.footer'); ?>
+<?php Classy::render('layout.footer'); ?>

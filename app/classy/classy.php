@@ -1,5 +1,8 @@
 <?php 
 
+use Windwalker\Renderer\BladeRenderer;
+
+
 /**
  * The core theme class.
  *
@@ -25,11 +28,15 @@ class Classy {
 	 * @return Classy A single instance of this class.
 	 */
 	public static function get_instance() {
+		
 		if ( null === self::$single_instance ) {
+		
 			self::$single_instance = new self();
+		
 		}
 
 		return self::$single_instance;
+
 	}
 
 	/**
@@ -40,6 +47,7 @@ class Classy {
 	 * @since    1.0.0
 	 */
 	protected function __construct() {
+		
 		$this->define_constants();
 
 		$this->include_core_files();
@@ -49,6 +57,7 @@ class Classy {
 		$this->init_config();
 
 		add_filter('theme_page_templates', array($this, 'filter_templates'), 3);
+
 	}
 
 	/**
@@ -58,11 +67,13 @@ class Classy {
 	 * @param  string
 	 */
 	private function define( $name, $value ) {
+		
 		if ( !defined($name) ) {
 			
 			define( $name, $value );
 
 		}
+
 	}
 
 	/**
@@ -72,6 +83,7 @@ class Classy {
 	 * @access   private
 	 */
 	private function define_constants() {
+
 		$theme = wp_get_theme();
 
 		$this->define( 'THEME', $theme->template );
@@ -81,16 +93,21 @@ class Classy {
 		$this->define( 'THEME_VERSION', $theme->get('Version') );
 		$this->define( 'THEME_FRAMEWORK_PATH', THEME_PATH . 'app/' );
 		$this->define( 'THEME_FRAMEWORK_DIR', THEME_DIR . 'app/' );
+
 	}
 
 	/**
 	 * Include core files that are responsible for theme render
 	 */
 	private function include_core_files() {
+
 		require_once THEME_PATH . 'vendor/autoload.php';
 
 		// Basis Class
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-basis.php';
+
+		// Hierarchy
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-hierarchy.php';
 
 		// Theme Config
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
@@ -118,12 +135,14 @@ class Classy {
 
 		// Appearance
 		require_once THEME_FRAMEWORK_PATH . 'appearance.php';
+
 	}
 
 	/**
 	 * Include theme Object-Orienter models
 	 */
 	private function include_models() {
+
 		$files = (array) glob( THEME_FRAMEWORK_PATH . '/models/*.php' );
 
 		foreach ( $files as $filename ) {
@@ -135,13 +154,16 @@ class Classy {
 			}
 
 		}
+
 	}
 
 	/**
 	 * Init Theme Configuration
 	 */
 	private function init_config() {
+
 		$this->config = ClassyConfig::init();
+
 	}
 
 	/**
@@ -165,11 +187,13 @@ class Classy {
 	 * @return any
 	 */
 	public static function get_config_var($name) {
+
 		$vars = ClassyConfig::get_vars();
 
 		if (isset($vars[$name])) return $vars[$name];
 
 		return false;
+
 	}
 
 	/**
@@ -178,9 +202,11 @@ class Classy {
 	 * @return string
 	 */
 	public static function textdomain() {
+
 		$textdomain = Classy::get_config_var('textdomain');
 
 		return $textdomain ? $textdomain : THEME;
+
 	}
 
 	/**
@@ -188,12 +214,40 @@ class Classy {
 	 * If there is $template attribute presented, it will render requested template. 
 	 * If it's not it will try to find necessary template based on $wp_query
 	 * 
-	 * @param  string|null $template template path in blade format, ex: single, base.default, single.partials.slider and etc
+	 * @param  string|null $template template path in blade format, ex: single, layout.default, single.partials.slider and etc
 	 * @param  array|null  $data     Additional params
 	 * @return void                
 	 */
 	public static function render($template = null, $data = null) {
-		ClassyTemplate::render($template, $data);
+		
+		$views = THEME_PATH . ClassyTemplate::$folder;
+		$cache = WP_CONTENT_DIR . '/templatecache';
+		$common_scope = ClassyScope::get_common_scope();
+
+		if ($template !== null && is_string($template)) {
+
+			if ($data && is_array($data)) {
+
+				$scope = array_merge($common_scope, $data);
+
+			} else {
+
+				$scope = $common_scope;
+
+			}
+
+		} else {
+
+			$template = ClassyTemplate::get_template();
+
+			$scope = ClassyScope::get_scope();
+
+		}
+
+		$renderer = new BladeRenderer($views, array('cache_path' => $cache));
+
+		echo $renderer->render($template, $scope);
+
 	}
 
 	/**
@@ -204,7 +258,9 @@ class Classy {
 	 * @return string
 	 */
 	public static function archives_title() {
+		
 		return ClassyHelper::get_archives_title();
+
 	}
 
 
@@ -216,6 +272,7 @@ class Classy {
 	 * @return mixed               
 	 */
 	public static function get_posts($args = false, $return_type = 'ClassyPost') {
+
 		$_return = array();
 
 		$query = ClassyQueryHelper::find_query($args);
@@ -253,11 +310,13 @@ class Classy {
 	 * @return mixed               
 	 */
 	public static function get_post($args = false, $return_type = 'ClassyPost') {
+
 		$posts = self::get_posts($args, $return_type);
 
 		if ( $post = reset($posts ) ) {
 			return $post;
 		}
+
 	}
 
 	/**
@@ -265,6 +324,7 @@ class Classy {
 	 * @return array mixed
 	 */
 	public static function get_pagination( $prefs = array() ) {
+
 		global $wp_query;
 		global $paged;
 		global $wp_rewrite;
@@ -319,6 +379,7 @@ class Classy {
 		}
 		
 		return ClassyHelper::array_to_object($data);
+
 	}
 
 }
@@ -332,7 +393,9 @@ class Classy {
  * @return Classy  Singleton instance of plugin class.
  */
 function get_theme_framework() {
+
 	return Classy::get_instance();
+	
 }
 
 /**

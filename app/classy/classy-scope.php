@@ -9,21 +9,29 @@ class ClassyScope {
 
 	protected static $common = null;
 
+	public static $folder = 'scope';
+
 	/**
-	 * Returns basic scope
+	 * Returns request scope
 	 * 
 	 * @return array
 	 */
 	public static function get_scope($template_name = null) {
 
-		global $paged;
-
 		$scope = self::require_scope('common');
 
-		if ($template_name) {
+		if (is_string($template_name)) {
 
 			$scope = self::extend_scope($scope, $template_name);
 			
+		} else {
+
+			$request = ClassyHierarchy::get_current_request();
+
+			$file = ClassyHierarchy::get_available_file('scope', $request);
+
+			$scope = self::extend_scope($scope, $file);
+
 		}
 
 

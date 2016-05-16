@@ -22,12 +22,10 @@ $environment = 'production';
 /**
  * Theme Post types
  * 
- * @link https://github.com/anrw/classy/wiki/Creating-custom-post-types
+ * @link https://github.com/anrw/classy/wiki/Custom-post-types
  * @var array
  */
-$post_types = array(
-
-);
+$post_types = array();
 
 /**
  * Theme Taxonomies

@@ -245,6 +245,8 @@ class ClassyHelper {
 	 */
 	public static function get_archives_title() {
 
+		$textdomain = Classy::textdomain();
+
 	    $archives_title = '';
 
 	    if ( is_category() ) {
@@ -268,7 +270,7 @@ class ClassyHelper {
 
 	    } else if ( is_search() ) {
 
-	        $archives_title = sprintf( __( 'Search Results for: %s', 'flotheme' ), '<span>' . get_search_query() . '</span>' );
+	        $archives_title = sprintf( __( 'Search Results for: %s', $textdomain ), '<span>' . get_search_query() . '</span>' );
 	    
 	    } else if ( is_archive() ) {
 	        
@@ -278,11 +280,11 @@ class ClassyHelper {
 	        
 	        } elseif ( is_month() ) {
 	        
-	            $archives_title = get_the_date( _x( 'F Y', 'monthly archives date format', 'flotheme'));
+	            $archives_title = get_the_date( _x( 'F Y', 'monthly archives date format', $textdomain ));
 	        
 	        } elseif ( is_year() ) {
 	        
-	            $archives_title = get_the_date( _x( 'Y', 'yearly archives date format', 'flotheme'));
+	            $archives_title = get_the_date( _x( 'Y', 'yearly archives date format', $textdomain ));
 	        
 	        } else {
 	        

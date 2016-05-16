@@ -1,4 +1,4 @@
-@extends('basic')
+@extends('layout.default')
 
 @section('content')
 	<h1>404</h1>

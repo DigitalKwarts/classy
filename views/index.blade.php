@@ -1,17 +1,18 @@
-@extends('base.default')
+@extends('layout.default')
 
 @section('content')
-	<h1>{{ $page_title }}</h1>
 
-	@forelse ($posts as $post)
-		<article>
-			<h3><a href="{{ $post->permalink() }}">{{ $post->title() }}</a></h3>
-		</article>
-	@empty
-		<p>No posts</p>
-	@endforelse
+	@if (isset($posts))
+		@forelse ($posts as $post)
+			<article>
+				<h3><a href="{{ $post->permalink() }}">{{ $post->title() }}</a></h3>
+			</article>
+		@empty
+			<p>No posts</p>
+		@endforelse
+	@endif
 
-	@if ($pagination)
+	@if (isset($pagination))
 		<div class="pagination">
 			@if (isset($pagination->prev))
 				<a href="{{ $pagination->prev->link }}" class="prev {{ $pagination->prev->link }}">Prev</a>

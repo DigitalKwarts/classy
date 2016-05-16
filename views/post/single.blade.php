@@ -1,4 +1,4 @@
-@extends('base.default')
+@extends('layout.default')
 
 @section('content')
 	@if ($post)

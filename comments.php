@@ -4,4 +4,4 @@ global $post;
 
 $classypost = new ClassyPost($post->ID);
 
-Classy::render('base.comments', array('post' => $classypost));
+Classy::render('layout.comments', array('post' => $classypost));

@@ -1,7 +1,7 @@
 {{-- This is an example of how page templates can be created. --}}
 {{-- Template Name: Example --}}
 
-@extends('base.default')
+@extends('layout.default')
 
 @section('content')
 	@if ($post)
