@@ -115,8 +115,8 @@ class Classy {
 		// Scope
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
 
-		// Template Loader
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-template.php';
+		// View Loader
+		require_once THEME_FRAMEWORK_PATH . 'classy/classy-view.php';
 
 		// Helper functions
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-helper.php';
@@ -174,7 +174,7 @@ class Classy {
 	
 	public function filter_templates($page_templates = array(), $object = null, $post = null) {
 
-		$custom_templates = ClassyTemplate::get_page_templates_list(); 
+		$custom_templates = ClassyView::get_page_templates_list(); 
 
 		return array_merge($page_templates, $custom_templates);
 
@@ -220,7 +220,7 @@ class Classy {
 	 */
 	public static function render($template = null, $data = null) {
 		
-		$views = THEME_PATH . ClassyTemplate::$folder;
+		$views = THEME_PATH . ClassyView::$folder;
 		$cache = WP_CONTENT_DIR . '/templatecache';
 		$common_scope = ClassyScope::get_common_scope();
 
@@ -238,7 +238,7 @@ class Classy {
 
 		} else {
 
-			$template = ClassyTemplate::get_template();
+			$template = ClassyView::get_template();
 
 			$scope = ClassyScope::get_scope();
 

@@ -37,7 +37,7 @@ The biggest problem with wordpress theme development is that you always need to 
 
 ### How it works?
 
-`ClassyTemplate` repeats the wordpress template hierarchy and uses it separately for scopes and templates. This allows to use the same scope with different templates and different scopes with the same template.
+`ClassyView` and `ClassyScope` repeat the Wordpress template hierarchy, however they do it independently. This allows to use the same scope with different templates and different scopes with the same template.
 
 ## Example of project structure
 ![alt tag](http://i.imgur.com/7BUl5lR.png)

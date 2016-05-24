@@ -1,11 +1,11 @@
 <?php 
 
 /**
- * Template Loader
+ * View Loader
  *
  * Loads the corresponding template based on request
  */
-class ClassyTemplate {
+class ClassyView {
 
 	/**
 	 * Theme twig templates folder

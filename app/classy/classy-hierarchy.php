@@ -92,7 +92,7 @@ class ClassyHierarchy {
 
 		if ($type == 'template') {
 
-			$folder = ClassyTemplate::$folder;
+			$folder = ClassyView::$folder;
 
 			return THEME_PATH . $folder . '/' . $template . '.blade.php';			
 		
