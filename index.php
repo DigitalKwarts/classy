@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * The main template file
+ * The main view file
  *
  * @package 	WordPress
  */
