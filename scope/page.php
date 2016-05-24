@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Data that will be accesible on page template
+ * Data that will be accesible on every page view. In case some other templates don't overwrite it with their own scope.
  */
 
 $data = array(
