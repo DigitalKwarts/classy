@@ -15,11 +15,11 @@ class ClassyView {
 	public static $folder = 'views';
 
 	/**
-	 * Returns template to show based on request value
+	 * Returns view name to show based on request value
 	 * 
 	 * @return string
 	 */
-	public static function get_template() {
+	public static function get_view() {
 
 		$request = ClassyHierarchy::get_current_request();
 

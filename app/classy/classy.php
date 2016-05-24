@@ -238,7 +238,7 @@ class Classy {
 
 		} else {
 
-			$template = ClassyView::get_template();
+			$template = ClassyView::get_view();
 
 			$scope = ClassyScope::get_scope();
 
