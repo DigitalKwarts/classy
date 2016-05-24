@@ -1,4 +1,4 @@
-{{-- This is an example of how page templates can be created. --}}
+{{-- This is an example of how page templates can be registered. --}}
 {{-- Template Name: Example --}}
 
 @extends('layout.default')
