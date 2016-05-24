@@ -54,7 +54,7 @@ class ClassyView {
 
 		$templates = array();
 		
-	    $files = (array) glob( THEME_PATH . '/' . self::$folder . '/*/*.blade.php' );
+		$files = (array) glob( THEME_PATH . '/' . self::$folder . '/*/*.blade.php' );
 
 		foreach ( $files as $filename ) {
 			
