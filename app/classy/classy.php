@@ -210,21 +210,21 @@ class Classy {
 	}
 
 	/**
-	 * Performs template render. 
-	 * If there is $template attribute presented, it will render requested template. 
-	 * If it's not it will try to find necessary template based on $wp_query
+	 * Performs view render. 
+	 * If there is $view attribute presented, it will render requested view. 
+	 * If it's not it will try to find necessary view based on $wp_query
 	 * 
-	 * @param  string|null $template template path in blade format, ex: single, layout.default, single.partials.slider and etc
+	 * @param  string|null $view view path in blade format, ex: single, layout.default, single.partials.slider and etc
 	 * @param  array|null  $data     Additional params
 	 * @return void                
 	 */
-	public static function render($template = null, $data = null) {
+	public static function render($view = null, $data = null) {
 		
 		$views = THEME_PATH . ClassyView::$folder;
-		$cache = WP_CONTENT_DIR . '/templatecache';
+		$cache = WP_CONTENT_DIR . '/viewcache';
 		$common_scope = ClassyScope::get_common_scope();
 
-		if ($template !== null && is_string($template)) {
+		if ($view !== null && is_string($view)) {
 
 			if ($data && is_array($data)) {
 
@@ -238,7 +238,7 @@ class Classy {
 
 		} else {
 
-			$template = ClassyView::get_view();
+			$view = ClassyView::get_view();
 
 			$scope = ClassyScope::get_scope();
 
@@ -246,7 +246,7 @@ class Classy {
 
 		$renderer = new BladeRenderer($views, array('cache_path' => $cache));
 
-		echo $renderer->render($template, $scope);
+		echo $renderer->render($view, $scope);
 
 	}
 

@@ -8,7 +8,7 @@
 class ClassyView {
 
 	/**
-	 * Theme twig templates folder
+	 * Views folder
 	 * 
 	 * @var string
 	 */
@@ -23,11 +23,11 @@ class ClassyView {
 
 		$request = ClassyHierarchy::get_current_request();
 
-		$file = ClassyHierarchy::get_available_file('template', $request);
+		$file = ClassyHierarchy::get_available_file('view', $request);
 
-		$template = self::get_blade_template($file);
+		$view = self::get_blade_view($file);
 
-		return $template;
+		return $view;
 
 	}
 
@@ -35,12 +35,12 @@ class ClassyView {
 	/**
 	 * Replaces all slashes with dots
 	 * 
-	 * @param  string $template
+	 * @param  string $view
 	 * @return string           
 	 */
-	public static function get_blade_template($template) {
+	public static function get_blade_view($view) {
 
-		return str_replace('/', '.', $template);
+		return str_replace('/', '.', $view);
 
 	}
 

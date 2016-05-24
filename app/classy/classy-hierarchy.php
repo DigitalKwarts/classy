@@ -84,23 +84,23 @@ class ClassyHierarchy {
 	/**
 	 * Returns file's absolute path
 	 * 
-	 * @param  string $type     template/scope
-	 * @param  string $template path to template ex: "post/archive"
+	 * @param  string $type     view/scope
+	 * @param  string $view path to view ex: "post/archive"
 	 * @return string           full fule path
 	 */
-	public static function get_file_path($type = 'template', $template) {
+	public static function get_file_path($type = 'view', $view) {
 
-		if ($type == 'template') {
+		if ($type == 'view') {
 
 			$folder = ClassyView::$folder;
 
-			return THEME_PATH . $folder . '/' . $template . '.blade.php';			
+			return THEME_PATH . $folder . '/' . $view . '.blade.php';			
 		
 		} elseif ($type == 'scope') {
 
 			$folder = ClassyScope::$folder;
 
-			return THEME_PATH . $folder . '/' . $template . '.php';			
+			return THEME_PATH . $folder . '/' . $view . '.php';			
 
 		}
 
@@ -108,13 +108,13 @@ class ClassyHierarchy {
 
 
 	/**
-	 * Checks if template exists
+	 * Checks if view exists
 	 * 
-	 * @param  string $type template/scope
-	 * @param  string $template in blade path format, ex: layout/header
+	 * @param  string $type view/scope
+	 * @param  string $view in blade path format, ex: layout/header
 	 * @return boolean true/false
 	 */
-	public static function file_exists($type = 'template', $file) {
+	public static function file_exists($type = 'view', $file) {
 
 		$file = str_replace('.', '/', $file);
 
@@ -126,21 +126,21 @@ class ClassyHierarchy {
 
 
 	/**
-	 * Returns template name for render, based on type of request
+	 * Returns view name for render, based on type of request
 	 *
-	 * @param  string $type template/scope
+	 * @param  string $type view/scope
 	 * @param  string $type 
 	 * @return array 
 	 */
-	public static function get_available_file($type = 'template', $page) {
+	public static function get_available_file($type = 'view', $page) {
 
-		$templates = self::get_request_templates_list($page);
+		$views = self::get_request_hierarchy_list($page);
 
-		foreach ($templates as $template) {
+		foreach ($views as $view) {
 
-			if ( self::file_exists($type, $template) ):
+			if ( self::file_exists($type, $view) ):
 
-				return $template;
+				return $view;
 
 			endif;
 
@@ -152,20 +152,20 @@ class ClassyHierarchy {
 
 
 	/**
-	 * Returns list of templates to check, based on type of request
+	 * Returns list of filenames to check, based on type of request
 	 * 
 	 * @param  string $type 
 	 * @return array
 	 */
-	private static function get_request_templates_list($type) {
+	private static function get_request_hierarchy_list($type) {
 
-		$templates = array();
+		$views = array();
 
 		// Home
 
 		if ( $type == 'home' ) :
 
-			$templates[] = 'home';
+			$views[] = 'home';
 
 		// Single
 
@@ -173,9 +173,9 @@ class ClassyHierarchy {
 
 			$post_type = get_post_type();
 
-			$templates[] = $post_type . '.single';
+			$views[] = $post_type . '.single';
 
-			$templates[] = 'single';
+			$views[] = 'single';
 
 		// Post type
 
@@ -183,9 +183,9 @@ class ClassyHierarchy {
 
 			$post_type = get_post_type();
 
-			$templates[] = $post_type . '.archive';
+			$views[] = $post_type . '.archive';
 
-			$templates[] = 'archive';
+			$views[] = 'archive';
 
 
 		// Taxonomy
@@ -198,14 +198,14 @@ class ClassyHierarchy {
 				
 				$taxonomy = $term->taxonomy;
 
-				$templates[] = "taxonomy.$taxonomy-{$term->slug}";
-				$templates[] = "taxonomy.$taxonomy";
+				$views[] = "taxonomy.$taxonomy-{$term->slug}";
+				$views[] = "taxonomy.$taxonomy";
 
 			}
 
-			$templates[] = 'taxonomy.taxonomy';
+			$views[] = 'taxonomy.taxonomy';
 
-			$templates[] = 'taxonomy';
+			$views[] = 'taxonomy';
 
 		// Category
 
@@ -214,13 +214,13 @@ class ClassyHierarchy {
 			$category = get_queried_object();
 
 			if ( ! empty( $category->slug ) ) {
-				$templates[] = "category.{$category->slug}";
-				$templates[] = "category.{$category->term_id}";
+				$views[] = "category.{$category->slug}";
+				$views[] = "category.{$category->term_id}";
 			}
 
-			$templates[] = 'category.category';
+			$views[] = 'category.category';
 
-			$templates[] = 'category';
+			$views[] = 'category';
 
 
 		// Attachment
@@ -242,21 +242,21 @@ class ClassyHierarchy {
 				}
 
 				if ( ! empty( $subtype ) ) {
-					$templates[] = "attachment.{$type}.{$subtype}";
-					$templates[] = "attachment.{$subtype}";
+					$views[] = "attachment.{$type}.{$subtype}";
+					$views[] = "attachment.{$subtype}";
 
-					$templates[] = "{$type}.{$subtype}";
-					$templates[] = "{$subtype}";
+					$views[] = "{$type}.{$subtype}";
+					$views[] = "{$subtype}";
 				}
 
-				$templates[] = "attachment.{$type}";
-				$templates[] = "{$type}";
+				$views[] = "attachment.{$type}";
+				$views[] = "{$type}";
 
 			}
 
-			$templates[] = 'attachment.attachment';
+			$views[] = 'attachment.attachment';
 
-			$templates[] = 'attachment';
+			$views[] = 'attachment';
 
 
 		// Tag
@@ -266,15 +266,15 @@ class ClassyHierarchy {
 			$tag = get_queried_object();
 
 			if ( ! empty( $tag->slug ) ) {
-				$templates[] = "post.tag.{$tag->slug}";
-				$templates[] = "post.tag.{$tag->term_id}";
+				$views[] = "post.tag.{$tag->slug}";
+				$views[] = "post.tag.{$tag->term_id}";
 
-				$templates[] = "tag.{$tag->slug}";
-				$templates[] = "tag.{$tag->term_id}";
+				$views[] = "tag.{$tag->slug}";
+				$views[] = "tag.{$tag->term_id}";
 			}
-			$templates[] = 'post.tag';
+			$views[] = 'post.tag';
 
-			$templates[] = 'tag';
+			$views[] = 'tag';
 
 
 		// Author
@@ -284,29 +284,29 @@ class ClassyHierarchy {
 			$author = get_queried_object();
 
 			if ( $author instanceof WP_User ) {
-				$templates[] = "post.author.{$author->user_nicename}";
-				$templates[] = "post.author.{$author->ID}";
+				$views[] = "post.author.{$author->user_nicename}";
+				$views[] = "post.author.{$author->ID}";
 
-				$templates[] = "author.{$author->user_nicename}";
-				$templates[] = "author.{$author->ID}";
+				$views[] = "author.{$author->user_nicename}";
+				$views[] = "author.{$author->ID}";
 			}
 
-			$templates[] = 'post.author';
+			$views[] = 'post.author';
 
-			$templates[] = 'author';
+			$views[] = 'author';
 
 
 		// Front Page
 
 		elseif ( $type == 'front-page' ):
 
-			$templates[] = 'front-page.front-page';
-			$templates[] = 'front-page';
+			$views[] = 'front-page.front-page';
+			$views[] = 'front-page';
 			
-			$templates[] = 'home.home';
-			$templates[] = 'home';
+			$views[] = 'home.home';
+			$views[] = 'home';
 
-			$templates = array_merge($templates, self::get_request_templates_list('post_type_archive'));
+			$views = array_merge($views, self::get_request_hierarchy_list('post_type_archive'));
 
 		// Page
 
@@ -314,51 +314,52 @@ class ClassyHierarchy {
 
 			$template = self::get_classy_template();
 
-			$templates[] = $template;
+			$views[] = $template;
 
-			$templates[] = 'page.' . $template;
+			$views[] = 'page.' . $template;
 
-			$templates[] = 'template.' . $template;
+			$views[] = 'template.' . $template;
 
 
 		elseif ( $type == 'page' ):
 
 			$id = get_queried_object_id();
-			
-			$template = get_post_meta('theme-page-template', $id);
 
 			$pagename = get_query_var('pagename');
 
 			if ( ! $pagename && $id ) {
 				// If a static page is set as the front page, $pagename will not be set. Retrieve it from the queried object
 				$post = get_queried_object();
-				if ( $post )
+				
+				if ( $post ) {
 					$pagename = $post->post_name;
+				}
 			}
 
-			if ( $template && $template != 'index' )
-				$templates[] = $template;
-			if ( $pagename )
-				$templates[] = "page.$pagename";
-			if ( $id )
-				$templates[] = "page.$id";
-
-			$templates[] = 'page.page';
+			if ( $pagename ) {
+				$views[] = 'page.' . $pagename;
+			}
 			
-			$templates[] = 'page';
+			if ( $id ) {
+				$views[] = 'page.' . $id;
+			}
+
+			$views[] = 'page.page';
+			
+			$views[] = 'page';
 
 
 		// Default
 
 		else:
 
-			$templates[] = $type;
+			$views[] = $type;
 
 		endif;
 
-		$templates[] = 'index';
+		$views[] = 'index';
 
-		return $templates;
+		return $views;
 
 	}
 

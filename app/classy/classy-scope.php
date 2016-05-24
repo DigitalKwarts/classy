@@ -1,9 +1,9 @@
 <?php 
 
 /**
- * Template Scope
+ * View's scope
  *
- * Loads the scope (content) for requested template
+ * Loads the scope (data)
  */
 class ClassyScope {
 
@@ -16,13 +16,13 @@ class ClassyScope {
 	 * 
 	 * @return array
 	 */
-	public static function get_scope($template_name = null) {
+	public static function get_scope($view_name = null) {
 
 		$scope = self::require_scope('common');
 
-		if (is_string($template_name)) {
+		if (is_string($view_name)) {
 
-			$scope = self::extend_scope($scope, $template_name);
+			$scope = self::extend_scope($scope, $view_name);
 			
 		} else {
 
@@ -45,9 +45,9 @@ class ClassyScope {
 	 * 
 	 * @return array
 	 */
-	public static function extend_scope($scope, $template_name) {
+	public static function extend_scope($scope, $view_name) {
 
-		$scope = array_merge($scope, self::require_scope($template_name));
+		$scope = array_merge($scope, self::require_scope($view_name));
 		
 		return $scope;
 
