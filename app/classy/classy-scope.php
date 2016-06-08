@@ -18,7 +18,7 @@ class ClassyScope {
 	 */
 	public static function get_scope($view_name = null) {
 
-		$scope = self::require_scope('common');
+		$scope = self::get_common_scope();
 
 		if (is_string($view_name)) {
 
