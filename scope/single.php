@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Data that will be accesible on single post
