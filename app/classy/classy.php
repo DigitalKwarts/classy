@@ -279,19 +279,19 @@ class Classy {
 
 		if (isset($query->posts)) {
 
-			foreach ($query->posts as $post_id) {
+			foreach ($query->posts as $post) {
 				
 				if ($return_type == 'ClassyPost') {
 				
-					$_return[] = new ClassyPost($post_id);
+					$_return[] = new ClassyPost($post);
 				
-				} elseif($return_type == 'object') {
+				} elseif($return_type == 'id') {
 
-					$_return[] = get_post($post_id);
+					$_return[] = $post->id;
 
 				} else {
 
-					$_return[] = $post_id;
+					$_return[] = $post;
 
 				}
 

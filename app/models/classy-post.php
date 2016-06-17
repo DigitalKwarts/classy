@@ -71,16 +71,15 @@ class ClassyPost extends ClassyBasis {
 	
 	/**
 	 * Main constructor function. If ID won't be provided we will try to find it, based on your query
-	 * @param int $pid
+	 * @param object/int $post
 	 */
-	public function __construct($pid = null) {
-		$this->ID = $this->verify_id($pid);
-		
-		$this->init();
-	}
-
-	protected function verify_id($pid) {
-		return $pid;
+	public function __construct($post = null) {
+		if (is_integer($post)) {
+			$this->ID = $post;
+			$this->init();
+		} elseif (is_a($post, 'WP_Post')) {
+			$this->import($post);
+		}
 	}
 
 	/**
@@ -89,7 +88,9 @@ class ClassyPost extends ClassyBasis {
 	protected function init() {
 		$object = (array) $this->get_object();
 
-		$this->import($object);
+		if ($object) {
+			$this->import($object);
+		}
 	}
 
 	/**

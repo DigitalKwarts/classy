@@ -10,7 +10,7 @@ class ClassyQueryHelper {
 	 */
 	public static function find_query($args = false) {
 
-		$default_args = array('fields' => 'ids');
+		$default_args = array();
 
 		if (!$args) {
 		
