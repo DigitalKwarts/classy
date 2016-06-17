@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ClassyImage extends ClassyBasis {
 
@@ -8,12 +8,11 @@ class ClassyImage extends ClassyBasis {
 	 */
 	public $id;
 
-	
+
 	/**
 	 * Main constructor function. Requires image id
 	 * @param int $pid
 	 */
-	public function __construct($pid = null) {
+	public function __construct( $pid = null ) {
 	}
-
 }

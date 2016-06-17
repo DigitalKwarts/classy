@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class ClassyUser extends ClassyBasis {
 
@@ -56,18 +56,17 @@ class ClassyUser extends ClassyBasis {
 	 */
 	private $object;
 
-	
 	/**
 	 * Main constructor function. Requires user id
 	 * @param int $uid
 	 */
-	public function __construct($uid = null) {
-		$this->ID = $this->verify_id($uid);
-		
+	public function __construct( $uid = null ) {
+		$this->ID = $this->verify_id( $uid );
+
 		$this->init();
 	}
 
-	private function verify_id($uid) {
+	private function verify_id( $uid ) {
 		return $uid;
 	}
 
@@ -77,9 +76,9 @@ class ClassyUser extends ClassyBasis {
 	private function init() {
 		$object = (array) $this->get_object();
 
-		$this->import($object);
+		$this->import( $object );
 
-		if (isset($this->first_name) && isset($this->last_name)) {
+		if ( isset( $this->first_name ) && isset( $this->last_name ) ) {
 			$this->name = $this->first_name . ' ' . $this->last_name;
 		} else {
 			$this->name = 'Anonymous';
@@ -89,27 +88,27 @@ class ClassyUser extends ClassyBasis {
 
 	/**
 	 * Returns user object
-	 * 
+	 *
 	 * @return object
 	 */
 	private function get_object() {
-		return get_userdata($this->ID);
+		return get_userdata( $this->ID );
 	}
 
 	/**
 	 * Returns user first name
-	 * 
+	 *
 	 * @return string
 	 */
 	public function first_name() {
 
 		return $this->first_name;
-	
+
 	}
 
 	/**
 	 * Returns user display name
-	 * 
+	 *
 	 * @return string
 	 */
 	public function display_name() {
@@ -117,10 +116,10 @@ class ClassyUser extends ClassyBasis {
 		return $this->display_name;
 
 	}
-	
+
 	/**
 	 * Returns user full name
-	 * 
+	 *
 	 * @return string
 	 */
 	public function name() {
@@ -128,10 +127,10 @@ class ClassyUser extends ClassyBasis {
 		return $this->name;
 
 	}
-	
+
 	/**
 	 * Returns user user_login
-	 * 
+	 *
 	 * @return string
 	 */
 	public function user_login() {
@@ -139,10 +138,10 @@ class ClassyUser extends ClassyBasis {
 		return $this->user_login;
 
 	}
-	
+
 	/**
 	 * Returns user email
-	 * 
+	 *
 	 * @return string
 	 */
 	public function email() {
@@ -153,15 +152,14 @@ class ClassyUser extends ClassyBasis {
 
 	/**
 	 * Returns author posts url
-	 * 
+	 *
 	 * @return string
 	 */
 	public function link() {
-		if ( !$this->link ) {
-			$this->link = get_author_posts_url($this->ID);
+		if ( ! $this->link ) {
+			$this->link = get_author_posts_url( $this->ID );
 		}
 
 		return $this->link;
 	}
-
 }
