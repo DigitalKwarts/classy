@@ -86,10 +86,10 @@ class ClassyPost extends ClassyBasis {
 	 * Initialises Instance based on provided post id
 	 */
 	protected function init() {
-		$object = (array) $this->get_object();
+		$post = $this->get_object();
 
-		if ($object) {
-			$this->import($object);
+		if (is_a($post, 'WP_Post')) {
+			$this->import($post);
 		}
 	}
 
