@@ -89,6 +89,8 @@ class ClassyHierarchy {
 	 */
 	public static function get_file_path( $type = 'view', $view ) {
 
+		$view = str_replace( '.', '/', $view );
+
 		if ( 'view' == $type ) {
 
 			$folder = ClassyView::$folder;
