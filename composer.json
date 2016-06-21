@@ -11,5 +11,8 @@
     "require": {
         "windwalker/renderer": "2.*",
         "illuminate/view": "4.*"
+    },
+    "require-dev": {
+        "wp-coding-standards/wpcs": "dev-master"
     }
 }

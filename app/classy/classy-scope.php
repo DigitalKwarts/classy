@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * View's scope
@@ -13,27 +13,26 @@ class ClassyScope {
 
 	/**
 	 * Returns request scope
-	 * 
+	 *
 	 * @return array
 	 */
-	public static function get_scope($view_name = null) {
+	public static function get_scope( $view_name = null ) {
 
-		$scope = self::require_scope('common');
+		$scope = self::get_common_scope();
 
-		if (is_string($view_name)) {
+		if ( is_string( $view_name ) ) {
 
-			$scope = self::extend_scope($scope, $view_name);
-			
+			$scope = self::extend_scope( $scope, $view_name );
+
 		} else {
 
 			$request = ClassyHierarchy::get_current_request();
 
-			$file = ClassyHierarchy::get_available_file('scope', $request);
+			$file = ClassyHierarchy::get_available_file( 'scope', $request );
 
-			$scope = self::extend_scope($scope, $file);
+			$scope = self::extend_scope( $scope, $file );
 
 		}
-
 
 		return $scope;
 
@@ -42,13 +41,13 @@ class ClassyScope {
 
 	/**
 	 * Extends Scope with scope that is defined in theme_name/scope folder
-	 * 
+	 *
 	 * @return array
 	 */
-	public static function extend_scope($scope, $view_name) {
+	public static function extend_scope( $scope, $view_name ) {
 
-		$scope = array_merge($scope, self::require_scope($view_name));
-		
+		$scope = array_merge( $scope, self::require_scope( $view_name ) );
+
 		return $scope;
 
 	}
@@ -56,14 +55,14 @@ class ClassyScope {
 
 	/**
 	 * Returns Common Scope
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function get_common_scope() {
-		
+
 		if ( null === self::$common ) {
 
-			self::$common = self::require_scope('common');
+			self::$common = self::require_scope( 'common' );
 
 		}
 
@@ -73,24 +72,24 @@ class ClassyScope {
 
 	/**
 	 * Requires file's scope
-	 * 
+	 *
 	 * @param  string $filename
 	 * @return array
 	 */
-	public static function require_scope($filename) {
+	public static function require_scope( $filename ) {
 
 		$return = array();
 
 		$file = THEME_PATH . 'scope/' . $filename . '.php';
 
-		if ( file_exists($file) ) {
+		if ( file_exists( $file ) ) {
 
 			require $file;
-			
+
 		}
 
-		if ( isset($data) ) {
-			
+		if ( isset( $data ) ) {
+
 			$return = $data;
 
 		}
@@ -98,5 +97,4 @@ class ClassyScope {
 		return $return;
 
 	}
-
 }

@@ -29,7 +29,7 @@ class ClassyMenuItem extends ClassyBasis {
 	 * @var integer
 	 */
 	public $level = 0;
-	
+
 	/**
 	 * Item title
 	 * @var string
@@ -38,23 +38,23 @@ class ClassyMenuItem extends ClassyBasis {
 
 	/**
 	 * Checks if provided arg is instance of WP_Post and inits it
-	 * 
+	 *
 	 * @param WP_Post $item
 	 */
-	public function __construct($item) {
+	public function __construct( $item ) {
 
-		if (is_a($item, 'WP_Post')) {
+		if ( is_a( $item, 'WP_Post' ) ) {
 
-			$this->import($item);
+			$this->import( $item );
 			$this->filter_classes();
-			
+
 		}
 
 	}
 
 	/**
 	 * Returns item title
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_title() {
@@ -65,7 +65,7 @@ class ClassyMenuItem extends ClassyBasis {
 
 	/**
 	 * Returns item slug
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_slug() {
@@ -76,7 +76,7 @@ class ClassyMenuItem extends ClassyBasis {
 
 	/**
 	 * Returns item link (url)
-	 * 
+	 *
 	 * @return string
 	 */
 	public function get_link() {
@@ -87,7 +87,7 @@ class ClassyMenuItem extends ClassyBasis {
 
 	/**
 	 * Retuns item children, if there are any
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get_children() {
@@ -102,29 +102,29 @@ class ClassyMenuItem extends ClassyBasis {
 	 */
 	public function get_classes() {
 
-		return implode(' ', $this->classes);
+		return implode( ' ', $this->classes );
 
 	}
 
 	/**
 	 * Adds css class to classes array
-	 * 
+	 *
 	 * @param string $class_name
 	 */
-	public function add_class($class_name) {
-		
+	public function add_class( $class_name ) {
+
 		$this->classes[] = $class_name;
 
 	}
 
 	/**
 	 * Adds child to current ClassyMenuItem
-	 * 
-	 * @param ClassyMenuItem $item 
+	 *
+	 * @param ClassyMenuItem $item
 	 */
-	public function add_child($item) {
+	public function add_child( $item ) {
 
-		if ( !$this->has_child ) {
+		if ( ! $this->has_child ) {
 			$this->add_class( 'menu-item-has-children' );
 			$this->has_child = true;
 		}
@@ -132,7 +132,7 @@ class ClassyMenuItem extends ClassyBasis {
 		$this->children[] = $item;
 		$item->level = $this->level + 1;
 
-		if ($item->children) {
+		if ( $item->children ) {
 			$this->update_child_levels();
 		}
 
@@ -140,35 +140,34 @@ class ClassyMenuItem extends ClassyBasis {
 
 	/**
 	 * Applies filters for item classes
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function filter_classes() {
 
 		$this->classes = apply_filters( 'nav_menu_css_class', $this->classes, $this );
-	
+
 	}
 
 	/**
 	 * Updates children nesting level param
-	 * 
+	 *
 	 * @return boolean
 	 */
 	protected function update_child_levels() {
 
-		if (is_array($this->children)) {
-		
-			foreach( $this->children as $child ) {
+		if ( is_array( $this->children ) ) {
+
+			foreach ( $this->children as $child ) {
 				$child->level = $this->level + 1;
 				$child->update_child_levels();
 			}
-		
+
 			return true;
-		
+
 		}
 
 		return false;
 
 	}
-
 }

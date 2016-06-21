@@ -157,3 +157,7 @@ We recommend you to structure your templates in one of this ways:
 
 Wordpress: 4.5+
 PHP: 5.4+
+
+## WPCS
+
+Just run `vendor/bin/phpcs --standard=phpcs.ruleset.xml app/ -s`

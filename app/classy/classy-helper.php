@@ -23,7 +23,7 @@ class ClassyHelper {
 		$original_text = $text;
 		$allowed_tag_string = '';
 
-		foreach ( explode( ' ', $allowed_tags  ) as $tag ) {
+		foreach ( explode( ' ', $allowed_tags ) as $tag ) {
 			$allowed_tag_string .= '<' . $tag . '>';
 		}
 
@@ -49,7 +49,7 @@ class ClassyHelper {
 		} else {
 			$text = implode( $sep, $words_array );
 		}
-		
+
 		$text = self::close_tags( $text );
 
 		return apply_filters( 'wp_trim_words', $text, $num_words, $more, $original_text );
@@ -67,42 +67,42 @@ class ClassyHelper {
 		preg_match_all( '#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result );
 
 		$openedtags = $result[1];
-		
+
 		//put all closed tags into an array
 		preg_match_all( '#</([a-z]+)>#iU', $html, $result );
-		
+
 		$closedtags = $result[1];
 		$len_opened = count( $openedtags );
-		
+
 		// all tags are closed
 		if ( count( $closedtags ) == $len_opened ) {
 			return $html;
 		}
-		
+
 		$openedtags = array_reverse( $openedtags );
-		
+
 		// close tags
 		for ( $i = 0; $i < $len_opened; $i++ ) {
-			if ( !in_array( $openedtags[$i], $closedtags ) ) {
-				$html .= '</' . $openedtags[$i] . '>';
+			if ( ! in_array( $openedtags[ $i ], $closedtags ) ) {
+				$html .= '</' . $openedtags[ $i ] . '>';
 			} else {
-				unset( $closedtags[array_search( $openedtags[$i], $closedtags )] );
+				unset( $closedtags[ array_search( $openedtags[ $i ], $closedtags ) ] );
 			}
 		}
 
-		$html = str_replace(array('</br>','</hr>','</wbr>'), '', $html);
-		$html = str_replace(array('<br>','<hr>','<wbr>'), array('<br />','<hr />','<wbr />'), $html);
-		
+		$html = str_replace( array( '</br>', '</hr>', '</wbr>' ), '', $html );
+		$html = str_replace( array( '<br>', '<hr>', '<wbr>' ), array( '<br />', '<hr />', '<wbr />' ), $html );
+
 		return $html;
 	}
 
 	/**
 	 * Displays variable if WP_DEBUG is up
-	 * 
+	 *
 	 * @param  mixed $arg
 	 */
 	public static function error_log( $arg ) {
-		if ( !WP_DEBUG ) {
+		if ( ! WP_DEBUG ) {
 			return;
 		}
 		if ( is_object( $arg ) || is_array( $arg ) ) {
@@ -131,17 +131,17 @@ class ClassyHelper {
 			'mid_size' => 2,
 			'type' => 'array',
 			'add_args' => false, // array of query args to add
-			'add_fragment' => ''
+			'add_fragment' => '',
 		);
 		$args = wp_parse_args( $args, $defaults );
 		// Who knows what else people pass in $args
-		$args['total'] = intval( (int)$args['total'] );
+		$args['total'] = intval( (int) $args['total'] );
 		if ( $args['total'] < 2 ) {
 			return array();
 		}
-		$args['current'] = (int)$args['current'];
-		$args['end_size'] = 0 < (int)$args['end_size'] ? (int)$args['end_size'] : 1; // Out of bounds?  Make it the default.
-		$args['mid_size'] = 0 <= (int)$args['mid_size'] ? (int)$args['mid_size'] : 2;
+		$args['current'] = (int) $args['current'];
+		$args['end_size'] = 0 < (int) $args['end_size'] ? (int) $args['end_size'] : 1; // Out of bounds?  Make it the default.
+		$args['mid_size'] = 0 <= (int) $args['mid_size'] ? (int) $args['mid_size'] : 2;
 		$args['add_args'] = is_array( $args['add_args'] ) ? $args['add_args'] : false;
 		$page_links = array();
 		$dots = false;
@@ -156,7 +156,7 @@ class ClassyHelper {
 			$page_links[] = array(
 				'class' => 'prev page-numbers',
 				'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
-				'title' => $args['prev_text']
+				'title' => $args['prev_text'],
 			);
 		}
 		for ( $n = 1; $n <= $args['total']; $n++ ) {
@@ -167,7 +167,7 @@ class ClassyHelper {
 					'title' => $n_display,
 					'text' => $n_display,
 					'name' => $n_display,
-					'current' => true
+					'current' => true,
 				);
 				$dots = true;
 			} else {
@@ -178,20 +178,20 @@ class ClassyHelper {
 					if ( $args['add_args'] ) {
 						$link = rtrim( add_query_arg( $args['add_args'], $link ), '/' );
 					}
-					$link = str_replace(' ', '+', $link);
+					$link = str_replace( ' ', '+', $link );
 					$link = untrailingslashit( $link );
 					$page_links[] = array(
 						'class' => 'page-number page-numbers',
 						'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
 						'title' => $n_display,
 						'name' => $n_display,
-						'current' => $args['current'] == $n
+						'current' => $args['current'] == $n,
 					);
 					$dots = true;
-				} elseif ( $dots && !$args['show_all'] ) {
+				} elseif ( $dots && ! $args['show_all'] ) {
 					$page_links[] = array(
 						'class' => 'dots',
-						'title' => __( '&hellip;' )
+						'title' => __( '&hellip;' ),
 					);
 					$dots = false;
 				}
@@ -207,7 +207,7 @@ class ClassyHelper {
 			$page_links[] = array(
 				'class' => 'next page-numbers',
 				'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
-				'title' => $args['next_text']
+				'title' => $args['next_text'],
 			);
 		}
 		return $page_links;
@@ -216,17 +216,17 @@ class ClassyHelper {
 
 	/**
 	 * Converts array to object recursively
-	 * 
+	 *
 	 * @param  array $array
 	 * @return object
 	 */
-	public static function array_to_object($array) {
+	public static function array_to_object( $array ) {
 		$obj = new stdClass;
 
-		foreach ($array as $k => $v) {
-			if (strlen($k)) {
-				if (is_array($v)) {
-					$obj->{$k} = self::array_to_object($v); //RECURSION
+		foreach ( $array as $k => $v ) {
+			if ( strlen( $k ) ) {
+				if ( is_array( $v ) ) {
+					$obj->{$k} = self::array_to_object( $v ); //RECURSION
 				} else {
 					$obj->{$k} = $v;
 				}
@@ -235,12 +235,12 @@ class ClassyHelper {
 
 		return $obj;
 
-	} 
+	}
 
 
 	/**
 	 * Returns Current Archives Page Title
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function get_archives_title() {
@@ -252,55 +252,52 @@ class ClassyHelper {
 	    if ( is_category() ) {
 
 	        $archives_title = single_cat_title( '', false );
-	    
+
 	    } else if ( is_tag() ) {
 
 	        $archives_title = 'Tag: ' . single_tag_title( '', false );
-	    
+
 	    } else if ( is_author() ) {
 
 	        if ( have_posts() ) {
-	        
+
 	            the_post();
 	            $archives_title = 'Author: ' . get_the_author();
-	        
+
 	        }
-	        
+
 	        rewind_posts();
 
 	    } else if ( is_search() ) {
 
 	        $archives_title = sprintf( __( 'Search Results for: %s', $textdomain ), '<span>' . get_search_query() . '</span>' );
-	    
+
 	    } else if ( is_archive() ) {
-	        
+
 	        if ( is_day() ) {
-	        
+
 	            $archives_title = get_the_date();
-	        
+
 	        } elseif ( is_month() ) {
-	        
-	            $archives_title = get_the_date( _x( 'F Y', 'monthly archives date format', $textdomain ));
-	        
+
+	            $archives_title = get_the_date( _x( 'F Y', 'monthly archives date format', $textdomain ) );
+
 	        } elseif ( is_year() ) {
-	        
-	            $archives_title = get_the_date( _x( 'Y', 'yearly archives date format', $textdomain ));
-	        
+
+	            $archives_title = get_the_date( _x( 'Y', 'yearly archives date format', $textdomain ) );
+
 	        } else {
-	        
+
 	            $archives_title = 'Archives';
-	        
+
 	        }
-	    
-	    } else {
-	    
+		} else {
+
 	        $archives_title = 'Archives';
-	    
+
 	    }
 
 	    return $archives_title;
 
 	}
-
-
 }

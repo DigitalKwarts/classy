@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Data that will be accesible on pages with "Example" template

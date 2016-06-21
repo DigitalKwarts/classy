@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Windwalker\Renderer\BladeRenderer;
 
@@ -28,11 +28,11 @@ class Classy {
 	 * @return Classy A single instance of this class.
 	 */
 	public static function get_instance() {
-		
+
 		if ( null === self::$single_instance ) {
-		
+
 			self::$single_instance = new self();
-		
+
 		}
 
 		return self::$single_instance;
@@ -47,7 +47,7 @@ class Classy {
 	 * @since    1.0.0
 	 */
 	protected function __construct() {
-		
+
 		$this->define_constants();
 
 		$this->include_core_files();
@@ -56,20 +56,20 @@ class Classy {
 
 		$this->init_config();
 
-		add_filter('theme_page_templates', array($this, 'filter_templates'), 3);
+		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ), 3 );
 
 	}
 
 	/**
 	 * Function to define constants
-	 * 
+	 *
 	 * @param  string
 	 * @param  string
 	 */
 	private function define( $name, $value ) {
-		
-		if ( !defined($name) ) {
-			
+
+		if ( ! defined( $name ) ) {
+
 			define( $name, $value );
 
 		}
@@ -78,7 +78,7 @@ class Classy {
 
 	/**
 	 * Defines plugin constants
-	 * 
+	 *
 	 * @since    1.0.0
 	 * @access   private
 	 */
@@ -87,10 +87,10 @@ class Classy {
 		$theme = wp_get_theme();
 
 		$this->define( 'THEME', $theme->template );
-		$this->define( 'THEME_NAME', $theme->get('Name') );
+		$this->define( 'THEME_NAME', $theme->get( 'Name' ) );
 		$this->define( 'THEME_PATH', get_template_directory() . '/' );
 		$this->define( 'THEME_DIR', get_template_directory_uri() . '/' );
-		$this->define( 'THEME_VERSION', $theme->get('Version') );
+		$this->define( 'THEME_VERSION', $theme->get( 'Version' ) );
 		$this->define( 'THEME_FRAMEWORK_PATH', THEME_PATH . 'app/' );
 		$this->define( 'THEME_FRAMEWORK_DIR', THEME_DIR . 'app/' );
 
@@ -111,7 +111,7 @@ class Classy {
 
 		// Theme Config
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
-	
+
 		// Scope
 		require_once THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
 
@@ -147,12 +147,11 @@ class Classy {
 
 		foreach ( $files as $filename ) {
 
-			if ( !empty($filename) ) {
+			if ( ! empty( $filename ) ) {
 
 				require_once $filename;
 
 			}
-
 		}
 
 	}
@@ -168,29 +167,29 @@ class Classy {
 
 	/**
 	 * Filters registed templates and ads custom theme templates
-	 * 
+	 *
 	 * @return array
 	 */
-	
-	public function filter_templates($page_templates = array(), $object = null, $post = null) {
 
-		$custom_templates = ClassyView::get_page_templates_list(); 
+	public function filter_templates( $page_templates = array(), $object = null, $post = null ) {
 
-		return array_merge($page_templates, $custom_templates);
+		$custom_templates = ClassyView::get_page_templates_list();
+
+		return array_merge( $page_templates, $custom_templates );
 
 	}
 
 	/**
 	 * Returns theme config variable
-	 * 
+	 *
 	 * @param  string $name
 	 * @return any
 	 */
-	public static function get_config_var($name) {
+	public static function get_config_var( $name ) {
 
 		$vars = ClassyConfig::get_vars();
 
-		if (isset($vars[$name])) return $vars[$name];
+		if ( isset( $vars[ $name ] ) ) { return $vars[ $name ]; }
 
 		return false;
 
@@ -198,44 +197,43 @@ class Classy {
 
 	/**
 	 * Returns theme textdomain
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function textdomain() {
 
-		$textdomain = Classy::get_config_var('textdomain');
+		$textdomain = Classy::get_config_var( 'textdomain' );
 
 		return $textdomain ? $textdomain : THEME;
 
 	}
 
 	/**
-	 * Performs view render. 
-	 * If there is $view attribute presented, it will render requested view. 
+	 * Performs view render.
+	 * If there is $view attribute presented, it will render requested view.
 	 * If it's not it will try to find necessary view based on $wp_query
-	 * 
+	 *
 	 * @param  string|null $view view path in blade format, ex: single, layout.default, single.partials.slider and etc
 	 * @param  array|null  $data     Additional params
-	 * @return void                
+	 * @return void
 	 */
-	public static function render($view = null, $data = null) {
-		
+	public static function render( $view = null, $data = null ) {
+
 		$views = THEME_PATH . ClassyView::$folder;
 		$cache = WP_CONTENT_DIR . '/viewcache';
 		$common_scope = ClassyScope::get_common_scope();
 
-		if ($view !== null && is_string($view)) {
+		if ( null !== $view && is_string( $view ) ) {
 
-			if ($data && is_array($data)) {
+			if ( $data && is_array( $data ) ) {
 
-				$scope = array_merge($common_scope, $data);
+				$scope = array_merge( $common_scope, $data );
 
 			} else {
 
 				$scope = $common_scope;
 
 			}
-
 		} else {
 
 			$view = ClassyView::get_view();
@@ -244,21 +242,21 @@ class Classy {
 
 		}
 
-		$renderer = new BladeRenderer($views, array('cache_path' => $cache));
+		$renderer = new BladeRenderer( $views, array( 'cache_path' => $cache ) );
 
-		echo $renderer->render($view, $scope);
+		echo $renderer->render( $view, $scope );
 
 	}
 
 	/**
 	 * Alias for ClassyHelper::get_archives_title()
-	 * Returns page title for archive page. 
+	 * Returns page title for archive page.
 	 * Example: Archives, Author: John Doe, Tag: Lorem Ipsum
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function archives_title() {
-		
+
 		return ClassyHelper::get_archives_title();
 
 	}
@@ -266,37 +264,35 @@ class Classy {
 
 	/**
 	 * Returns posts
-	 * 
+	 *
 	 * @param  mixed $args        Array of query args
 	 * @param  string  $return_type ClassyPost/object/id
-	 * @return mixed               
+	 * @return mixed
 	 */
-	public static function get_posts($args = false, $return_type = 'ClassyPost') {
+	public static function get_posts( $args = false, $return_type = 'ClassyPost' ) {
 
 		$_return = array();
 
-		$query = ClassyQueryHelper::find_query($args);
+		$query = ClassyQueryHelper::find_query( $args );
 
-		if (isset($query->posts)) {
+		if ( isset( $query->posts ) ) {
 
-			foreach ($query->posts as $post_id) {
-				
-				if ($return_type == 'ClassyPost') {
-				
-					$_return[] = new ClassyPost($post_id);
-				
-				} elseif($return_type == 'object') {
+			foreach ( $query->posts as $post ) {
 
-					$_return[] = get_post($post_id);
+				if ( 'ClassyPost' == $return_type ) {
+
+					$_return[] = new ClassyPost( $post );
+
+				} elseif ( 'id' == $return_type ) {
+
+					$_return[] = $post->id;
 
 				} else {
 
-					$_return[] = $post_id;
+					$_return[] = $post;
 
 				}
-
 			}
-
 		}
 
 		return $_return;
@@ -304,16 +300,16 @@ class Classy {
 
 	/**
 	 * Returns post
-	 * 
+	 *
 	 * @param  mixed $args Array of query args
 	 * @param  string  $return_type ClassyPost/object/id
-	 * @return mixed               
+	 * @return mixed
 	 */
-	public static function get_post($args = false, $return_type = 'ClassyPost') {
+	public static function get_post( $args = false, $return_type = 'ClassyPost' ) {
 
-		$posts = self::get_posts($args, $return_type);
+		$posts = self::get_posts( $args, $return_type );
 
-		if ( $post = reset($posts ) ) {
+		if ( $post = reset( $posts ) ) {
 			return $post;
 		}
 
@@ -331,16 +327,16 @@ class Classy {
 
 		$args = array();
 		$args['total'] = ceil( $wp_query->found_posts / $wp_query->query_vars['posts_per_page'] );
-		
+
 		if ( $wp_rewrite->using_permalinks() ) {
-			
+
 			$url = explode( '?', get_pagenum_link( 0 ) );
-			
+
 			if ( isset( $url[1] ) ) {
 				parse_str( $url[1], $query );
 				$args['add_args'] = $query;
 			}
-			
+
 			$args['format'] = 'page/%#%';
 			$args['base'] = trailingslashit( $url[0] ).'%_%';
 
@@ -353,7 +349,7 @@ class Classy {
 		$args['current'] = max( 1, get_query_var( 'paged' ) );
 		$args['mid_size'] = max( 9 - $args['current'], 3 );
 		$args['prev_next'] = false;
-		
+
 		if ( is_int( $prefs ) ) {
 			$args['mid_size'] = $prefs - 2;
 		} else {
@@ -363,25 +359,24 @@ class Classy {
 		$data = array();
 		$data['pages'] = ClassyHelper::paginate_links( $args );
 		$next = get_next_posts_page_link( $args['total'] );
-		
+
 		if ( $next ) {
 			$data['next'] = array( 'link' => untrailingslashit( $next ), 'class' => 'page-numbers next' );
 		}
 
 		$prev = previous_posts( false );
-		
+
 		if ( $prev ) {
 			$data['prev'] = array( 'link' => untrailingslashit( $prev ), 'class' => 'page-numbers prev' );
 		}
-		
+
 		if ( $paged < 2 ) {
 			$data['prev'] = null;
 		}
-		
-		return ClassyHelper::array_to_object($data);
+
+		return ClassyHelper::array_to_object( $data );
 
 	}
-
 }
 
 
@@ -395,12 +390,12 @@ class Classy {
 function get_theme_framework() {
 
 	return Classy::get_instance();
-	
+
 }
 
 /**
  * Get Instance
- * 
+ *
  * @var classy
  */
-$classy = get_theme_framework(); 
+$classy = get_theme_framework();

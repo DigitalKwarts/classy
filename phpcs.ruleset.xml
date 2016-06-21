@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="Classy">
+    <!-- Don't validate not our code -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
+
+    <!-- Ignore all assets -->
+    <exclude-pattern>*.css</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>*.less</exclude-pattern>
+
+    <!-- Strange but without this, nothing works. -->
+    <rule ref="vendor/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/ArrayDeclarationSniff.php"/>
+
+	<!-- WordPress Core + Docs + Extra Code Style -->
+	<rule ref="vendor/wp-coding-standards/wpcs/WordPress-Core" />
+	<!--<rule ref="vendor/wp-coding-standards/wpcs/WordPress-Docs" />-->
+	<!--<rule ref="vendor/wp-coding-standards/wpcs/WordPress-Extra" />-->
+</ruleset>
