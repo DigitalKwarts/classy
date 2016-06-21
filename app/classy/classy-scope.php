@@ -78,9 +78,9 @@ class ClassyScope {
 	 */
 	public static function require_scope( $filename ) {
 
-		$return = array();
+		$_return = array();
 
-		$file = THEME_PATH . 'scope/' . $filename . '.php';
+		$file = ClassyHierarchy::get_file_path( 'scope', $filename );
 
 		if ( file_exists( $file ) ) {
 
@@ -90,11 +90,11 @@ class ClassyScope {
 
 		if ( isset( $data ) ) {
 
-			$return = $data;
+			$_return = $data;
 
 		}
 
-		return $return;
+		return $_return;
 
 	}
 }
