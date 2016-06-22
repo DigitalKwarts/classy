@@ -15,7 +15,7 @@ class ClassyImage extends ClassyBasis {
 	public function __construct( $pid = null ) {
 
 		// Checks if image with this id exists
-		if ( $pid && wp_get_attachment_image_src( $pid ) ) {
+		if ( null !== $pid && wp_get_attachment_image_src( $pid ) ) {
 
 			$this->ID = $pid;
 

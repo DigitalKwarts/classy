@@ -110,7 +110,7 @@ class ClassyMenu {
 	 * Checks if the provided menu id exists
 	 *
 	 * @param  int $menu_id
-	 * @return int/boolean
+	 * @return int|boolean
 	 */
 	protected function check_menu_id( $menu_id ) {
 

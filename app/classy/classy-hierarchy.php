@@ -111,9 +111,9 @@ class ClassyHierarchy {
 	/**
 	 * Checks if view exists
 	 *
-	 * @param  string $type view/scope
-	 * @param  string $view in blade path format, ex: layout/header
-	 * @return boolean true/false
+	 * @param  string $type view|scope
+	 * @param  string $file in blade path format, ex: layout|header
+	 * @return boolean true|false
 	 */
 	public static function file_exists( $type = 'view', $file ) {
 
@@ -129,7 +129,7 @@ class ClassyHierarchy {
 	/**
 	 * Returns view name for render, based on type of request
 	 *
-	 * @param  string $type view/scope
+	 * @param  string $type view|scope
 	 * @param  string $type
 	 * @return array
 	 */
@@ -380,7 +380,7 @@ class ClassyHierarchy {
 
 		preg_match( '/classy\-(.*)/', $template_slug, $matches );
 
-		if ( $matches && isset( $matches[1] ) ) { return $matches[1]; }
+		if ( ! empty( $matches ) && isset( $matches[1] ) ) { return $matches[1]; }
 
 		return false;
 
