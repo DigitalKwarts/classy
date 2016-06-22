@@ -121,7 +121,7 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Returns the Post Edit url
+	 * Returns post edit url
 	 *
 	 * @return string
 	 */
@@ -131,20 +131,123 @@ class ClassyPost extends ClassyBasis {
 		}
 	}
 
+	/**
+	 * Returns array of attached image ids
+	 *
+	 * @return array of ids
+	 */
+	public function get_attached_images() {
+
+		$attrs = array(
+			'post_parent' => $this->ID,
+			'post_status' => null,
+			'post_type' => 'attachment',
+			'post_mime_type' => 'image',
+			'order' => 'ASC',
+			'numberposts' => -1,
+			'orderby' => 'menu_order',
+			'fields' => 'ids',
+		);
+
+		$images = get_children( $attrs );
+
+		if ( ! count( $images ) ) {
+			return false;
+		}
+
+		return $images;
+
+	}
+
+	/**
+	 * Returns array of attached images as ClassyImage objects
+	 *
+	 * @return array of ClassyImage
+	 */
+	public function attached_images() {
+
+		$_return = array();
+
+		$images = $this->get_attached_images();
+
+		if ( $images ) {
+
+			foreach ( $images as $image_id ) {
+
+				$_return[] = new ClassyImage( $image_id );
+
+			}
+		}
+
+		return $_return;
+	}
+
+
+	/**
+	 * Returns first attached image id
+	 *
+	 * @return int/boolean
+	 */
+	public function get_first_attached_image_id() {
+
+		$attrs = array(
+			'post_parent' => $this->ID,
+			'post_status' => null,
+			'post_type' => 'attachment',
+			'post_mime_type' => 'image',
+			'order' => 'ASC',
+			'numberposts' => 1,
+			'orderby' => 'menu_order',
+			'fields' => 'ids',
+		);
+
+		$images = get_children( $attrs );
+
+		if ( ! count( $images ) ) {
+			return false;
+		}
+
+		$images = array_values( $images );
+
+		return $images[0];
+
+	}
+
+
+	/**
+	 * Returns first attached image
+	 *
+	 * @return ClassyImage
+	 */
+	public function first_attached_image( $size = 'thumbnail' ) {
+
+		$image_id = $this->get_first_attached_image_id();
+
+		if ( $image_id ) {
+			return new ClassyImage( $image_id );
+		}
+
+		return new ClassyImage();
+	}
+
 
 	/**
 	 * Returns post thumbnail
 	 *
 	 * @return ClassyImage
 	 */
-	public function get_thumbnail() {
+	public function thumbnail() {
 		if ( function_exists( 'get_post_thumbnail_id' ) ) {
 			$image_id = get_post_thumbnail_id( $this->ID );
 
 			if ( $image_id ) {
+
 				return new ClassyImage( $image_id );
+
 			}
 		}
+
+		return new ClassyImage();
 	}
 
 
