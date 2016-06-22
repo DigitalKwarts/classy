@@ -237,6 +237,7 @@ class ClassyPost extends ClassyBasis {
 	 * @return ClassyImage
 	 */
 	public function thumbnail() {
+		
 		if ( function_exists( 'get_post_thumbnail_id' ) ) {
 			$image_id = get_post_thumbnail_id( $this->ID );
 
@@ -248,6 +249,7 @@ class ClassyPost extends ClassyBasis {
 		}
 
 		return new ClassyImage();
+
 	}
 
 
