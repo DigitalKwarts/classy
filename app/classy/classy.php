@@ -266,10 +266,10 @@ class Classy {
 	 * Returns posts
 	 *
 	 * @param  mixed $args        Array of query args
-	 * @param  string  $return_type ClassyPost/object/id
+	 * @param  string  $return object/id/ClassyPost
 	 * @return mixed
 	 */
-	public static function get_posts( $args = false, $return_type = 'ClassyPost' ) {
+	public static function get_posts( $args = false, $return = 'ClassyPost' ) {
 
 		$_return = array();
 
@@ -279,17 +279,17 @@ class Classy {
 
 			foreach ( $query->posts as $post ) {
 
-				if ( 'ClassyPost' == $return_type ) {
-
-					$_return[] = new ClassyPost( $post );
-
-				} elseif ( 'id' == $return_type ) {
+				if ( 'id' == $return ) {
 
 					$_return[] = $post->id;
 
-				} else {
+				} elseif ( 'object' == $return ) {
 
 					$_return[] = $post;
+
+				} elseif ( class_exists( $return ) ) {
+
+					$_return[] = new $return( $post );
 
 				}
 			}
@@ -297,6 +297,7 @@ class Classy {
 
 		return $_return;
 	}
+
 
 	/**
 	 * Returns post
