@@ -316,6 +316,8 @@ class ClassyHierarchy {
 
 			$views[] = 'template.' . $template;
 
+			$views[] = 'page';
+
 		elseif ( 'page' == $type ) :
 
 			$id = get_queried_object_id();
