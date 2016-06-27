@@ -5,7 +5,7 @@ class ClassyQueryHelper {
 	/**
 	 * Finds or creates new query based on provided params
 	 *
-	 * @param  array/boolean $args
+	 * @param  array|boolean $args
 	 * @return object        WP_Query
 	 */
 	public static function find_query( $args = false ) {

@@ -39,6 +39,37 @@ class ClassyComment extends ClassyBasis {
 	public $comment_content;
 
 	/**
+	 * Comment approved
+	 * @var boolean
+	 */
+	public $comment_approved;
+
+
+	/**
+	 * Comment date
+	 * @var string
+	 */
+	public $comment_date;
+
+	/**
+	 * User Id
+	 * @var int
+	 */
+	public $user_id;
+
+	/**
+	 * Comment nested Level
+	 * @var int
+	 */
+	public $level;
+
+	/**
+	 * Comment Parent Id
+	 * @var int
+	 */
+	public $comment_parent;
+
+	/**
 	 * Child comments
 	 * @var array
 	 */
@@ -272,7 +303,7 @@ class ClassyComment extends ClassyBasis {
 	 */
 	public function add_child( $comment ) {
 
-		$this->children[] = $item;
+		$this->children[] = $comment;
 		$item->level = $this->level + 1;
 
 		if ( $item->children ) {

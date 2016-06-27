@@ -9,7 +9,7 @@ class ClassyBasis {
 	/**
 	 * Imports data params into the class instance
 	 *
-	 * @param  object/array $data
+	 * @param  object|array $data
 	 * @return void
 	 */
 	protected function import( $data ) {

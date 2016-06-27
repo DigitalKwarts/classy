@@ -23,7 +23,7 @@ class ClassyConfig {
 	/**
 	 * Requires config file variables
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public static function get_vars() {
 

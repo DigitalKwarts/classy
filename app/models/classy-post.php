@@ -134,7 +134,7 @@ class ClassyPost extends ClassyBasis {
 	/**
 	 * Returns array of attached image ids
 	 *
-	 * @return array of ids
+	 * @return false|array of ids
 	 */
 	public function get_attached_images() {
 
@@ -186,7 +186,7 @@ class ClassyPost extends ClassyBasis {
 	/**
 	 * Returns first attached image id
 	 *
-	 * @return int/boolean
+	 * @return int|boolean
 	 */
 	public function get_first_attached_image_id() {
 
@@ -219,7 +219,7 @@ class ClassyPost extends ClassyBasis {
 	 *
 	 * @return ClassyImage
 	 */
-	public function first_attached_image( $size = 'thumbnail' ) {
+	public function first_attached_image() {
 
 		$image_id = $this->get_first_attached_image_id();
 
@@ -237,7 +237,7 @@ class ClassyPost extends ClassyBasis {
 	 * @return ClassyImage
 	 */
 	public function thumbnail() {
-		
+
 		if ( function_exists( 'get_post_thumbnail_id' ) ) {
 			$image_id = get_post_thumbnail_id( $this->ID );
 
