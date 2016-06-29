@@ -7,6 +7,9 @@
  */
 class ClassyAppearance {
 
+	/**
+	 * ClassyAppearance constructor.
+	 */
 	public function __construct() {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
@@ -26,8 +29,6 @@ class ClassyAppearance {
 
 		wp_register_style( 'general_css', THEME_DIR . 'assets/css/general.css', array(), THEME_VERSION, 'all' );
 
-		// wp_enqueue_style( 'general_css' );
-
 	}
 
 	/**
@@ -35,7 +36,7 @@ class ClassyAppearance {
 	 */
 	public function enqueue_scripts() {
 
-		if ( Classy::get_config_var( 'environment' ) == 'production' ) {
+		if ( 'production' === Classy::get_config_var( 'environment' ) ) {
 
 			wp_register_script( 'theme_scripts', THEME_DIR . 'assets/js/min/production.js', array( 'jquery' ), THEME_VERSION, true );
 
@@ -44,8 +45,6 @@ class ClassyAppearance {
 			wp_register_script( 'theme_scripts', THEME_DIR . 'assets/js/scripts.js', array( 'jquery' ), THEME_VERSION, true );
 
 		}
-
-		// wp_enqueue_script( 'theme_scripts' );
 
 	}
 

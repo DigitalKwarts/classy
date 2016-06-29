@@ -1,9 +1,7 @@
 <?php 
 
 /**
- * The main view file
- *
- * @package 	WordPress
+ * The main view file.
  */
 
 Classy::render();

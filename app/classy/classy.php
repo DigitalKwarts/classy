@@ -244,7 +244,7 @@ class Classy {
 
 		$renderer = new BladeRenderer( $views, array( 'cache_path' => $cache ) );
 
-		echo $renderer->render( $view, $scope );
+		echo $renderer->render( $view, $scope ); // XSS: xss ok.
 
 	}
 
@@ -265,7 +265,7 @@ class Classy {
 	/**
 	 * Returns posts
 	 *
-	 * @param  mixed $args        Array of query args
+	 * @param  mixed   $args   Array of query args
 	 * @param  string  $return object/id/ClassyPost
 	 * @return mixed
 	 */
@@ -279,11 +279,11 @@ class Classy {
 
 			foreach ( $query->posts as $post ) {
 
-				if ( 'id' == $return ) {
+				if ( 'id' === $return ) {
 
 					$_return[] = $post->id;
 
-				} elseif ( 'object' == $return ) {
+				} elseif ( 'object' === $return ) {
 
 					$_return[] = $post;
 

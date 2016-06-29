@@ -25,7 +25,7 @@ class ClassyMenu {
 	 */
 	public function __construct( $arg = null ) {
 
-		if ( is_numeric( $arg ) && 0 != $arg ) {
+		if ( is_numeric( $arg ) && 0 !== absint( $arg ) ) {
 
 			$menu_id = $this->check_menu_id( $arg );
 
@@ -120,7 +120,7 @@ class ClassyMenu {
 
 			foreach ( $menus as $menu ) {
 
-				if ( $menu->term_id == $menu_id ) {
+				if ( absint( $menu->term_id ) === absint( $menu_id ) ) {
 
 					return $menu_id;
 
