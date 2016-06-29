@@ -222,7 +222,7 @@ class ClassyComment extends ClassyBasis {
 	 */
 	protected function get_default_avatar( $default, $email, $size, $host ) {
 
-		if ( substr( $default, 0, 1 ) == '/' ) {
+		if ( '/' === substr( $default, 0, 1 ) ) {
 			$default = home_url() . $default;
 		}
 
@@ -235,14 +235,14 @@ class ClassyComment extends ClassyBasis {
 			}
 		}
 
-		if ( 'mystery' == $default ) {
+		if ( 'mystery' === $default ) {
 			$default = $host . '/avatar/ad516503a11cd5ca435acc9bb6523536?s=' . $size;
 			// ad516503a11cd5ca435acc9bb6523536 == md5('unknown@gravatar.com')
-		} else if ( 'blank' == $default ) {
+		} else if ( 'blank' === $default ) {
 			$default = $email ? 'blank' : includes_url( 'images/blank.gif' );
-		} else if ( ! empty( $email ) && 'gravatar_default' == $default ) {
+		} else if ( ! empty( $email ) && 'gravatar_default' === $default ) {
 			$default = '';
-		} else if ( 'gravatar_default' == $default ) {
+		} else if ( 'gravatar_default' === $default ) {
 			$default = $host . '/avatar/?s=' . $size;
 		} else if ( empty( $email ) && ! strstr( $default, 'http://' ) ) {
 			$default = $host . '/avatar/?d=' . $default . '&amp;s=' . $size;

@@ -279,7 +279,7 @@ class ClassyPost extends ClassyBasis {
 	 * @return string        Post content
 	 */
 	public function get_content( $page = 0 ) {
-		if ( 0 == $page && $this->post_content ) {
+		if ( 0 === absint( $page ) && $this->post_content ) {
 			return $this->post_content;
 		}
 
@@ -407,7 +407,7 @@ class ClassyPost extends ClassyBasis {
 			$text = trim( $text );
 			$last = $text[ strlen( $text ) - 1 ];
 
-			if ( '.' != $last && $trimmed ) {
+			if ( '.' !== $last && $trimmed ) {
 				$text .= ' &hellip; ';
 			}
 
@@ -416,7 +416,7 @@ class ClassyPost extends ClassyBasis {
 				if ( false !== $last_p_tag ) {
 					$text = substr( $text, 0, $last_p_tag );
 				}
-				if ( '.' != $last && $trimmed ) {
+				if ( '.' !== $last && $trimmed ) {
 					$text .= ' &hellip; ';
 				}
 			}
@@ -437,6 +437,10 @@ class ClassyPost extends ClassyBasis {
 
 	/**
 	 * Returns comments array
+	 *
+	 * @param string $status
+	 * @param string $order
+	 *
 	 * @return array
 	 */
 	public function get_comments( $status = 'approve', $order = 'DESC' ) {

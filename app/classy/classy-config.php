@@ -16,7 +16,7 @@ class ClassyConfig {
 	 */
 	private static function get_allowed_variables() {
 
-		return array( 'environment', 'textdomain', 'post_types', 'taxonomies', 'post_formats', 'sidebars' );;
+		return array( 'environment', 'textdomain', 'post_types', 'taxonomies', 'post_formats', 'sidebars' );
 
 	}
 
@@ -50,7 +50,10 @@ class ClassyConfig {
 				}
 			} else {
 
-				die( 'There is no config file in ' . THEME . ' custom/config.php' );
+				wp_die( sprintf(
+					'There is no config file in %s custom/config.php',
+					esc_html( THEME )
+				) );
 
 			}
 		}
@@ -62,7 +65,7 @@ class ClassyConfig {
 
 
 	/**
-	 * Retrieves config variables and then inits wordpress functionality based on them
+	 * Retrieves config variables and then init WordPress functionality based on them.
 	 */
 	public static function init() {
 

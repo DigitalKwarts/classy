@@ -32,7 +32,7 @@ class ClassyHelper {
 		/* translators: If your word count is based on single characters (East Asian characters),
 		enter 'characters'. Otherwise, enter 'words'. Do not translate into your own language. */
 
-		if ( 'characters' == _x( 'words', 'word count: words or characters?' ) && preg_match( '/^utf\-?8$/i', get_option( 'blog_charset' ) ) ) {
+		if ( 'characters' === _x( 'words', 'word count: words or characters?' ) && preg_match( '/^utf\-?8$/i', get_option( 'blog_charset' ) ) ) {
 			$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text ), ' ' );
 			preg_match_all( '/./u', $text, $words_array );
 			$words_array = array_slice( $words_array[0], 0, $num_words + 1 );
@@ -75,7 +75,7 @@ class ClassyHelper {
 		$len_opened = count( $openedtags );
 
 		// all tags are closed
-		if ( count( $closedtags ) == $len_opened ) {
+		if ( count( $closedtags ) === $len_opened ) {
 			return $html;
 		}
 
@@ -83,7 +83,7 @@ class ClassyHelper {
 
 		// close tags
 		for ( $i = 0; $i < $len_opened; $i++ ) {
-			if ( ! in_array( $openedtags[ $i ], $closedtags ) ) {
+			if ( ! in_array( $openedtags[ $i ], $closedtags, true ) ) {
 				$html .= '</' . $openedtags[ $i ] . '>';
 			} else {
 				unset( $closedtags[ array_search( $openedtags[ $i ], $closedtags ) ] );
@@ -100,10 +100,12 @@ class ClassyHelper {
 	 * Displays variable if WP_DEBUG is up
 	 *
 	 * @param  mixed $arg
+	 *
+	 * @return bool
 	 */
 	public static function error_log( $arg ) {
 		if ( ! WP_DEBUG ) {
-			return;
+			return true;
 		}
 		if ( is_object( $arg ) || is_array( $arg ) ) {
 			$arg = print_r( $arg, true );
@@ -146,7 +148,7 @@ class ClassyHelper {
 		$page_links = array();
 		$dots = false;
 		if ( $args['prev_next'] && $args['current'] && 1 < $args['current'] ) {
-			$link = str_replace( '%_%', 2 == $args['current'] ? '' : $args['format'], $args['base'] );
+			$link = str_replace( '%_%', 2 === absint( $args['current'] ) ? '' : $args['format'], $args['base'] );
 			$link = str_replace( '%#%', $args['current'] - 1, $link );
 			if ( $args['add_args'] ) {
 				$link = add_query_arg( $args['add_args'], $link );
@@ -161,7 +163,7 @@ class ClassyHelper {
 		}
 		for ( $n = 1; $n <= $args['total']; $n++ ) {
 			$n_display = number_format_i18n( $n );
-			if ( $n == $args['current'] ) {
+			if ( absint( $args['current'] ) === $n ) {
 				$page_links[] = array(
 					'class' => 'page-number page-numbers current',
 					'title' => $n_display,
@@ -172,7 +174,7 @@ class ClassyHelper {
 				$dots = true;
 			} else {
 				if ( $args['show_all'] || ( $n <= $args['end_size'] || ( $args['current'] && $n >= $args['current'] - $args['mid_size'] && $n <= $args['current'] + $args['mid_size'] ) || $n > $args['total'] - $args['end_size'] ) ) {
-					$link = str_replace( '%_%', 1 == $n ? '' : $args['format'], $args['base'] );
+					$link = str_replace( '%_%', 1 === absint( $n ) ? '' : $args['format'], $args['base'] );
 					$link = str_replace( '%#%', $n, $link );
 					$link = trailingslashit( $link ) . ltrim( $args['add_fragment'], '/' );
 					if ( $args['add_args'] ) {
@@ -185,7 +187,7 @@ class ClassyHelper {
 						'link' => esc_url( apply_filters( 'paginate_links', $link ) ),
 						'title' => $n_display,
 						'name' => $n_display,
-						'current' => $args['current'] == $n,
+						'current' => absint( $args['current'] ) === $n,
 					);
 					$dots = true;
 				} elseif ( $dots && ! $args['show_all'] ) {
@@ -197,7 +199,7 @@ class ClassyHelper {
 				}
 			}
 		}
-		if ( $args['prev_next'] && $args['current'] && ( $args['current'] < $args['total'] || -1 == $args['total'] ) ) {
+		if ( $args['prev_next'] && $args['current'] && ( $args['current'] < $args['total'] || -1 === intval( $args['total'] ) ) ) {
 			$link = str_replace( '%_%', $args['format'], $args['base'] );
 			$link = str_replace( '%#%', $args['current'] + 1, $link );
 			if ( $args['add_args'] ) {
