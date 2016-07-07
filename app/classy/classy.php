@@ -56,7 +56,7 @@ class Classy {
 
 		$this->init_config();
 
-		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ), 3 );
+		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ) );
 
 	}
 
@@ -166,12 +166,13 @@ class Classy {
 	}
 
 	/**
-	 * Filters registed templates and ads custom theme templates
+	 * Filters registered templates and adds custom theme templates.
+	 *
+	 * @param array $page_templates Available WordPress templates.
 	 *
 	 * @return array
 	 */
-
-	public function filter_templates( $page_templates = array(), $object = null, $post = null ) {
+	public function filter_templates( $page_templates = array() ) {
 
 		$custom_templates = ClassyView::get_page_templates_list();
 
@@ -180,18 +181,17 @@ class Classy {
 	}
 
 	/**
-	 * Returns theme config variable
+	 * Returns theme config variable.
 	 *
-	 * @param  string $name
-	 * @return any
+	 * @param string $name Variable's name.
+	 *
+	 * @return mixed|bool Return false if variable not found.
 	 */
 	public static function get_config_var( $name ) {
 
 		$vars = ClassyConfig::get_vars();
 
-		if ( isset( $vars[ $name ] ) ) { return $vars[ $name ]; }
-
-		return false;
+		return ( isset( $vars[ $name ] ) ) ? $vars[ $name ] : false;
 
 	}
 
