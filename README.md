@@ -152,12 +152,18 @@ We recommend you to structure your templates in one of this ways:
 
 ## Useful links
 1. [Blade documentation](https://laravel.com/docs/5.1/blade)
+2. [WordPress Code Style](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/)
+2. [PHP Mess Detector](https://phpmd.org/)
 
 ## Requirements:
 
 Wordpress: 4.5+
 PHP: 5.4+
 
-## WPCS
+## How to check php code style
 
-Just run `vendor/bin/phpcs --standard=phpcs.ruleset.xml app/ -s`
+Check WP Code Style `vendor/bin/phpcs --standard=phpcs.ruleset.xml app/ -s`
+
+## How to run static code analyzer
+ 
+Check PHPMD `vendor/bin/phpmd app text phpmd.ruleset.xml`
