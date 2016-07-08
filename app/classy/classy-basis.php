@@ -22,6 +22,11 @@ class ClassyBasis {
 
 		if ( is_array( $data ) ) {
 
+			// In case if we import WP_User object.
+			if ( isset( $data['data'] ) ) {
+				$data = $data['data'];
+			}
+
 			foreach ( $data as $key => $value ) {
 
 				if ( ! empty( $key ) ) {
