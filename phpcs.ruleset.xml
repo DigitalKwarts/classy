@@ -14,4 +14,8 @@
 	<!-- WordPress Core + Docs + Extra Code Style -->
 	<rule ref="vendor/wp-coding-standards/wpcs/WordPress-Core" />
     <rule ref="vendor/wp-coding-standards/wpcs/WordPress-Extra" />
+    <rule ref="vendor/wp-coding-standards/wpcs/WordPress-Docs">
+        <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+        <exclude name="Squiz.Commenting.FileComment.Missing" />
+    </rule>
 </ruleset>

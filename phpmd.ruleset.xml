@@ -7,7 +7,14 @@
     <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml" />
 
     <!-- Naming. -->
-    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml" />
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml">
+        <exclude name="ShortVariable"/>
+    </rule>
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml/ShortVariable">
+        <properties>
+            <property name="exceptions" value="wp,id,ID" />
+        </properties>
+    </rule>
 
     <!-- Code size. -->
     <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml" />

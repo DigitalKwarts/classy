@@ -1,64 +1,70 @@
 <?php
 
+/**
+ * Wrapper for WP_User.
+ */
 class ClassyUser extends ClassyBasis {
 
 	/**
-	 * Current user id
+	 * Current user id.
+	 *
 	 * @var int
 	 */
 	public $ID;
 
 	/**
-	 * User posts url
+	 * User posts url.
+	 *
 	 * @var string
 	 */
 	public $link;
 
 	/**
-	 * User login (example: anrw)
+	 * User login (example: anrw).
+	 *
 	 * @var string
 	 */
 	public $user_login;
 
 	/**
-	 * User full name
+	 * User full name.
+	 *
 	 * @var string
 	 */
 	public $name;
 
 	/**
-	 * It's basically sanitized version of user login, used for permalinks
+	 * It's basically sanitized version of user login, used for permalinks.
+	 *
 	 * @var string
 	 */
 	public $user_nicename;
 
 	/**
-	 * User email
+	 * User email.
+	 *
 	 * @var string
 	 */
 	public $user_email;
 
 	/**
-	 * Human-Friendly name, like: Andrew Tolochka
+	 * Human-Friendly name, like: Andrew Tolochka.
+	 *
 	 * @var string
 	 */
 	public $display_name;
 
 	/**
-	 * User password hash
-	 * @var string
-	 */
-	private $user_pass;
-
-	/**
-	 * Stores current post object
+	 * Stores current user object.
+	 *
 	 * @var object
 	 */
 	private $object;
 
 	/**
-	 * Main constructor function. Requires user id
-	 * @param int $uid
+	 * Main constructor function. Requires user id.
+	 *
+	 * @param int $uid User id.
 	 */
 	public function __construct( $uid = null ) {
 		$this->ID = $this->verify_id( $uid );
@@ -66,92 +72,85 @@ class ClassyUser extends ClassyBasis {
 		$this->init();
 	}
 
+	/**
+	 * Verify user id.
+	 *
+	 * @param int $uid User id.
+	 *
+	 * @return int
+	 */
 	private function verify_id( $uid ) {
+		// @todo: Realize this method.
 		return $uid;
 	}
 
 	/**
-	 * Initialises Instance based on provided post id
+	 * Initialises User Instance.
 	 */
 	private function init() {
-		$object = (array) $this->get_object();
+		$this->object = $this->get_object();
 
-		$this->import( $object );
+		$this->import( $this->object );
 
-		if ( isset( $this->first_name ) && isset( $this->last_name ) ) {
-			$this->name = $this->first_name . ' ' . $this->last_name;
-		} else {
-			$this->name = 'Anonymous';
-		}
-
+		$this->setup_user_name();
 	}
 
 	/**
-	 * Returns user object
+	 * Returns user object.
 	 *
 	 * @return object
 	 */
 	private function get_object() {
-		return get_userdata( $this->ID );
+		return get_user_by( 'id', $this->ID );
 	}
 
 	/**
-	 * Returns user first name
+	 * Returns user first name.
 	 *
 	 * @return string
 	 */
 	public function first_name() {
-
-		return $this->first_name;
-
+		return $this->object->first_name;
 	}
 
 	/**
-	 * Returns user display name
+	 * Returns user display name.
 	 *
 	 * @return string
 	 */
 	public function display_name() {
-
 		return $this->display_name;
-
 	}
 
 	/**
-	 * Returns user full name
+	 * Returns user full name.
 	 *
 	 * @return string
 	 */
 	public function name() {
-
 		return $this->name;
-
 	}
 
 	/**
-	 * Returns user user_login
+	 * Returns user user_login.
 	 *
 	 * @return string
 	 */
 	public function user_login() {
-
 		return $this->user_login;
-
 	}
 
 	/**
-	 * Returns user email
+	 * Returns user email.
 	 *
 	 * @return string
 	 */
 	public function email() {
-
 		return $this->user_email;
-
 	}
 
 	/**
-	 * Returns author posts url
+	 * Returns author posts url.
 	 *
 	 * @return string
 	 */
@@ -161,5 +160,17 @@ class ClassyUser extends ClassyBasis {
 		}
 
 		return $this->link;
+	}
+
+	/**
+	 * Setup user name and display name.
+	 */
+	private function setup_user_name() {
+		$this->name = 'Anonymous';
+		if ( isset( $this->object->first_name ) && isset( $this->object->last_name ) ) {
+			$this->name = $this->object->first_name . ' ' . $this->object->last_name;
+		}
+
+		$this->display_name = $this->object->display_name;
 	}
 }
