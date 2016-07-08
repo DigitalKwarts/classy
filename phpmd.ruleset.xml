@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="Classy">
+    <!-- Unused code. -->
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/unusedcode.xml" />
+
+    <!-- Design. -->
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/design.xml" />
+
+    <!-- Naming. -->
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/naming.xml" />
+
+    <!-- Code size. -->
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/codesize.xml" />
+
+    <!-- Clean code. -->
+    <rule ref="vendor/phpmd/phpmd/src/main/resources/rulesets/cleancode.xml">
+        <exclude name="StaticAccess"/>
+    </rule>
+</ruleset>
