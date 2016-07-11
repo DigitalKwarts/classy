@@ -1,1 +1,1 @@
-<?php Classy::render( 'layout.header' ); ?>
+<?php Classy::render( 'layout.header' );

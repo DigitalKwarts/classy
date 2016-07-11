@@ -91,17 +91,17 @@ class ClassyHierarchy {
 
 		$view = str_replace( '.', '/', $view );
 
-		if ( 'view' == $type ) {
+		if ( 'view' === $type ) {
 
 			$folder = ClassyView::$folder;
 
-			return THEME_PATH . $folder . '/' . $view . '.blade.php';
+			return CLASSY_THEME_PATH . $folder . '/' . $view . '.blade.php';
 
-		} elseif ( 'scope' == $type ) {
+		} elseif ( 'scope' === $type ) {
 
 			$folder = ClassyScope::$folder;
 
-			return THEME_PATH . $folder . '/' . $view . '.php';
+			return CLASSY_THEME_PATH . $folder . '/' . $view . '.php';
 
 		}
 
@@ -164,13 +164,13 @@ class ClassyHierarchy {
 
 		// Home
 
-		if ( 'home' == $type ) :
+		if ( 'home' === $type ) :
 
 			$views[] = 'home';
 
 			// Single
 
-		elseif ( 'single' == $type ) :
+		elseif ( 'single' === $type ) :
 
 			$post_type = get_post_type();
 
@@ -180,7 +180,7 @@ class ClassyHierarchy {
 
 			// Post type
 
-		elseif ( 'post_type_archive' == $type ) :
+		elseif ( 'post_type_archive' === $type ) :
 
 			$post_type = get_post_type();
 
@@ -190,7 +190,7 @@ class ClassyHierarchy {
 
 			// Taxonomy
 
-		elseif ( 'taxonomy' == $type ) :
+		elseif ( 'taxonomy' === $type ) :
 
 			$term = get_queried_object();
 
@@ -209,7 +209,7 @@ class ClassyHierarchy {
 
 			// Category
 
-		elseif ( 'category' == $type ) :
+		elseif ( 'category' === $type ) :
 
 			$category = get_queried_object();
 
@@ -224,7 +224,7 @@ class ClassyHierarchy {
 
 			// Attachment
 
-		elseif ( 'attachment' == $type ) :
+		elseif ( 'attachment' === $type ) :
 
 			$attachment = get_queried_object();
 
@@ -259,7 +259,7 @@ class ClassyHierarchy {
 
 			// Tag
 
-		elseif ( 'tag' == $type ) :
+		elseif ( 'tag' === $type ) :
 
 			$tag = get_queried_object();
 
@@ -276,7 +276,7 @@ class ClassyHierarchy {
 
 			// Author
 
-		elseif ( 'author' == $type ) :
+		elseif ( 'author' === $type ) :
 
 			$author = get_queried_object();
 
@@ -294,7 +294,7 @@ class ClassyHierarchy {
 
 			// Front Page
 
-		elseif ( 'front-page' == $type ) :
+		elseif ( 'front-page' === $type ) :
 
 			$views[] = 'front-page.front-page';
 			$views[] = 'front-page';
@@ -306,7 +306,7 @@ class ClassyHierarchy {
 
 			// Page
 
-		elseif ( 'classy-template' == $type ) :
+		elseif ( 'classy-template' === $type ) :
 
 			$template = self::get_classy_template();
 
@@ -320,7 +320,7 @@ class ClassyHierarchy {
 
 			$views[] = 'page';
 
-		elseif ( 'page' == $type ) :
+		elseif ( 'page' === $type ) :
 
 			$id = get_queried_object_id();
 

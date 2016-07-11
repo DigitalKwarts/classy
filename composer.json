@@ -13,6 +13,7 @@
         "illuminate/view": "4.*"
     },
     "require-dev": {
-        "wp-coding-standards/wpcs": "dev-master"
+        "wp-coding-standards/wpcs": "dev-master",
+        "phpmd/phpmd": "@stable"
     }
 }

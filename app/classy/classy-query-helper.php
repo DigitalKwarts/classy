@@ -56,7 +56,7 @@ class ClassyQueryHelper {
 
 		if ( $custom_posts_page = get_option( 'page_for_posts' ) ) {
 
-			if ( isset( $query->query['p'] ) && $query->query['p'] == $custom_posts_page ) {
+			if ( isset( $query->query['p'] ) && absint( $query->query['p'] ) === absint( $custom_posts_page ) ) {
 
 				return new WP_Query( array( 'post_type' => 'post' ) );
 

@@ -48,7 +48,7 @@ class Classy {
 	 */
 	protected function __construct() {
 
-		$this->define_constants();
+		define_constants();
 
 		$this->include_core_files();
 
@@ -56,23 +56,7 @@ class Classy {
 
 		$this->init_config();
 
-		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ), 3 );
-
-	}
-
-	/**
-	 * Function to define constants
-	 *
-	 * @param  string
-	 * @param  string
-	 */
-	private function define( $name, $value ) {
-
-		if ( ! defined( $name ) ) {
-
-			define( $name, $value );
-
-		}
+		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ) );
 
 	}
 
@@ -86,13 +70,13 @@ class Classy {
 
 		$theme = wp_get_theme();
 
-		$this->define( 'THEME', $theme->template );
-		$this->define( 'THEME_NAME', $theme->get( 'Name' ) );
-		$this->define( 'THEME_PATH', get_template_directory() . '/' );
-		$this->define( 'THEME_DIR', get_template_directory_uri() . '/' );
-		$this->define( 'THEME_VERSION', $theme->get( 'Version' ) );
-		$this->define( 'THEME_FRAMEWORK_PATH', THEME_PATH . 'app/' );
-		$this->define( 'THEME_FRAMEWORK_DIR', THEME_DIR . 'app/' );
+		define( 'CLASSY_THEME', $theme->template );
+		define( 'CLASSY_THEME_NAME', $theme->get( 'Name' ) );
+		define( 'CLASSY_THEME_PATH', get_template_directory() . '/' );
+		define( 'CLASSY_THEME_DIR', get_template_directory_uri() . '/' );
+		define( 'CLASSY_THEME_VERSION', $theme->get( 'Version' ) );
+		define( 'CLASSY_THEME_FRAMEWORK_PATH', CLASSY_THEME_PATH . 'app/' );
+		define( 'CLASSY_THEME_FRAMEWORK_DIR', CLASSY_THEME_DIR . 'app/' );
 
 	}
 
@@ -101,40 +85,40 @@ class Classy {
 	 */
 	private function include_core_files() {
 
-		require_once THEME_PATH . 'vendor/autoload.php';
+		require_once CLASSY_THEME_PATH . 'vendor/autoload.php';
 
 		// Basis Class
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-basis.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-basis.php';
 
 		// Hierarchy
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-hierarchy.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-hierarchy.php';
 
 		// Theme Config
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
 
 		// Scope
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
 
 		// View Loader
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-view.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-view.php';
 
 		// Helper functions
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-helper.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-helper.php';
 
 		// Query Helper
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-query-helper.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-query-helper.php';
 
 		// Menu
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-menu.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-menu.php';
 
 		// Menu Item
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-menu-item.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-menu-item.php';
 
 		// Comment
-		require_once THEME_FRAMEWORK_PATH . 'classy/classy-comment.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-comment.php';
 
 		// Appearance
-		require_once THEME_FRAMEWORK_PATH . 'appearance.php';
+		require_once CLASSY_THEME_FRAMEWORK_PATH . 'appearance.php';
 
 	}
 
@@ -143,7 +127,7 @@ class Classy {
 	 */
 	private function include_models() {
 
-		$files = (array) glob( THEME_FRAMEWORK_PATH . '/models/*.php' );
+		$files = (array) glob( CLASSY_THEME_FRAMEWORK_PATH . '/models/*.php' );
 
 		foreach ( $files as $filename ) {
 
@@ -166,12 +150,13 @@ class Classy {
 	}
 
 	/**
-	 * Filters registed templates and ads custom theme templates
+	 * Filters registered templates and adds custom theme templates.
+	 *
+	 * @param array $page_templates Available WordPress templates.
 	 *
 	 * @return array
 	 */
-
-	public function filter_templates( $page_templates = array(), $object = null, $post = null ) {
+	public function filter_templates( $page_templates = array() ) {
 
 		$custom_templates = ClassyView::get_page_templates_list();
 
@@ -180,18 +165,17 @@ class Classy {
 	}
 
 	/**
-	 * Returns theme config variable
+	 * Returns theme config variable.
 	 *
-	 * @param  string $name
-	 * @return any
+	 * @param string $name Variable's name.
+	 *
+	 * @return mixed|bool Return false if variable not found.
 	 */
 	public static function get_config_var( $name ) {
 
 		$vars = ClassyConfig::get_vars();
 
-		if ( isset( $vars[ $name ] ) ) { return $vars[ $name ]; }
-
-		return false;
+		return ( isset( $vars[ $name ] ) ) ? $vars[ $name ] : false;
 
 	}
 
@@ -204,7 +188,7 @@ class Classy {
 
 		$textdomain = Classy::get_config_var( 'textdomain' );
 
-		return $textdomain ? $textdomain : THEME;
+		return $textdomain ? $textdomain : CLASSY_THEME;
 
 	}
 
@@ -219,7 +203,7 @@ class Classy {
 	 */
 	public static function render( $view = null, $data = null ) {
 
-		$views = THEME_PATH . ClassyView::$folder;
+		$views = CLASSY_THEME_PATH . ClassyView::$folder;
 		$cache = WP_CONTENT_DIR . '/viewcache';
 		$common_scope = ClassyScope::get_common_scope();
 
@@ -244,7 +228,7 @@ class Classy {
 
 		$renderer = new BladeRenderer( $views, array( 'cache_path' => $cache ) );
 
-		echo $renderer->render( $view, $scope );
+		echo $renderer->render( $view, $scope ); // XSS: xss ok.
 
 	}
 
@@ -265,7 +249,7 @@ class Classy {
 	/**
 	 * Returns posts
 	 *
-	 * @param  mixed $args        Array of query args
+	 * @param  mixed   $args   Array of query args
 	 * @param  string  $return object/id/ClassyPost
 	 * @return mixed
 	 */
@@ -279,11 +263,11 @@ class Classy {
 
 			foreach ( $query->posts as $post ) {
 
-				if ( 'id' == $return ) {
+				if ( 'id' === $return ) {
 
 					$_return[] = $post->id;
 
-				} elseif ( 'object' == $return ) {
+				} elseif ( 'object' === $return ) {
 
 					$_return[] = $post;
 
