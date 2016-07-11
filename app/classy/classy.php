@@ -48,7 +48,7 @@ class Classy {
 	 */
 	protected function __construct() {
 
-		define_constants();
+		$this->define_constants();
 
 		$this->include_core_files();
 
