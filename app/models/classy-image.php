@@ -33,7 +33,7 @@ class ClassyImage extends ClassyBasis {
 	public static function get_default_image() {
 
 		// You can put here any url
-		return THEME_DIR . '/assets/noimage.png';
+		return CLASSY_THEME_DIR . '/assets/noimage.png';
 
 	}
 

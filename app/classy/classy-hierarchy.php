@@ -95,13 +95,13 @@ class ClassyHierarchy {
 
 			$folder = ClassyView::$folder;
 
-			return THEME_PATH . $folder . '/' . $view . '.blade.php';
+			return CLASSY_THEME_PATH . $folder . '/' . $view . '.blade.php';
 
 		} elseif ( 'scope' === $type ) {
 
 			$folder = ClassyScope::$folder;
 
-			return THEME_PATH . $folder . '/' . $view . '.php';
+			return CLASSY_THEME_PATH . $folder . '/' . $view . '.php';
 
 		}
 
