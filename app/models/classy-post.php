@@ -1,77 +1,91 @@
 <?php
 
+/**
+ * Wrapper for WP_Post.
+ */
 class ClassyPost extends ClassyBasis {
 
 	/**
-	 * Current post id
+	 * Current post id.
+	 *
 	 * @var int
 	 */
 	public $ID;
 
 	/**
-	 * Stores current post object
-	 * @var object
+	 * Stores current post object.
+	 *
+	 * @var WP_Post
 	 */
 	protected $object;
 
 	/**
-	 * Post title
+	 * Post title.
+	 *
 	 * @var string
 	 */
 	public $post_title;
 
 	/**
-	 * Post name
+	 * Post name.
+	 *
 	 * @var string
 	 */
 	public $post_name;
 
 	/**
-	 * Post content (raw)
+	 * Post content (raw).
+	 *
 	 * @var string
 	 */
 	public $post_content;
 
 	/**
-	 * Post type
+	 * Post type.
+	 *
 	 * @var string
 	 */
 	public $post_type;
 
 	/**
-	 * Post author id
+	 * Post author id.
+	 *
 	 * @var int
 	 */
 	public $post_author;
 
 	/**
-	 * Post date. String as stored in the WP database, ex: 2012-04-23 08:11:23
+	 * Post date. String as stored in the WP database, ex: 2012-04-23 08:11:23.
+	 *
 	 * @var string
 	 */
 	public $post_date;
 
 	/**
-	 * Post excerpt (raw)
+	 * Post excerpt (raw).
+	 *
 	 * @var string
 	 */
 	public $post_excerpt;
 
 	/**
 	 * Post status. It can be draft, publish, pending, private, trash, etc.
+	 *
 	 * @var string
 	 */
 	public $post_status;
 
 	/**
-	 * Post permalink
+	 * Post permalink.
+	 *
 	 * @var string
 	 */
 	public $permalink;
 
-
 	/**
-	 * Main constructor function. If ID won't be provided we will try to find it, based on your query
-	 * @param object/int $post
+	 * Main constructor function. If ID won't be provided we will try to find it, based on your query.
+	 *
+	 * @param object|int $post WP_Post or WP_Post.ID.
 	 */
 	public function __construct( $post = null ) {
 		if ( is_integer( $post ) ) {
@@ -83,7 +97,7 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Initialises Instance based on provided post id
+	 * Initialises Instance based on provided post id.
 	 */
 	protected function init() {
 		$post = $this->get_object();
@@ -94,11 +108,10 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Returns post object
+	 * Returns post object.
 	 *
-	 * @return object
+	 * @return WP_Post
 	 */
-
 	public function get_object() {
 		$object = get_post( $this->ID );
 
@@ -106,7 +119,7 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Checks if current user can edit this post
+	 * Checks if current user can edit this post.
 	 *
 	 * @return boolean
 	 */
@@ -117,11 +130,12 @@ class ClassyPost extends ClassyBasis {
 		if ( current_user_can( 'edit_post', $this->ID ) ) {
 			return true;
 		}
+
 		return false;
 	}
 
 	/**
-	 * Returns post edit url
+	 * Returns post edit url.
 	 *
 	 * @return string
 	 */
@@ -129,15 +143,16 @@ class ClassyPost extends ClassyBasis {
 		if ( $this->can_edit() ) {
 			return get_edit_post_link( $this->ID );
 		}
+
+		return '';
 	}
 
 	/**
-	 * Returns array of attached image ids
+	 * Returns array of attached image ids.
 	 *
 	 * @return false|array of ids
 	 */
 	public function get_attached_images() {
-
 		$attrs = array(
 			'post_parent' => $this->ID,
 			'post_status' => null,
@@ -156,16 +171,14 @@ class ClassyPost extends ClassyBasis {
 		}
 
 		return $images;
-
 	}
 
 	/**
-	 * Returns array of attached images as ClassyImage objects
+	 * Returns array of attached images as ClassyImage objects.
 	 *
 	 * @return array of ClassyImage
 	 */
 	public function attached_images() {
-
 		$_return = array();
 
 		$images = $this->get_attached_images();
@@ -184,12 +197,11 @@ class ClassyPost extends ClassyBasis {
 
 
 	/**
-	 * Returns first attached image id
+	 * Returns first attached image id.
 	 *
 	 * @return int|boolean
 	 */
 	public function get_first_attached_image_id() {
-
 		$attrs = array(
 			'post_parent' => $this->ID,
 			'post_status' => null,
@@ -210,12 +222,10 @@ class ClassyPost extends ClassyBasis {
 		$images = array_values( $images );
 
 		return $images[0];
-
 	}
 
-
 	/**
-	 * Returns first attached image
+	 * Returns first attached image.
 	 *
 	 * @return ClassyImage
 	 */
@@ -230,14 +240,12 @@ class ClassyPost extends ClassyBasis {
 		return new ClassyImage();
 	}
 
-
 	/**
-	 * Returns post thumbnail
+	 * Returns post thumbnail.
 	 *
 	 * @return ClassyImage
 	 */
 	public function thumbnail() {
-
 		if ( function_exists( 'get_post_thumbnail_id' ) ) {
 			$image_id = get_post_thumbnail_id( $this->ID );
 
@@ -249,12 +257,10 @@ class ClassyPost extends ClassyBasis {
 		}
 
 		return new ClassyImage();
-
 	}
 
-
 	/**
-	 * Returns post title with filters applied
+	 * Returns post title with filters applied.
 	 *
 	 * @return string
 	 */
@@ -263,7 +269,7 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Alias for get_title
+	 * Alias for get_title.
 	 *
 	 * @return string
 	 */
@@ -271,11 +277,11 @@ class ClassyPost extends ClassyBasis {
 		return $this->get_title();
 	}
 
-
 	/**
 	 * Returns the post content with filters applied.
 	 *
-	 * @param  integer $page Page number, in case our post has <!--nextpage--> tags
+	 * @param  integer $page Page number, in case our post has <!--nextpage--> tags.
+	 *
 	 * @return string        Post content
 	 */
 	public function get_content( $page = 0 ) {
@@ -300,9 +306,8 @@ class ClassyPost extends ClassyBasis {
 		return $content;
 	}
 
-
 	/**
-	 * Alias for get_content
+	 * Alias for get_content.
 	 *
 	 * @return string
 	 */
@@ -311,7 +316,7 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Returns post type object for current post
+	 * Returns post type object for current post.
 	 *
 	 * @return object
 	 */
@@ -320,7 +325,7 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Returns post permalink
+	 * Returns post permalink.
 	 *
 	 * @return string
 	 */
@@ -333,7 +338,6 @@ class ClassyPost extends ClassyBasis {
 
 		return $this->permalink;
 	}
-
 
 	/**
 	 * Alias for get_permalink
@@ -349,11 +353,12 @@ class ClassyPost extends ClassyBasis {
 	 * It will look for post_excerpt and will return it.
 	 * If post contains <!-- more --> tag it will return content until it
 	 *
-	 * @param  integer $len      Number of words
-	 * @param  boolean $force    If is set to true it will cut your post_excerpt to desired $len length
-	 * @param  string  $readmore The text for 'readmore' link
-	 * @param  boolean $strip    Should we strip tags?
-	 * @return string            Post preview
+	 * @param  integer $len      Number of words.
+	 * @param  boolean $force    If is set to true it will cut your post_excerpt to desired $len length.
+	 * @param  string  $readmore The text for 'readmore' link.
+	 * @param  boolean $strip    Should we strip tags.
+	 *
+	 * @return string            Post preview.
 	 */
 	public function get_preview( $len = 50, $force = false, $readmore = 'Read More', $strip = true ) {
 		$text = '';
@@ -438,8 +443,8 @@ class ClassyPost extends ClassyBasis {
 	/**
 	 * Returns comments array
 	 *
-	 * @param string $status
-	 * @param string $order
+	 * @param string $status Comment status.
+	 * @param string $order  Order for comments query.
 	 *
 	 * @return array
 	 */
@@ -473,6 +478,5 @@ class ClassyPost extends ClassyBasis {
 		}
 
 		return array_values( $_return );
-
 	}
 }
