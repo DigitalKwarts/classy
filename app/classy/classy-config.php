@@ -30,11 +30,11 @@ class ClassyConfig {
 		if ( null === self::$vars ) {
 
 			// Check for a theme config
-			$config_file = THEME_FRAMEWORK_PATH . 'config.php';
+			$config_file = CLASSY_THEME_FRAMEWORK_PATH . 'config.php';
 
 			if ( file_exists( $config_file ) ) {
 
-				require_once THEME_FRAMEWORK_PATH . 'config.php';
+				require_once CLASSY_THEME_FRAMEWORK_PATH . 'config.php';
 
 				$vars = self::get_allowed_variables();
 
@@ -52,7 +52,7 @@ class ClassyConfig {
 
 				wp_die( sprintf(
 					'There is no config file in %s custom/config.php',
-					esc_html( THEME )
+					esc_html( CLASSY_THEME )
 				) );
 
 			}
