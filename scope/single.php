@@ -1,9 +1,7 @@
 <?php
-
 /**
- * Data that will be accesible on single post
+ * Data that will be accessible on single post.
  */
-
 $data = array(
-	'post' => Classy::get_post(),
+	'post' => get_theme_framework()::get_post(),
 );

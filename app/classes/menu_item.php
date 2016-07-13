@@ -1,10 +1,12 @@
 <?php
 
+namespace Classy;
+
 /**
  * Class for handling menu item functionality
  */
 
-class ClassyMenuItem extends ClassyBasis {
+class Menu_Item extends Basis {
 
 	/**
 	 * Children
@@ -39,11 +41,11 @@ class ClassyMenuItem extends ClassyBasis {
 	/**
 	 * Checks if provided arg is instance of WP_Post and inits it
 	 *
-	 * @param WP_Post $item
+	 * @param \WP_Post $item
 	 */
 	public function __construct( $item ) {
 
-		if ( is_a( $item, 'WP_Post' ) ) {
+		if ( is_a( $item, '\WP_Post' ) ) {
 
 			$this->import( $item );
 			$this->filter_classes();
@@ -118,9 +120,9 @@ class ClassyMenuItem extends ClassyBasis {
 	}
 
 	/**
-	 * Adds child to current ClassyMenuItem
+	 * Adds child to current Menu_Item
 	 *
-	 * @param ClassyMenuItem $item
+	 * @param Menu_Item $item
 	 */
 	public function add_child( $item ) {
 

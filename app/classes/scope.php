@@ -1,11 +1,13 @@
 <?php
 
+namespace Classy;
+
 /**
  * View's scope.
  *
  * Loads the scope (data).
  */
-class ClassyScope {
+class Scope {
 
 	protected static $common = null;
 
@@ -34,9 +36,9 @@ class ClassyScope {
 
 		} else {
 
-			$request = ClassyHierarchy::get_current_request();
+			$request = Hierarchy::get_current_request();
 
-			$file = ClassyHierarchy::get_available_file( 'scope', $request );
+			$file = Hierarchy::get_available_file( 'scope', $request );
 
 			$scope = self::extend_scope( $scope, $file );
 
@@ -90,7 +92,7 @@ class ClassyScope {
 
 		$_return = array();
 
-		$file = ClassyHierarchy::get_file_path( 'scope', $filename );
+		$file = Hierarchy::get_file_path( 'scope', $filename );
 
 		if ( file_exists( $file ) ) {
 

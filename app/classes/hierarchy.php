@@ -1,10 +1,11 @@
 <?php
+namespace Classy;
 
 /**
  * Implements WordPress Hierarchy
  */
 
-class ClassyHierarchy {
+class Hierarchy {
 
 	/**
 	 * Stores current request for multiple use
@@ -93,13 +94,13 @@ class ClassyHierarchy {
 
 		if ( 'view' === $type ) {
 
-			$folder = ClassyView::$folder;
+			$folder = View::$folder;
 
 			return CLASSY_THEME_PATH . $folder . '/' . $view . '.blade.php';
 
 		} elseif ( 'scope' === $type ) {
 
-			$folder = ClassyScope::$folder;
+			$folder = Scope::$folder;
 
 			return CLASSY_THEME_PATH . $folder . '/' . $view . '.php';
 

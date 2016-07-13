@@ -1,11 +1,9 @@
 <?php
-
 /**
- * Data that will be accesible on archive page (index)
+ * Data that will be accessible on archive page (index).
  */
-
 $data = array(
-	'posts' => Classy::get_posts(),
-	'page_title' => Classy::archives_title(),
-	'pagination' => Classy::get_pagination(),
+	'posts' => get_theme_framework()::get_posts(),
+	'page_title' => get_theme_framework()::archives_title(),
+	'pagination' => get_theme_framework()::get_pagination(),
 );

@@ -9,11 +9,17 @@
         }
     ],
     "require": {
+        "php": ">=5.6.0",
         "windwalker/renderer": "2.*",
         "illuminate/view": "4.*"
     },
     "require-dev": {
         "wp-coding-standards/wpcs": "dev-master",
         "phpmd/phpmd": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Classy\\": "app/classes"
+        }
     }
 }

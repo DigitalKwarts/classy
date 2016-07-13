@@ -1,6 +1,7 @@
 <?php
+namespace Classy;
 
-class ClassyComment extends ClassyBasis {
+class Comment extends Basis {
 
 	/**
 	 * Comment ID
@@ -78,11 +79,11 @@ class ClassyComment extends ClassyBasis {
 	/**
 	 * Checks if provided arg is instance of WP_Comment and inits it
 	 *
-	 * @param WP_Comment $item
+	 * @param \WP_Comment $item
 	 */
 	public function __construct( $item ) {
 
-		if ( is_a( $item, 'WP_Comment' ) ) {
+		if ( is_a( $item, '\WP_Comment' ) ) {
 
 			$this->import( $item );
 
@@ -91,19 +92,19 @@ class ClassyComment extends ClassyBasis {
 	}
 
 	/**
-	 * Returns ClassyUser object of comment author
+	 * Returns User object of comment author
 	 *
-	 * @return object ClassyUser
+	 * @return object User
 	 */
 	public function author() {
 
 		if ( $this->user_id ) {
 
-			return new ClassyUser( $this->user_id );
+			return new Models\User( $this->user_id );
 
 		} else {
 
-			$author = new ClassyUser( 0 );
+			$author = new Models\User( 0 );
 
 			if ( isset( $this->comment_author ) && $this->comment_author ) {
 
@@ -297,9 +298,9 @@ class ClassyComment extends ClassyBasis {
 	}
 
 	/**
-	 * Adds child to current ClassyComment
+	 * Adds child to current Comment
 	 *
-	 * @param ClassyComment $comment
+	 * @param Comment $comment
 	 */
 	public function add_child( $comment ) {
 

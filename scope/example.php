@@ -1,9 +1,7 @@
 <?php
-
 /**
- * Data that will be accesible on pages with "Example" template
+ * Data that will be accessible on pages with "Example" template.
  */
-
 $data = array(
-	'post' => Classy::get_post(),
+	'post' => get_theme_framework()::get_post(),
 );

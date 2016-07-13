@@ -1,14 +1,21 @@
 <?php
+/**
+ * Theme Appearance Class.
+ *
+ * Manages JS & CSS enqueuing of the theme.
+ */
+
+namespace Classy;
 
 /**
- * Theme Appearance Class
- *
- * Manages JS & CSS enqueuing of the theme
+ * Class Appearance.
+ * 
+ * @package Classy
  */
-class ClassyAppearance {
+class Appearance {
 
 	/**
-	 * ClassyAppearance constructor.
+	 * Appearance constructor.
 	 */
 	public function __construct() {
 
@@ -105,5 +112,3 @@ class ClassyAppearance {
 
 	}
 }
-
-new ClassyAppearance();

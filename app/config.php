@@ -21,7 +21,6 @@ $textdomain = 'themename';
  */
 $environment = 'production';
 
-
 /**
  * Theme Post types
  *
@@ -37,7 +36,6 @@ $post_types = array();
  * @var array
  */
 $taxonomies = array();
-
 
 /**
  * Theme post formats.

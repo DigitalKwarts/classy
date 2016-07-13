@@ -2,6 +2,6 @@
 
 global $post;
 
-$classypost = new ClassyPost( $post );
+$classypost = new \Classy\Models\Post( $post );
 
-Classy::render( 'layout.comments', array( 'post' => $classypost ) );
+Classy\Classy::render( 'layout.comments', array( 'post' => $classypost ) );

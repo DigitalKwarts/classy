@@ -1,10 +1,8 @@
 <?php
-
 /**
- * Data that will be accesible in every view
+ * Data that will be accessible in every view.
  */
-
 $data = array(
-	'menu' => new ClassyMenu(),
+	'menu' => new Classy\Menu(),
 	'foo' => 'bar',
 );
