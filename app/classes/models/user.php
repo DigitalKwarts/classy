@@ -1,9 +1,14 @@
 <?php
 
+namespace Classy\Models;
+
+use Classy\Basis;
+
+
 /**
- * Wrapper for WP_User.
+ * Wrapper for \WP_User.
  */
-class ClassyUser extends ClassyBasis {
+class User extends Basis {
 
 	/**
 	 * Current user id.
@@ -170,7 +175,5 @@ class ClassyUser extends ClassyBasis {
 		if ( isset( $this->object->first_name ) && isset( $this->object->last_name ) ) {
 			$this->name = $this->object->first_name . ' ' . $this->object->last_name;
 		}
-
-		$this->display_name = $this->object->display_name;
 	}
 }

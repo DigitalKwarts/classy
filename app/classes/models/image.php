@@ -1,6 +1,10 @@
 <?php
 
-class ClassyImage extends ClassyBasis {
+namespace Classy\Models;
+
+use Classy\Basis;
+
+class Image extends Basis {
 
 	/**
 	 * Current image id

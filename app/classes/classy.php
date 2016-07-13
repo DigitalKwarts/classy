@@ -1,14 +1,18 @@
 <?php
-
-use Windwalker\Renderer\BladeRenderer;
-
-
 /**
  * The core theme class.
  *
  * @since 	1.0.0
  * @package Classy
  * @author 	Andrew Tolochka <atolochka@gmail.com>
+ */
+
+namespace Classy;
+
+use Windwalker\Renderer\BladeRenderer;
+
+/**
+ * Class Classy.
  */
 class Classy {
 
@@ -46,17 +50,29 @@ class Classy {
 	 * @since    1.0.0
 	 */
 	protected function __construct() {
-
 		$this->define_constants();
 
-		$this->include_core_files();
+		$this->init_appearance();
 
-		$this->include_models();
+		$this->load_template_function();
 
 		$this->init_config();
 
 		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ) );
+	}
 
+	/**
+	 * Init Appearance class.
+	 */
+	private function init_appearance() {
+		new Appearance();
+	}
+
+	/**
+	 * Load template functions.
+	 */
+	private function load_template_function() {
+		require_once( CLASSY_THEME_PATH . 'app/functions/template-functions.php' );
 	}
 
 	/**
@@ -80,72 +96,10 @@ class Classy {
 	}
 
 	/**
-	 * Include core files that are responsible for theme render
-	 */
-	private function include_core_files() {
-
-		require_once CLASSY_THEME_PATH . 'vendor/autoload.php';
-
-		// Basis Class.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-basis.php';
-
-		// Hierarchy.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-hierarchy.php';
-
-		// Theme Config.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
-
-		// Scope.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
-
-		// View Loader.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-view.php';
-
-		// Helper functions.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-helper.php';
-
-		// Query Helper.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-query-helper.php';
-
-		// Menu.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-menu.php';
-
-		// Menu Item.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-menu-item.php';
-
-		// Comment.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-comment.php';
-
-		// Appearance.
-		require_once CLASSY_THEME_FRAMEWORK_PATH . 'appearance.php';
-
-	}
-
-	/**
-	 * Include theme Object-Oriented models.
-	 */
-	private function include_models() {
-
-		$files = (array) glob( CLASSY_THEME_FRAMEWORK_PATH . '/models/*.php' );
-
-		foreach ( $files as $filename ) {
-
-			if ( ! empty( $filename ) ) {
-
-				require_once $filename;
-
-			}
-		}
-
-	}
-
-	/**
 	 * Init Theme Configuration
 	 */
 	private function init_config() {
-
-		$this->config = ClassyConfig::init();
-
+		Config::init();
 	}
 
 	/**
@@ -157,7 +111,7 @@ class Classy {
 	 */
 	public function filter_templates( $page_templates = array() ) {
 
-		$custom_templates = ClassyView::get_page_templates_list();
+		$custom_templates = View::get_page_templates_list();
 
 		return array_merge( $page_templates, $custom_templates );
 
@@ -172,7 +126,7 @@ class Classy {
 	 */
 	public static function get_config_var( $name ) {
 
-		$vars = ClassyConfig::get_vars();
+		$vars = Config::get_vars();
 
 		return ( isset( $vars[ $name ] ) ) ? $vars[ $name ] : false;
 
@@ -202,9 +156,9 @@ class Classy {
 	 */
 	public static function render( $view = null, $data = null ) {
 
-		$views = CLASSY_THEME_PATH . ClassyView::$folder;
+		$views = CLASSY_THEME_PATH . View::$folder;
 		$cache = WP_CONTENT_DIR . '/viewcache';
-		$common_scope = ClassyScope::get_common_scope();
+		$common_scope = Scope::get_common_scope();
 
 		if ( null !== $view && is_string( $view ) ) {
 
@@ -219,9 +173,9 @@ class Classy {
 			}
 		} else {
 
-			$view = ClassyView::get_view();
+			$view = View::get_view();
 
-			$scope = ClassyScope::get_scope();
+			$scope = Scope::get_scope();
 
 		}
 
@@ -232,7 +186,7 @@ class Classy {
 	}
 
 	/**
-	 * Alias for ClassyHelper::get_archives_title()
+	 * Alias for Helper::get_archives_title()
 	 * Returns page title for archive page.
 	 * Example: Archives, Author: John Doe, Tag: Lorem Ipsum
 	 *
@@ -240,7 +194,7 @@ class Classy {
 	 */
 	public static function archives_title() {
 
-		return ClassyHelper::get_archives_title();
+		return Helper::get_archives_title();
 
 	}
 
@@ -248,15 +202,15 @@ class Classy {
 	 * Returns posts
 	 *
 	 * @param  mixed  $args   Array of query args.
-	 * @param  string $return object/id/ClassyPost.
+	 * @param  string $return object/id/Post.
 	 *
 	 * @return array
 	 */
-	public static function get_posts( $args = false, $return = 'ClassyPost' ) {
+	public static function get_posts( $args = false, $return = '\Classy\Models\Post' ) {
 
 		$_return = array();
 
-		$query = ClassyQueryHelper::find_query( $args );
+		$query = Query_Helper::find_query( $args );
 
 		if ( isset( $query->posts ) ) {
 
@@ -286,11 +240,11 @@ class Classy {
 	 * Returns post.
 	 *
 	 * @param  mixed  $args 		Array of query args.
-	 * @param  string $return_type 	ClassyPost/object/id.
+	 * @param  string $return_type 	Post/object/id.
 	 *
 	 * @return mixed
 	 */
-	public static function get_post( $args = false, $return_type = 'ClassyPost' ) {
+	public static function get_post( $args = false, $return_type = '\Classy\Models\Post' ) {
 
 		$posts = self::get_posts( $args, $return_type );
 
@@ -345,7 +299,7 @@ class Classy {
 		}
 
 		$data = array();
-		$data['pages'] = ClassyHelper::paginate_links( $args );
+		$data['pages'] = Helper::paginate_links( $args );
 		$next = get_next_posts_page_link( $args['total'] );
 
 		if ( $next ) {
@@ -362,28 +316,7 @@ class Classy {
 			$data['prev'] = null;
 		}
 
-		return ClassyHelper::array_to_object( $data );
+		return Helper::array_to_object( $data );
 
 	}
 }
-
-
-/**
- * Grab the Classy object and return it.
- * Wrapper for Classy::get_instance()
- *
- * @since  0.1.0
- * @return Classy  Singleton instance of plugin class.
- */
-function get_theme_framework() {
-
-	return Classy::get_instance();
-
-}
-
-/**
- * Get Instance
- *
- * @var classy
- */
-$classy = get_theme_framework();

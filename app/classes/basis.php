@@ -1,10 +1,16 @@
 <?php
-
 /**
- * Includes Basic Class methods that are common used in other classes
+ * Includes Basic Class methods that are common used in other classes.
  */
 
-class ClassyBasis {
+namespace Classy;
+
+/**
+ * Class Basis.
+ *
+ * @package Classy
+ */
+class Basis {
 
 	/**
 	 * Imports data params into the class instance

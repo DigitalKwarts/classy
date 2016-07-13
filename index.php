@@ -1,7 +1,5 @@
 <?php 
-
 /**
  * The main view file.
  */
-
-Classy::render();
+get_theme_framework()::render();

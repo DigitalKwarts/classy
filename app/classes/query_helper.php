@@ -1,6 +1,7 @@
 <?php
+namespace Classy;
 
-class ClassyQueryHelper {
+class Query_Helper {
 
 	/**
 	 * Finds or creates new query based on provided params
@@ -20,11 +21,11 @@ class ClassyQueryHelper {
 
 			$args = array_merge( $default_args, $args );
 
-			return new WP_Query( $args );
+			return new \WP_Query( $args );
 
 		} else {
 
-			return new WP_Query( $default_args );
+			return new \WP_Query( $default_args );
 
 		}
 	}
@@ -58,7 +59,7 @@ class ClassyQueryHelper {
 
 			if ( isset( $query->query['p'] ) && absint( $query->query['p'] ) === absint( $custom_posts_page ) ) {
 
-				return new WP_Query( array( 'post_type' => 'post' ) );
+				return new \WP_Query( array( 'post_type' => 'post' ) );
 
 			}
 		}

@@ -1,10 +1,12 @@
 <?php
 
+namespace Classy;
+
 /**
  * Includes multiple helper function
  */
 
-class ClassyHelper {
+class Helper {
 
 	/**
 	 *
@@ -223,7 +225,7 @@ class ClassyHelper {
 	 * @return object
 	 */
 	public static function array_to_object( $array ) {
-		$obj = new stdClass;
+		$obj = new \stdClass;
 
 		foreach ( $array as $k => $v ) {
 			if ( strlen( $k ) ) {

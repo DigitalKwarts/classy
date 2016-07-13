@@ -1,10 +1,11 @@
 <?php
+namespace Classy;
 
 /**
  * Class for handling menu functionality
  */
 
-class ClassyMenu {
+class Menu {
 
 	/**
 	 * Menu ID
@@ -64,7 +65,7 @@ class ClassyMenu {
 
 		foreach ( $items as $item ) {
 
-			$_return[ $item->ID ] = new ClassyMenuItem( $item );
+			$_return[ $item->ID ] = new Menu_Item( $item );
 		}
 
 		// Apply nesting

@@ -1,11 +1,17 @@
 <?php
+/**
+ * View Loader.
+ * Loads the corresponding template based on request.
+ *
+ * @package Classy
+ */
+
+namespace Classy;
 
 /**
- * View Loader
- *
- * Loads the corresponding template based on request
+ * Class View.
  */
-class ClassyView {
+class View {
 
 	/**
 	 * Views folder.
@@ -21,9 +27,9 @@ class ClassyView {
 	 */
 	public static function get_view() {
 
-		$request = ClassyHierarchy::get_current_request();
+		$request = Hierarchy::get_current_request();
 
-		$file = ClassyHierarchy::get_available_file( 'view', $request );
+		$file = Hierarchy::get_available_file( 'view', $request );
 
 		$view = self::get_blade_view( $file );
 

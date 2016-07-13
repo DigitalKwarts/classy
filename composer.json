@@ -15,5 +15,10 @@
     "require-dev": {
         "wp-coding-standards/wpcs": "dev-master",
         "phpmd/phpmd": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Classy\\": "app/classes"
+        }
     }
 }

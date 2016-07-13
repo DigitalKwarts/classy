@@ -1,11 +1,13 @@
 <?php
 
+namespace Classy;
+
 /**
  * Theme Config
  *
  * Loads theme config and registers models based on it
  */
-class ClassyConfig {
+class Config {
 
 	protected static $vars = null;
 

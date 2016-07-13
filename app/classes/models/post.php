@@ -1,9 +1,15 @@
 <?php
 
+namespace Classy\Models;
+
+use Classy\Basis;
+use Classy\Comment;
+use Classy\Helper;
+
 /**
  * Wrapper for WP_Post.
  */
-class ClassyPost extends ClassyBasis {
+class Post extends Basis {
 
 	/**
 	 * Current post id.
@@ -15,7 +21,7 @@ class ClassyPost extends ClassyBasis {
 	/**
 	 * Stores current post object.
 	 *
-	 * @var WP_Post
+	 * @var \WP_Post
 	 */
 	protected $object;
 
@@ -91,7 +97,7 @@ class ClassyPost extends ClassyBasis {
 		if ( is_integer( $post ) ) {
 			$this->ID = $post;
 			$this->init();
-		} elseif ( is_a( $post, 'WP_Post' ) ) {
+		} elseif ( is_a( $post, '\WP_Post' ) ) {
 			$this->import( $post );
 		}
 	}
@@ -102,7 +108,7 @@ class ClassyPost extends ClassyBasis {
 	protected function init() {
 		$post = $this->get_object();
 
-		if ( is_a( $post, 'WP_Post' ) ) {
+		if ( is_a( $post, '\WP_Post' ) ) {
 			$this->import( $post );
 		}
 	}
@@ -110,7 +116,7 @@ class ClassyPost extends ClassyBasis {
 	/**
 	 * Returns post object.
 	 *
-	 * @return WP_Post
+	 * @return \WP_Post
 	 */
 	public function get_object() {
 		$object = get_post( $this->ID );
@@ -174,9 +180,9 @@ class ClassyPost extends ClassyBasis {
 	}
 
 	/**
-	 * Returns array of attached images as ClassyImage objects.
+	 * Returns array of attached images as Image objects.
 	 *
-	 * @return array of ClassyImage
+	 * @return array of Image
 	 */
 	public function attached_images() {
 		$_return = array();
@@ -187,7 +193,7 @@ class ClassyPost extends ClassyBasis {
 
 			foreach ( $images as $image_id ) {
 
-				$_return[] = new ClassyImage( $image_id );
+				$_return[] = new Image( $image_id );
 
 			}
 		}
@@ -227,23 +233,23 @@ class ClassyPost extends ClassyBasis {
 	/**
 	 * Returns first attached image.
 	 *
-	 * @return ClassyImage
+	 * @return Image
 	 */
 	public function first_attached_image() {
 
 		$image_id = $this->get_first_attached_image_id();
 
 		if ( $image_id ) {
-			return new ClassyImage( $image_id );
+			return new Image( $image_id );
 		}
 
-		return new ClassyImage();
+		return new Image();
 	}
 
 	/**
 	 * Returns post thumbnail.
 	 *
-	 * @return ClassyImage
+	 * @return Image
 	 */
 	public function thumbnail() {
 		if ( function_exists( 'get_post_thumbnail_id' ) ) {
@@ -251,12 +257,12 @@ class ClassyPost extends ClassyBasis {
 
 			if ( $image_id ) {
 
-				return new ClassyImage( $image_id );
+				return new Image( $image_id );
 
 			}
 		}
 
-		return new ClassyImage();
+		return new Image();
 	}
 
 	/**
@@ -367,7 +373,7 @@ class ClassyPost extends ClassyBasis {
 		if ( isset( $this->post_excerpt ) && strlen( $this->post_excerpt ) ) {
 
 			if ( $force ) {
-				$text = ClassyHelper::trim_words( $this->post_excerpt, $len, false );
+				$text = Helper::trim_words( $this->post_excerpt, $len, false );
 				$trimmed = true;
 			} else {
 				$text = $this->post_excerpt;
@@ -380,7 +386,7 @@ class ClassyPost extends ClassyBasis {
 			$text = $pieces[0];
 
 			if ( $force ) {
-				$text = ClassyHelper::trim_words( $text, $len, false );
+				$text = Helper::trim_words( $text, $len, false );
 				$trimmed = true;
 			}
 
@@ -390,7 +396,7 @@ class ClassyPost extends ClassyBasis {
 
 		if ( ! strlen( $text ) ) {
 
-			$text = ClassyHelper::trim_words( $this->get_content(), $len, false );
+			$text = Helper::trim_words( $this->get_content(), $len, false );
 			$trimmed = true;
 
 		}
@@ -461,8 +467,8 @@ class ClassyPost extends ClassyBasis {
 		$comments = get_comments( $args );
 
 		foreach ( $comments as $comment ) {
-
-			$_return[ $comment->comment_ID ] = new ClassyComment( $comment );
+			
+			$_return[ $comment->comment_ID ] = new Comment( $comment );
 
 		}
 
