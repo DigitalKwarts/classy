@@ -1,9 +1,9 @@
 <?php
 
 /**
- * View's scope
+ * View's scope.
  *
- * Loads the scope (data)
+ * Loads the scope (data).
  */
 class ClassyScope {
 
@@ -12,7 +12,15 @@ class ClassyScope {
 	public static $folder = 'scope';
 
 	/**
-	 * Returns request scope
+	 * Returns request scope.
+	 *
+	 * @return array
+	 */
+
+	/**
+	 * @todo: Write description here.
+	 *
+	 * @param string|null $view_name View's name.
 	 *
 	 * @return array
 	 */
@@ -38,9 +46,11 @@ class ClassyScope {
 
 	}
 
-
 	/**
-	 * Extends Scope with scope that is defined in theme_name/scope folder
+	 * Extends Scope with scope that is defined in theme_name/scope folder.
+	 *
+	 * @param array  $scope
+	 * @param string $view_name View's name.
 	 *
 	 * @return array
 	 */
@@ -52,9 +62,8 @@ class ClassyScope {
 
 	}
 
-
 	/**
-	 * Returns Common Scope
+	 * Returns Common Scope.
 	 *
 	 * @return array
 	 */
@@ -71,9 +80,10 @@ class ClassyScope {
 	}
 
 	/**
-	 * Requires file's scope
+	 * Requires file's scope.
 	 *
-	 * @param  string $filename
+	 * @param  string $filename View's file name.
+	 *
 	 * @return array
 	 */
 	public static function require_scope( $filename ) {

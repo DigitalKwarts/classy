@@ -69,7 +69,6 @@ class ClassyAppearance {
 
 	}
 
-
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -78,13 +77,11 @@ class ClassyAppearance {
 	 * as indicating support for post thumbnails.
 	 */
 	public function setup_theme() {
-
-		/*
+		/**
 		 * Enable support for Post Thumbnails on posts and pages.
 		 *
 		 * @link http://codex.wordpress.org/Function_Reference/add_theme_support#Post_Thumbnails
 		 */
-
 		add_theme_support( 'post-thumbnails' );
 
 		// This theme uses wp_nav_menu() in one location.
