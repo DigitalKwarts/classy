@@ -6,10 +6,9 @@ use Windwalker\Renderer\BladeRenderer;
 /**
  * The core theme class.
  *
- *
- * @since      1.0.0
- * @package    Classy
- * @author     Andrew Tolochka <atolochka@gmail.com>
+ * @since 	1.0.0
+ * @package Classy
+ * @author 	Andrew Tolochka <atolochka@gmail.com>
  */
 class Classy {
 
@@ -87,43 +86,43 @@ class Classy {
 
 		require_once CLASSY_THEME_PATH . 'vendor/autoload.php';
 
-		// Basis Class
+		// Basis Class.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-basis.php';
 
-		// Hierarchy
+		// Hierarchy.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-hierarchy.php';
 
-		// Theme Config
+		// Theme Config.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-config.php';
 
-		// Scope
+		// Scope.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-scope.php';
 
-		// View Loader
+		// View Loader.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-view.php';
 
-		// Helper functions
+		// Helper functions.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-helper.php';
 
-		// Query Helper
+		// Query Helper.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-query-helper.php';
 
-		// Menu
+		// Menu.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-menu.php';
 
-		// Menu Item
+		// Menu Item.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-menu-item.php';
 
-		// Comment
+		// Comment.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'classy/classy-comment.php';
 
-		// Appearance
+		// Appearance.
 		require_once CLASSY_THEME_FRAMEWORK_PATH . 'appearance.php';
 
 	}
 
 	/**
-	 * Include theme Object-Orienter models
+	 * Include theme Object-Oriented models.
 	 */
 	private function include_models() {
 
@@ -197,8 +196,8 @@ class Classy {
 	 * If there is $view attribute presented, it will render requested view.
 	 * If it's not it will try to find necessary view based on $wp_query
 	 *
-	 * @param  string|null $view view path in blade format, ex: single, layout.default, single.partials.slider and etc
-	 * @param  array|null  $data     Additional params
+	 * @param  string|null $view View path in blade format, ex: single, layout.default, single.partials.slider and etc.
+	 * @param  array|null  $data Additional params.
 	 * @return void
 	 */
 	public static function render( $view = null, $data = null ) {
@@ -245,13 +244,13 @@ class Classy {
 
 	}
 
-
 	/**
 	 * Returns posts
 	 *
-	 * @param  mixed   $args   Array of query args
-	 * @param  string  $return object/id/ClassyPost
-	 * @return mixed
+	 * @param  mixed  $args   Array of query args.
+	 * @param  string $return object/id/ClassyPost.
+	 *
+	 * @return array
 	 */
 	public static function get_posts( $args = false, $return = 'ClassyPost' ) {
 
@@ -284,10 +283,11 @@ class Classy {
 
 
 	/**
-	 * Returns post
+	 * Returns post.
 	 *
-	 * @param  mixed $args Array of query args
-	 * @param  string  $return_type ClassyPost/object/id
+	 * @param  mixed  $args 		Array of query args.
+	 * @param  string $return_type 	ClassyPost/object/id.
+	 *
 	 * @return mixed
 	 */
 	public static function get_post( $args = false, $return_type = 'ClassyPost' ) {
@@ -301,7 +301,10 @@ class Classy {
 	}
 
 	/**
-	 * @param array   $prefs
+	 * @todo: Write description here.
+	 *
+	 * @param array $prefs Args for paginate_links.
+	 *
 	 * @return array mixed
 	 */
 	public static function get_pagination( $prefs = array() ) {

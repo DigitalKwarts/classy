@@ -1,4 +1,7 @@
 <?php
+/**
+ * Theme main config.
+ */
 
 /**
  * Textdomain

@@ -8,14 +8,14 @@
 class ClassyView {
 
 	/**
-	 * Views folder
+	 * Views folder.
 	 *
 	 * @var string
 	 */
 	public static $folder = 'views';
 
 	/**
-	 * Returns view name to show based on request value
+	 * Returns view name to show based on request value.
 	 *
 	 * @return string
 	 */
@@ -31,11 +31,11 @@ class ClassyView {
 
 	}
 
-
 	/**
-	 * Replaces all slashes with dots
+	 * Replaces all slashes with dots.
 	 *
-	 * @param  string $view
+	 * @param string $view View's name.
+	 *
 	 * @return string
 	 */
 	public static function get_blade_view( $view ) {
@@ -44,9 +44,8 @@ class ClassyView {
 
 	}
 
-
 	/**
-	 * Returns list of theme page templates
+	 * Returns list of theme page templates.
 	 *
 	 * @return array
 	 */
