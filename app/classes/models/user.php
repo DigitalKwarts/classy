@@ -1,12 +1,16 @@
 <?php
+/**
+ * Wrapper for \WP_User.
+ *
+ * @package Classy\Models
+ */
 
 namespace Classy\Models;
 
 use Classy\Basis;
 
-
 /**
- * Wrapper for \WP_User.
+ * Class User.
  */
 class User extends Basis {
 
