@@ -1,21 +1,26 @@
 <?php
+/**
+ * Includes multiple helper function.
+ *
+ * @package Classy
+ */
 
 namespace Classy;
 
 /**
- * Includes multiple helper function
+ * Class Helper.
  */
-
 class Helper {
 
 	/**
+	 * Trims text to a certain number of words.
 	 *
+	 * @param string $text         Text to trim.
+	 * @param int    $num_words    Number of words. Default 55.
+	 * @param string $more         Optional. What to append if $text needs to be trimmed. Default '&hellip;'.
+	 * @param string $allowed_tags Html allowed tags.
 	 *
-	 * @param string  $text
-	 * @param int     $num_words
-	 * @param string|null|false  $more text to appear in "Read more...". Null to use default, false to hide
-	 * @param string  $allowed_tags
-	 * @return string
+	 * @return string Trimmed text.
 	 */
 	public static function trim_words( $text, $num_words = 55, $more = null, $allowed_tags = 'p a span b i br blockquote' ) {
 		if ( null === $more ) {
@@ -30,9 +35,6 @@ class Helper {
 		}
 
 		$text = strip_tags( $text, $allowed_tag_string );
-
-		/* translators: If your word count is based on single characters (East Asian characters),
-		enter 'characters'. Otherwise, enter 'words'. Do not translate into your own language. */
 
 		if ( 'characters' === _x( 'words', 'word count: words or characters?' ) && preg_match( '/^utf\-?8$/i', get_option( 'blog_charset' ) ) ) {
 			$text = trim( preg_replace( "/[\n\r\t ]+/", ' ', $text ), ' ' );
@@ -57,33 +59,33 @@ class Helper {
 		return apply_filters( 'wp_trim_words', $text, $num_words, $more, $original_text );
 	}
 
-
 	/**
+	 * Close tags in html code.
 	 *
+	 * @param string $html Html code to be checked.
 	 *
-	 * @param string  $html
 	 * @return string
 	 */
 	public static function close_tags( $html ) {
-		//put all opened tags into an array
+		// Put all opened tags into an array.
 		preg_match_all( '#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result );
 
 		$openedtags = $result[1];
 
-		//put all closed tags into an array
+		// Put all closed tags into an array.
 		preg_match_all( '#</([a-z]+)>#iU', $html, $result );
 
 		$closedtags = $result[1];
 		$len_opened = count( $openedtags );
 
-		// all tags are closed
+		// All tags are closed.
 		if ( count( $closedtags ) === $len_opened ) {
 			return $html;
 		}
 
 		$openedtags = array_reverse( $openedtags );
 
-		// close tags
+		// Close tags.
 		for ( $i = 0; $i < $len_opened; $i++ ) {
 			if ( ! in_array( $openedtags[ $i ], $closedtags, true ) ) {
 				$html .= '</' . $openedtags[ $i ] . '>';
@@ -99,32 +101,16 @@ class Helper {
 	}
 
 	/**
-	 * Displays variable if WP_DEBUG is up
+	 * Retrieve paginated link for archive post pages.
 	 *
-	 * @param  mixed $arg
+	 * @param string|array $args Optional. Array or string of arguments for generating paginated links for archives.
 	 *
-	 * @return bool
-	 */
-	public static function error_log( $arg ) {
-		if ( ! WP_DEBUG ) {
-			return true;
-		}
-		if ( is_object( $arg ) || is_array( $arg ) ) {
-			$arg = print_r( $arg, true );
-		}
-		return error_log( $arg );
-	}
-
-	/**
-	 *
-	 *
-	 * @param string  $args
 	 * @return array
 	 */
 	public static function paginate_links( $args = '' ) {
 		$defaults = array(
-			'base' => '%_%', // http://example.com/all_posts.php%_% : %_% is replaced by format (below)
-			'format' => '?page=%#%', // ?page=%#% : %#% is replaced by the page number
+			'base' => '%_%', // Example http://example.com/all_posts.php%_% : %_% is replaced by format (below).
+			'format' => '?page=%#%', // Example ?page=%#% : %#% is replaced by the page number.
 			'total' => 1,
 			'current' => 0,
 			'show_all' => false,
@@ -134,11 +120,12 @@ class Helper {
 			'end_size' => 1,
 			'mid_size' => 2,
 			'type' => 'array',
-			'add_args' => false, // array of query args to add
+			'add_args' => false, // Array of query args to add.
 			'add_fragment' => '',
 		);
 		$args = wp_parse_args( $args, $defaults );
-		// Who knows what else people pass in $args
+
+		// Who knows what else people pass in $args.
 		$args['total'] = intval( (int) $args['total'] );
 		if ( $args['total'] < 2 ) {
 			return array();
@@ -217,11 +204,11 @@ class Helper {
 		return $page_links;
 	}
 
-
 	/**
-	 * Converts array to object recursively
+	 * Converts array to object recursively.
 	 *
-	 * @param  array $array
+	 * @param array $array Array to be converted.
+	 *
 	 * @return object
 	 */
 	public static function array_to_object( $array ) {
@@ -230,7 +217,7 @@ class Helper {
 		foreach ( $array as $k => $v ) {
 			if ( strlen( $k ) ) {
 				if ( is_array( $v ) ) {
-					$obj->{$k} = self::array_to_object( $v ); //RECURSION
+					$obj->{$k} = self::array_to_object( $v ); // Recursion.
 				} else {
 					$obj->{$k} = $v;
 				}
@@ -238,70 +225,40 @@ class Helper {
 		}
 
 		return $obj;
-
 	}
 
-
 	/**
-	 * Returns Current Archives Page Title
+	 * Returns Current Archives Page Title.
 	 *
 	 * @return string
 	 */
 	public static function get_archives_title() {
-
 		$textdomain = Classy::textdomain();
-
-	    $archives_title = '';
+		$archives_title = 'Archives';
 
 	    if ( is_category() ) {
-
 	        $archives_title = single_cat_title( '', false );
-
 	    } else if ( is_tag() ) {
-
 	        $archives_title = 'Tag: ' . single_tag_title( '', false );
-
 	    } else if ( is_author() ) {
-
 	        if ( have_posts() ) {
-
 	            the_post();
 	            $archives_title = 'Author: ' . get_the_author();
-
 	        }
 
 	        rewind_posts();
-
 	    } else if ( is_search() ) {
-
 	        $archives_title = sprintf( __( 'Search Results for: %s', $textdomain ), '<span>' . get_search_query() . '</span>' );
-
 	    } else if ( is_archive() ) {
-
 	        if ( is_day() ) {
-
 	            $archives_title = get_the_date();
-
 	        } elseif ( is_month() ) {
-
 	            $archives_title = get_the_date( _x( 'F Y', 'monthly archives date format', $textdomain ) );
-
 	        } elseif ( is_year() ) {
-
 	            $archives_title = get_the_date( _x( 'Y', 'yearly archives date format', $textdomain ) );
-
-	        } else {
-
-	            $archives_title = 'Archives';
-
 	        }
-		} else {
-
-	        $archives_title = 'Archives';
-
-	    }
+		}
 
 	    return $archives_title;
-
 	}
 }

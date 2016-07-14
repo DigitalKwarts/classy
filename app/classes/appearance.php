@@ -3,14 +3,14 @@
  * Theme Appearance Class.
  *
  * Manages JS & CSS enqueuing of the theme.
+ *
+ * @package Classy
  */
 
 namespace Classy;
 
 /**
  * Class Appearance.
- * 
- * @package Classy
  */
 class Appearance {
 

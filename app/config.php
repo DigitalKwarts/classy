@@ -1,6 +1,8 @@
 <?php
 /**
  * Theme main config.
+ *
+ * @package Classy
  */
 
 /**

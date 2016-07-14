@@ -1,4 +1,9 @@
 <?php
+/**
+ * Wrapper for WP_Post.
+ *
+ * @package Classy\Models
+ */
 
 namespace Classy\Models;
 
@@ -7,7 +12,7 @@ use Classy\Comment;
 use Classy\Helper;
 
 /**
- * Wrapper for WP_Post.
+ * Class Post.
  */
 class Post extends Basis {
 
@@ -119,9 +124,7 @@ class Post extends Basis {
 	 * @return \WP_Post
 	 */
 	public function get_object() {
-		$object = get_post( $this->ID );
-
-		return $object;
+		return get_post( $this->ID );
 	}
 
 	/**
@@ -286,9 +289,9 @@ class Post extends Basis {
 	/**
 	 * Returns the post content with filters applied.
 	 *
-	 * @param  integer $page Page number, in case our post has <!--nextpage--> tags.
+	 * @param integer $page Page number, in case our post has <!--nextpage--> tags.
 	 *
-	 * @return string        Post content
+	 * @return string Post content
 	 */
 	public function get_content( $page = 0 ) {
 		if ( 0 === absint( $page ) && $this->post_content ) {
@@ -467,7 +470,7 @@ class Post extends Basis {
 		$comments = get_comments( $args );
 
 		foreach ( $comments as $comment ) {
-			
+
 			$_return[ $comment->comment_ID ] = new Comment( $comment );
 
 		}

@@ -1,5 +1,11 @@
 <?php
 /**
+ * Template functions.
+ *
+ * @package Classy
+ */
+
+/**
  * Grab the Classy object and return it.
  * Wrapper for Classy::get_instance()
  *

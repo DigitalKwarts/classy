@@ -11,8 +11,14 @@
     <!-- Strange but without this, nothing works. -->
     <rule ref="vendor/wp-coding-standards/wpcs/WordPress/Sniffs/Arrays/ArrayDeclarationSniff.php"/>
 
-	<!-- WordPress Core + Docs + Extra Code Style -->
+	<!-- WordPress Core + Extra + Docs Code Style -->
 	<rule ref="vendor/wp-coding-standards/wpcs/WordPress-Core" />
     <rule ref="vendor/wp-coding-standards/wpcs/WordPress-Extra" />
-    <rule ref="vendor/wp-coding-standards/wpcs/WordPress-Docs" />
+    <rule ref="vendor/wp-coding-standards/wpcs/WordPress-Docs">
+        <!-- Ignore PHP 7 -->
+        <exclude name="Squiz.Commenting.FunctionComment.ScalarTypeHintMissing" />
+
+        <!-- Conflict with PSR-4 -->
+        <exclude name="WordPress.Files.FileName.UnderscoresNotAllowed" />
+    </rule>
 </ruleset>
