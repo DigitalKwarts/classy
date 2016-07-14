@@ -1,25 +1,40 @@
 <?php
+/**
+ * Theme Config.
+ *
+ * Loads theme config and registers models based on it.
+ *
+ * @package Classy
+ */
 
 namespace Classy;
 
 /**
- * Theme Config
- *
- * Loads theme config and registers models based on it
+ * Class Config.
  */
 class Config {
 
+	/**
+	 * Contains all vars from config file.
+	 *
+	 * @var null
+	 */
 	protected static $vars = null;
 
 	/**
-	 * Returns list of allowed variables that can be used in theme config
+	 * Returns list of allowed variables that can be used in theme config.
 	 *
 	 * @return array
 	 */
 	private static function get_allowed_variables() {
-
-		return array( 'environment', 'textdomain', 'post_types', 'taxonomies', 'post_formats', 'sidebars' );
-
+		return array(
+			'environment',
+			'textdomain',
+			'post_types',
+			'taxonomies',
+			'post_formats',
+			'sidebars',
+		);
 	}
 
 	/**
@@ -28,100 +43,89 @@ class Config {
 	 * @return array
 	 */
 	public static function get_vars() {
-
-		if ( null === self::$vars ) {
-
-			// Check for a theme config
+		if ( is_null( self::$vars ) ) {
+			// Check for a theme config.
 			$config_file = CLASSY_THEME_FRAMEWORK_PATH . 'config.php';
 
-			if ( file_exists( $config_file ) ) {
-
-				require_once CLASSY_THEME_FRAMEWORK_PATH . 'config.php';
-
-				$vars = self::get_allowed_variables();
-
-				foreach ( $vars as $var ) {
-
-					if ( isset( $$var ) ) {
-
-						self::$vars[ $var ] = $$var;
-
-						unset( $$var ); // We don't require it anymore
-
-					}
-				}
-			} else {
-
+			if ( ! file_exists( $config_file ) ) {
 				wp_die( sprintf(
 					'There is no config file in %s custom/config.php',
 					esc_html( CLASSY_THEME )
 				) );
+			}
 
+			require_once( CLASSY_THEME_FRAMEWORK_PATH . 'config.php' );
+			$vars = self::get_allowed_variables();
+
+			foreach ( $vars as $var ) {
+				if ( isset( $$var ) ) {
+					self::$vars[ $var ] = $$var;
+
+					unset( $$var ); // We don't require it anymore.
+				}
 			}
 		}
 
 		return self::$vars;
-
 	}
-
-
 
 	/**
 	 * Retrieves config variables and then init WordPress functionality based on them.
 	 */
 	public static function init() {
-
 		$vars = self::get_vars();
 
-		// Init Post Types
-		if ( isset( $vars['post_types'] ) ) { self::init_post_types( $vars['post_types'] ); }
-
-		// Init Taxonomies
-		if ( isset( $vars['taxonomies'] ) ) { self::init_taxonomies( $vars['taxonomies'] ); }
-
-		// Init Post Formats
-		if ( isset( $vars['post_formats'] ) ) { self::init_post_formats( $vars['post_formats'] ); }
-
-		// Init Sidebars
-		if ( isset( $vars['sidebars'] ) ) { self::init_sidebars( $vars['sidebars'] ); }
-
-	}
-
-
-
-	/**
-	 * Registers Post Types
-	 *
-	 * @param  array $post_types
-	 */
-	private static function init_post_types( $post_types ) {
-
-		if ( is_array( $post_types ) ) {
-
-			foreach ( $post_types as $type => $options ) {
-
-				self::add_post_type( $type, $options['config'], $options['singular'], $options['multiple'] );
-
-			}
+		// Init Post Types.
+		if ( isset( $vars['post_types'] ) ) {
+			self::init_post_types( $vars['post_types'] );
 		}
 
+		// Init Taxonomies.
+		if ( isset( $vars['taxonomies'] ) ) {
+			self::init_taxonomies( $vars['taxonomies'] );
+		}
+
+		// Init Post Formats.
+		if ( isset( $vars['post_formats'] ) ) {
+			self::init_post_formats( $vars['post_formats'] );
+		}
+
+		// Init Sidebars.
+		if ( isset( $vars['sidebars'] ) ) {
+			self::init_sidebars( $vars['sidebars'] );
+		}
 	}
 
+	/**
+	 * Registers Post Types.
+	 *
+	 * @param array $post_types Custom post types to be registered.
+	 */
+	private static function init_post_types( $post_types ) {
+		if ( is_array( $post_types ) ) {
+			foreach ( $post_types as $type => $options ) {
+				self::add_post_type(
+					$type,
+					$options['config'],
+					$options['singular'],
+					$options['multiple']
+				);
+			}
+		}
+	}
 
 	/**
-	 * Register Post Type Wrapper
+	 * Wrapper for register_post_type().
 	 *
-	 * @param string $name
-	 * @param array $config
-	 * @param string $singular
-	 * @param string $multiple
+	 * @param string $name     Post type key, must not exceed 20 characters.
+	 * @param array  $config   Better look into register_post_type() function.
+	 * @param string $singular Optional. Default singular name.
+	 * @param string $multiple Optional. Default multiple name.
 	 */
 	private static function add_post_type( $name, $config, $singular = 'Entry', $multiple = 'Entries' ) {
-
 		$domain = Classy::textdomain();
 
 		if ( ! isset( $config['labels'] ) ) {
-
 			$config['labels'] = array(
 				'name' => __( $multiple, $domain ),
 				'singular_name' => __( $singular, $domain ),
@@ -134,46 +138,43 @@ class Config {
 				'add_new' => __( 'Add New', $domain ),
 				'add_new_item' => __( 'Add New ' . $singular, $domain ),
 			);
-
 		}
 
 		register_post_type( $name, $config );
-
 	}
 
 	/**
-	 * Registers taxonomies
+	 * Registers taxonomies.
 	 *
-	 * @param  array $taxonomies
+	 * @param array $taxonomies Taxonomies to be registered.
 	 */
 	private static function init_taxonomies( $taxonomies ) {
-
 		if ( is_array( $taxonomies ) ) {
-
 			foreach ( $taxonomies as $type => $options ) {
-
-				self::add_taxonomy( $type, $options['for'], $options['config'], $options['singular'], $options['multiple'] );
-
+				self::add_taxonomy(
+					$type,
+					$options['for'],
+					$options['config'],
+					$options['singular'],
+					$options['multiple']
+				);
 			}
 		}
-
 	}
 
 	/**
-	 * Register taxonomy wrapper
+	 * Wrapper for register_taxonomy().
 	 *
-	 * @param string $name
-	 * @param mixed $object_type
-	 * @param array $config
-	 * @param string $singular
-	 * @param string $multiple
+	 * @param string $name 		  Taxonomy key, must not exceed 32 characters.
+	 * @param mixed  $object_type Name of the object type for the taxonomy object.
+	 * @param array  $config	  Better look into register_taxonomy() function.
+	 * @param string $singular    Optional. Default singular name.
+	 * @param string $multiple 	  Optional. Default multiple name.
 	 */
 	private static function add_taxonomy( $name, $object_type, $config, $singular = 'Entry', $multiple = 'Entries' ) {
-
 		$domain = Classy::textdomain();
 
 		if ( ! isset( $config['labels'] ) ) {
-
 			$config['labels'] = array(
 				'name' => __( $multiple, $domain ),
 				'singular_name' => __( $singular, $domain ),
@@ -187,41 +188,32 @@ class Config {
 				'new_item_name' => __( 'New ' . $singular . ' Name', $domain ),
 				'menu_name' => __( $singular, $domain ),
 			);
-
 		}
 
 		register_taxonomy( $name, $object_type, $config );
-
 	}
 
 	/**
-	 * Registers Post Formats
+	 * Registers Post Formats.
 	 *
-	 * @param  array $post_formats
+	 * @param array $post_formats Array with available post formats.
 	 */
 	private static function init_post_formats( $post_formats ) {
-
 		if ( is_array( $post_formats ) ) {
-
 			add_theme_support( 'post-formats', $post_formats );
-
 		}
-
 	}
 
 	/**
-	 * Registers Sidebars
+	 * Wrapper for register_sidebar().
 	 *
-	 * @param  array $sidebars
+	 * @param array $sidebars Sidebars to be registered.
 	 */
 	private static function init_sidebars( $sidebars ) {
-
 		$domain = Classy::textdomain();
 
 		if ( is_array( $sidebars ) ) {
-
 			foreach ( $sidebars as $id => $title ) {
-
 				register_sidebar(
 					array(
 						'id' => $id,
@@ -233,9 +225,7 @@ class Config {
 						'after_title' => '</h3>',
 					)
 				);
-
 			}
 		}
-
 	}
 }

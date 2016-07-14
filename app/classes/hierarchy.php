@@ -119,12 +119,12 @@ class Hierarchy {
 	 * Returns view name for render, based on type of request.
 	 *
 	 * @param string $type View|scope.
-	 * @param string $type Request type like: home, single etc.
+	 * @param string $page Request type like: home, single etc.
 	 *
 	 * @return array|bool
 	 */
-	public static function get_available_file( $type = 'view', $type ) {
-		$views = self::get_request_hierarchy_list( $type );
+	public static function get_available_file( $type = 'view', $page ) {
+		$views = self::get_request_hierarchy_list( $page );
 
 		foreach ( $views as $view ) {
 			if ( self::file_exists( $type, $view ) ) {
@@ -134,7 +134,6 @@ class Hierarchy {
 
 		return false;
 	}
-
 
 	/**
 	 * Returns list of filenames to check, based on type of request.
