@@ -50,7 +50,7 @@ The biggest problem with WordPress theme development is that you always need to 
 4. Install composer dependencies `composer install`
 
 ## Config file
-Check our github wiki [wiki](https://github.com/anrw/classy/wiki)
+Check our GitHub [Wiki](https://github.com/anrw/classy/wiki)
 
 ## Page Templates
 
@@ -68,8 +68,8 @@ We recommend you to structure your templates in one of this ways:
 
 ## Requirements:
 
-WordPress: 4.5+
-PHP: 5.6+
+* WordPress: 4.5+
+* PHP: 5.6+
 
 ## How to check php code style
 
