@@ -32,8 +32,12 @@ class Menu {
 	 * @param string $arg It can be menu id, slug or full name.
 	 */
 	public function __construct( $arg = null ) {
+		$locations = get_nav_menu_locations();
+
 		if ( is_numeric( $arg ) && 0 !== absint( $arg ) ) {
 			$menu_id = $this->check_menu_id( $arg );
+		} elseif ( is_array( $locations ) && count( $locations ) ) {
+			$menu_id = $this->get_locations_menu_id( $locations, $arg );
 		} elseif ( is_string( $arg ) ) {
 			$menu_id = $this->get_menu_id_by_name( $arg );
 		}
@@ -89,6 +93,25 @@ class Menu {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Performs menu id lookup inside navigation Menus.
+	 *
+	 * @param  array      $locations locations that are returned by get_nav_menu_locations().
+	 * @param  int|string $arg navigation id.
+	 * @return int
+	 */
+	protected function get_locations_menu_id( $locations, $arg ) {
+		if ( is_numeric( $arg ) ) {
+			$arg = array_search( $arg, $locations );
+		}
+
+		if ( isset( $locations[ $arg ] ) ) {
+			$menu_id = $locations[ $arg ];
+
+			return $menu_id;
+		}
 	}
 
 	/**
