@@ -2,8 +2,9 @@
 /**
  * Data that will be accessible on archive page (index).
  */
+$framework = get_theme_framework();
 $data = array(
-	'posts' => get_theme_framework()::get_posts(),
-	'page_title' => get_theme_framework()::archives_title(),
-	'pagination' => get_theme_framework()::get_pagination(),
+	'posts' => $framework::get_posts(),
+	'page_title' => $framework::archives_title(),
+	'pagination' => $framework::get_pagination(),
 );

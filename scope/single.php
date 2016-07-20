@@ -2,6 +2,7 @@
 /**
  * Data that will be accessible on single post.
  */
+$framework = get_theme_framework();
 $data = array(
-	'post' => get_theme_framework()::get_post(),
+	'post' => $framework::get_post(),
 );

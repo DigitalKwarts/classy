@@ -2,4 +2,5 @@
 /**
  * The main view file.
  */
-get_theme_framework()::render();
+$framework = get_theme_framework();
+$framework::render();

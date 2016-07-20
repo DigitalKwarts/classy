@@ -2,4 +2,5 @@
 /**
  * Theme footer.
  */
-get_theme_framework()::render( 'layout.footer' );
+$framework = get_theme_framework();
+$framework::render( 'layout.footer' );
