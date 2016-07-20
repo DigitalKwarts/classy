@@ -20,6 +20,13 @@ class Menu {
 	public $ID;
 
 	/**
+	 * Menu title.
+	 *
+	 * @var string
+	 */
+	public $title;
+
+	/**
 	 * Items.
 	 *
 	 * @var array
@@ -48,6 +55,7 @@ class Menu {
 
 		if ( $menu_id ) {
 			$this->ID = $menu_id;
+			$this->title = $this->get_menu_name_by_id($menu_id);
 			$this->init();
 		}
 	}
@@ -155,6 +163,26 @@ class Menu {
 
 		return false;
 	}
+
+	/**
+	 * Returns menu name by menu id.
+	 *
+	 * @param string $name Menu's name.
+	 *
+	 * @return int|bool
+	 */
+	protected function get_menu_name_by_id( $id = null ) {
+		if ( $id && is_int( $id ) ) {
+			$menu_obj = wp_get_nav_menu_object($id);
+
+			if ( $menu_obj ) {
+				return $menu_obj->name;
+			}
+		}
+
+		return false;
+	}
+
 
 	/**
 	 * Returns menu items.
