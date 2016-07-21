@@ -55,7 +55,7 @@ class Menu {
 
 		if ( $menu_id ) {
 			$this->ID = $menu_id;
-			$this->title = $this->get_menu_name_by_id( $menu_id );
+			$this->title = $this->get_menu_name_by_id();
 			$this->init();
 		}
 	}
@@ -167,17 +167,13 @@ class Menu {
 	/**
 	 * Returns menu name by menu id.
 	 *
-	 * @param string $id Menu's name.
-	 *
 	 * @return int|bool
 	 */
-	protected function get_menu_name_by_id( $id = null ) {
-		if ( $id && is_int( $id ) ) {
-			$menu_obj = wp_get_nav_menu_object( $id );
+	protected function get_menu_name_by_id() {
+		$menu_obj = wp_get_nav_menu_object( $this->ID );
 
-			if ( $menu_obj ) {
-				return $menu_obj->name;
-			}
+		if ( $menu_obj ) {
+			return $menu_obj->name;
 		}
 
 		return false;
