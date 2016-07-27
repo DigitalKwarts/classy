@@ -181,7 +181,57 @@ class Classy {
 
 		$renderer = new BladeRenderer( $views, array( 'cache_path' => $cache ) );
 
-		echo $renderer->render( $view, $scope ); // XSS: xss ok.
+		$html = $renderer->render( $view, $scope );
+
+		echo self::maybe_minify( $html );
+
+	}
+
+	/**
+	 * Minifies html in case the minify_html option is set to true.
+	 *
+	 * @param  string $html HTML string.
+	 * @return string
+	 */
+	private static function maybe_minify( $html ) {
+
+		$minify_html = self::get_config_var( 'minify_html' );
+
+		if ( true === $minify_html ) {
+
+			$html = self::minify_html( $html );
+
+		}
+
+		return $html;
+
+	}
+
+	/**
+	 * Returns minified version of string with removed whitespaces and empty strings.
+	 *
+	 * @param  string $html HTML string.
+	 * @return string
+	 */
+	private static function minify_html( $html ) {
+
+		$search = array(
+			"/\n/s",
+			'/\>[^\S ]+/s',  // Strip whitespaces after tags, except space.
+			'/[^\S ]+\</s',  // Strip whitespaces before tags, except space.
+			'/(\s)+/s',       // Shorten multiple whitespace sequences.
+			'/<!--(.|\s)*?-->/',
+		);
+
+		$replace = array(
+			'',
+			'>',
+			'<',
+			'\\1',
+			'',
+		);
+
+		return preg_replace( $search, $replace, $html );
 
 	}
 

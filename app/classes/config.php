@@ -30,6 +30,7 @@ class Config {
 		return array(
 			'environment',
 			'textdomain',
+			'minify_html',
 			'post_types',
 			'taxonomies',
 			'post_formats',
