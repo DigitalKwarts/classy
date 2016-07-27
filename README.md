@@ -57,9 +57,9 @@ Check our GitHub [Wiki](https://github.com/anrw/classy/wiki)
 To register a template you need simply to put `{{-- Template Name: Example --}}` at the top of your blade file. 
 We recommend you to structure your templates in one of this ways:
 
-1. views/`page`/`template-name`.blade.php
-2. views/`templates`/`template-name`.blade.php
-3. views/`template-name`/`template-name`.blade.php
+1. views/`page`/`templatename`.blade.php
+2. views/`template`/`templatename`.blade.php
+3. views/`template-name`/`templatename`.blade.php
 
 ## Useful links
 1. [Blade documentation](https://laravel.com/docs/5.1/blade)
