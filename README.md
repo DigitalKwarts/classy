@@ -78,3 +78,17 @@ Check WP Code Style `vendor/bin/phpcs --standard=phpcs.ruleset.xml app/ -s`
 ## How to run static code analyzer
  
 Check PHPMD `vendor/bin/phpmd app text phpmd.ruleset.xml`
+
+## Contribute
+
+You can report a bug, implement a feature or simply give an idea on how to make the project better. Every input from your side will be highly appreciated!
+
+## Big thanks to:
+
+[<img alt="anrw" src="https://avatars.githubusercontent.com/u/7533603?v=3&s=117" width="117">](https://github.com/anrw) |[<img alt="LehaMotovilov" src="https://avatars.githubusercontent.com/u/6247404?v=3&s=117" width="117">](https://github.com/LehaMotovilov) |[<img alt="konstantp" src="https://avatars.githubusercontent.com/u/8895125?v=3&s=117" width="117">](https://github.com/konstantp) |
+:---: |:---: |:---: |
+[anrw](https://github.com/anrw) |[LehaMotovilov](https://github.com/LehaMotovilov) |[konstantp](https://github.com/konstantp) |
+
+## License
+
+Classy is under GNU General Public Licence (GPL). You can use it in your personal and commercial work.
