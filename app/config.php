@@ -23,6 +23,15 @@ $textdomain = 'themename';
  */
 $environment = 'production';
 
+
+/**
+ * Minify Html.
+ * If you want to have your html minified - set this to true
+ *
+ * @var boolean
+ */
+$minify_html = false;
+
 /**
  * Theme Post types
  *
