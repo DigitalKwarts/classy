@@ -73,11 +73,11 @@ We recommend you to structure your templates in one of this ways:
 
 ## How to check php code style
 
-Check WP Code Style `vendor/bin/phpcs --standard=phpcs.ruleset.xml app/ -s`
+Check WP Code Style `composer cs`
 
 ## How to run static code analyzer
  
-Check PHPMD `vendor/bin/phpmd app text phpmd.ruleset.xml`
+Check PHPMD `composer md`
 
 ## Contribute
 
