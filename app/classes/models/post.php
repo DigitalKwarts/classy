@@ -295,7 +295,7 @@ class Post extends Basis {
 	 */
 	public function get_content( $page = 0 ) {
 		if ( 0 === absint( $page ) && $this->post_content ) {
-			return $this->post_content;
+			return apply_filters( 'the_content', $this->post_content );
 		}
 
 		$content = $this->post_content;
