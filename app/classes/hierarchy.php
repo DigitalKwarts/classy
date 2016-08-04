@@ -241,6 +241,14 @@ class Hierarchy {
 
 		elseif ( 'front-page' === $type ) :
 
+			$template = self::get_classy_template();
+
+			if ( ! empty( $template ) ) {
+				$views[] = $template;
+				$views[] = 'page.' . $template;
+				$views[] = 'template.' . $template;
+			}
+
 			$views[] = 'front-page.front-page';
 			$views[] = 'front-page';
 
