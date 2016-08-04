@@ -28,3 +28,24 @@ node_modules
 
 # Framework dependencies
 vendor
+
+# ignore OS generated files
+ehthumbs.db
+Thumbs.db
+
+# ignore Editor files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+
+# ignore databases
+#*.sql
+*.sqlite
+
+# ignore packaged files
+*.7z
+*.gz
+*.rar
+*.tar
+*.zip
+*.spc
