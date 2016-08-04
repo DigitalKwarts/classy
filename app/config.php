@@ -6,7 +6,7 @@
  */
 
 /**
- * Textdomain
+ * Textdomain.
  * If you're translating a theme, you'll need to use a text domain to denote all text belonging to that theme.
  *
  * @link https://codex.wordpress.org/I18n_for_WordPress_Developers
@@ -16,8 +16,8 @@ $textdomain = 'themename';
 
 /**
  * Environment.
- * Can be developemnt/production.
- * In this theme it is used to deliver minified assets when environment is production and originals for development
+ * Can be development/production.
+ * In this theme it is used to deliver minified assets when environment is production and originals for development.
  *
  * @var string
  */
@@ -26,14 +26,14 @@ $environment = 'production';
 
 /**
  * Minify Html.
- * If you want to have your html minified - set this to true
+ * If you want to have your html minified - set this to true.
  *
  * @var boolean
  */
 $minify_html = false;
 
 /**
- * Theme Post types
+ * Theme Post types.
  *
  * @link https://github.com/anrw/classy/wiki/Custom-post-types
  * @var array
@@ -41,7 +41,7 @@ $minify_html = false;
 $post_types = array();
 
 /**
- * Theme Taxonomies
+ * Theme Taxonomies.
  *
  * @link https://github.com/anrw/classy/wiki/Taxonomies
  * @var array
@@ -57,7 +57,7 @@ $taxonomies = array();
 $post_formats = array();
 
 /**
- * Sidebars
+ * Sidebars.
  *
  * @link https://github.com/anrw/classy/wiki/Sidebars
  * @var array
