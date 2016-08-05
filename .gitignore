@@ -28,3 +28,9 @@ node_modules
 
 # Framework dependencies
 vendor
+
+# IDE files
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+*.idea
