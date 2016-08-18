@@ -63,3 +63,15 @@ $post_formats = array();
  * @var array
  */
 $sidebars = array();
+
+
+/**
+ * Classy allows you to include custom modules, functions that are located in `app/custom/` directory.
+ * To include them, just write here relative path like this:
+ *
+ * module/init.php <- will include only init.php
+ * functions/*.php <- will include all files from `app/custom/functions/` directory
+ * 
+ * @var array
+ */
+$include = array();

@@ -58,6 +58,8 @@ class Classy {
 
 		$this->init_config();
 
+		$this->load_custom_includes();
+
 		add_filter( 'theme_page_templates', array( $this, 'filter_templates' ) );
 	}
 
@@ -72,7 +74,25 @@ class Classy {
 	 * Load template functions.
 	 */
 	private function load_template_function() {
-		require_once( CLASSY_THEME_PATH . 'app/core/functions/template-functions.php' );
+		require_once( CLASSY_THEME_FRAMEWORK_PATH . 'core/functions/template-functions.php' );
+	}
+
+	/**
+	 * Loads custom files specified in custom/config.php.
+	 */
+	private function load_custom_includes() {
+		$include = self::get_config_var( 'include' );
+
+		if ( is_array( $include ) ) {
+			foreach ( $include as $file ) {
+				$files = (array) glob( CLASSY_THEME_FRAMEWORK_PATH . '/custom/' . $file );
+				foreach ( $files as $filename ) {
+					if ( ! empty( $filename ) ) {
+						require_once $filename;
+					}
+				}
+			}
+		}
 	}
 
 	/**
