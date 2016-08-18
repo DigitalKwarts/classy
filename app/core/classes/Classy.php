@@ -72,7 +72,7 @@ class Classy {
 	 * Load template functions.
 	 */
 	private function load_template_function() {
-		require_once( CLASSY_THEME_PATH . 'app/functions/template-functions.php' );
+		require_once( CLASSY_THEME_PATH . 'app/core/functions/template-functions.php' );
 	}
 
 	/**

@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Classy\\": "app/classes"
+            "Classy\\": "app/core/classes",
+            "Classy\\Models\\": "app/core/models"
         }
     },
     "scripts": {
