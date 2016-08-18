@@ -35,7 +35,7 @@ class Config {
 			'taxonomies',
 			'post_formats',
 			'sidebars',
-			'include'
+			'include',
 		);
 	}
 

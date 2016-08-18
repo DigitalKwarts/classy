@@ -69,9 +69,9 @@ $sidebars = array();
  * Classy allows you to include custom modules, functions that are located in `app/custom/` directory.
  * To include them, just write here relative path like this:
  *
- * module/init.php <- will include only init.php
- * functions/*.php <- will include all files from `app/custom/functions/` directory
- * 
+ * To include one file: `module/init.php`
+ * To include all files from dir: `functions/*.php`
+ *
  * @var array
  */
 $include = array();
