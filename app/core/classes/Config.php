@@ -35,6 +35,7 @@ class Config {
 			'taxonomies',
 			'post_formats',
 			'sidebars',
+			'include',
 		);
 	}
 
@@ -46,7 +47,7 @@ class Config {
 	public static function get_vars() {
 		if ( is_null( self::$vars ) ) {
 			// Check for a theme config.
-			$config_file = CLASSY_THEME_FRAMEWORK_PATH . 'config.php';
+			$config_file = CLASSY_THEME_FRAMEWORK_PATH . '/custom/config.php';
 
 			if ( ! file_exists( $config_file ) ) {
 				wp_die( sprintf(
@@ -55,7 +56,7 @@ class Config {
 				) );
 			}
 
-			require_once( CLASSY_THEME_FRAMEWORK_PATH . 'config.php' );
+			require_once( $config_file );
 			$vars = self::get_allowed_variables();
 
 			foreach ( $vars as $var ) {
