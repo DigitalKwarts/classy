@@ -85,9 +85,9 @@ class Classy {
 
 		if ( is_array( $include ) ) {
 			foreach ( $include as $file ) {
-				$files = (array) glob( CLASSY_THEME_FRAMEWORK_PATH . '/custom/' . $file );
+				$files = (array) glob( CLASSY_THEME_FRAMEWORK_PATH . 'custom/' . $file );
 				foreach ( $files as $filename ) {
-					if ( ! empty( $filename ) ) {
+					if ( is_readable( $filename ) ) {
 						require_once $filename;
 					}
 				}
