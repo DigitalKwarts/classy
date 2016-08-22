@@ -43,10 +43,10 @@ class Menu {
 
 		if ( is_numeric( $arg ) && 0 !== absint( $arg ) ) {
 			$menu_id = $this->check_menu_id( $arg );
-		} elseif ( is_array( $locations ) && count( $locations ) ) {
-			$menu_id = $this->get_locations_menu_id( $locations, $arg );
 		} elseif ( is_string( $arg ) ) {
 			$menu_id = $this->get_menu_id_by_name( $arg );
+		} elseif ( is_array( $locations ) && count( $locations ) ) {
+			$menu_id = $this->get_locations_menu_id( $locations, $arg );
 		}
 
 		if ( ! isset( $menu_id ) ) {
